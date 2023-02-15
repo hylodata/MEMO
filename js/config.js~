@@ -1,0 +1,62 @@
+var config = {
+    style: 'mapbox://styles/branigan/cjz37rcb003ib1cr3s8rnkt2d',
+    accessToken: 'pk.eyJ1IjoiZ2JieSIsImEiOiJjbDRnMnhpcWowOTZ0M2ltYmVidmFlYzUyIn0.YMvE-Zv6jfxhACw69xOvLQ',
+    showMarkers: false,
+    theme: 'light',
+    use3dTerrain: true,
+    title: "Patience's Journey",
+    subtitle: '',
+    byline: '',
+    footer: 'Source: Story text from Wikipedia, August 2019. Data from <a href="https://www.usgs.gov/centers/norock/science/retreat-glaciers-glacier-national-park">USGS</a>',
+    chapters: [
+        {
+            id: 'patience',
+            alignment: 'full',
+            title: '',
+            image: './images/work.jpg',
+            description: '“After I graduated from secondary school in 2003, I decided to travel to Nigeria because my uncle who lived in Lagos offered me a place to stay and a job as an apprentice in a tailor shop.”',
+            location: {
+              center: [0.47773, 7.15319],
+zoom: 16.00,
+pitch: 45.00,
+bearing: -40.00
+            },
+            onChapterEnter: [
+                {
+                    layer: 'gnpglaciers-1998',
+                    opacity: 0.25
+                },
+                {
+                    layer: 'glaciernp-boundary',
+                    opacity: 0.25
+                }
+            ],
+            onChapterExit: [
+                {
+                    layer: 'glaciernp-boundary',
+                    opacity: 0
+                }
+            ]
+        },
+        {
+            id: 'hohoe2003',
+            alignment: 'left',
+            title: 'Hohoe, Volta Region, Ghana 2003',
+            image: '',
+            description: "In 2003, Patience left Hohoe  Municipality in Ghana's Volta Region, Ghana. She traveled by bus to Lomé, Togo.",
+            location: {
+              center: [1.22540, 6.13253],
+zoom: 13.31,
+pitch: 45.00,
+bearing: 0.00
+            },
+            onChapterEnter: [],
+            onChapterExit: [
+                // {
+                //     layer: 'gnpglaciers-2015',
+                //     opacity: 0
+                // }
+            ]
+        }
+    ]
+}
