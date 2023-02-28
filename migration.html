@@ -13,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
 
     <style>
         /* @font-face {
@@ -507,6 +508,14 @@
 
         var scroller = scrollama();
 
+        // Get our socket connection
+        // Note: In lab an IP will be required here
+        var socket = io('http://127.0.0.1:5001');
+
+        // Keep a timer of when we were last moved by the server
+        // If that movement was recent, don't send move updates for a while
+        let movementTimeout = Date.now();
+
         /* function handleStepEnter(response) {
          *     let el = response.element;
          *     let setCenter = el.dataset.center;
@@ -541,6 +550,11 @@
             steps.forEach(step => step.classList.remove('is-active'));
             el.classList.add('is-active');
 
+            if(Date.now() - movementTimeout > 5000){
+                socket.emit("groupScroll", {"index": response.index});
+                // movementTimeout = Date.now();
+            }
+
             map.flyTo({
                 center: setCenter.split(", "),
                 zoom: setZoom,
@@ -561,6 +575,8 @@
                 } else {
                     map.setLayoutProperty(layerToggle, 'visibility', 'visible');
                 }
+
+                socket.emit("groupScroll", {"index": response.index});
             }
 
         }
@@ -577,6 +593,21 @@
 
             window.addEventListener("resize", scroller.resize);
         }
+
+        socket.on("connect", () => {
+            console.log("connected to socketIO server");
+        });
+
+        socket.on("groupScroll", data => {
+            index = data.index;
+
+            var elements = document.getElementsByClassName("step");
+
+            elements[index].scrollIntoView({
+                behavior: "smooth",
+            });
+            movementTimeout = Date.now();
+        });
 
         init();
     </script>
