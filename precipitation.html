@@ -81,7 +81,7 @@
        projection: 'globe'
      });
 
-     var socket = io('http://127.0.0.1:5001');
+     var socket = io('http://10.0.1.98:5001');
 
      // Wait until the map has finished loading.
      map.on('load', () => {
@@ -281,7 +281,7 @@
 
          const visibility = map.getLayoutProperty(layer, 'visibility');
 
-         if (data.visible === 'false') {
+         if (visibility === 'visible') {
            map.setLayoutProperty(layer, 'visibility', 'none');
            this.className = '';
          } else {
