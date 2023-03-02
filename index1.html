@@ -7,6 +7,7 @@
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
     <style>
         body {
             margin: 0;
@@ -80,6 +81,8 @@
             projection: 'globe'
         });
 
+        var socket = io('http://127.0.0.1:5001');
+
         // Wait until the map has finished loading.
         map.on('load', () => {
             // Add a custom vector tileset source. This tileset contains
@@ -100,14 +103,14 @@
                 'data': './data/mapbox/fullRoute.geojson'
             });
 
-            map.addSource('R95P_200005', {
+            map.addSource('net_migration_200005', {
                 'type': 'geojson',
-                'data': './data/mapbox/R95P_200005.geojson'
+                'data': './data/mapbox/net_migration_200005.geojson'
             });
 
-            map.addSource('R95P_200510', {
+            map.addSource('net_migration_200510', {
                 'type': 'geojson',
-                'data': './data/mapbox/R95P_200510.geojson'
+                'data': './data/mapbox/net_migration_200510.geojson'
             });
 
             // Milestones Markers
@@ -147,11 +150,12 @@
                 }
             });
 
-            // R95P 200005
+
+            // migration 200005
             map.addLayer({
-                    'id': 'R95P_200005',
+                    'id': 'net_migration_200005',
                     'type': 'circle',
-                    'source': 'R95P_200005',
+                    'source': 'net_migration_200005',
                     'minzoom': 4,
                     'maxzoom': 15,
                     'layout': {
@@ -160,18 +164,18 @@
                     'paint': {
                         'circle-radius': 3,
                         'circle-color': {
-                            property: '200005',
+                            property: 'Migration',
                             stops: [
-                                [0, 'rgba(202,0,32,1.0)'],
-                                [10, 'rgba(221,73,75,0)'],
-                                [14, 'rgba(240,147,119,0)'],
-                                [18, 'rgba(245,193,169,0)'],
-                                [21, 'rgba(247,229,221,0)'],
-                                [23, 'rgba(225,236,242,0)'],
-                                [25, 'rgba(180,214,231,0)'],
-                                [27, 'rgba(130,188,217,0)'],
-                                [29, 'rgba(67,150,197,0)'],
-                                [34, 'rgba(5,113,176,1.0)']
+                                [-128773, 'rgba(230,97,1,1.0)'],
+                                [-4132, 'rgba(241,136,44,1.0)'],
+                                [-1755, 'rgba(251,175,88,1.0)'],
+                                [-731, 'rgba(251,205,148,1.0)'],
+                                [-244, 'rgba(249,233,214,1.0)'],
+                                [-31, 'rgba(232,231,239,1.0)'],
+                                [-2, 'rgba(201,197,223,1.0)'],
+                                [9, 'rgba(169,159,204,1.0)'],
+                                [92, 'rgba(131,109,179,1.0)'],
+                                [617, 'rgba(94,60,153,1.0)']
                             ]
                         },
                         'circle-opacity': 0.5
@@ -180,11 +184,11 @@
 
             );
 
-            // R95P 200510
+            // migration 200005
             map.addLayer({
-                    'id': 'R95P_200510',
+                    'id': 'net_migration_200510',
                     'type': 'circle',
-                    'source': 'R95P_200510',
+                    'source': 'net_migration_200510',
                     'minzoom': 4,
                     'maxzoom': 15,
                     'layout': {
@@ -193,18 +197,18 @@
                     'paint': {
                         'circle-radius': 3,
                         'circle-color': {
-                            property: '200510',
+                            property: 'Migration',
                             stops: [
-                                [0, 'rgba(202,0,32,1.0)'],
-                                [10, 'rgba(221,73,75,0)'],
-                                [14, 'rgba(240,147,119,0)'],
-                                [18, 'rgba(245,193,169,0)'],
-                                [21, 'rgba(247,229,221,0)'],
-                                [23, 'rgba(225,236,242,0)'],
-                                [25, 'rgba(180,214,231,0)'],
-                                [27, 'rgba(130,188,217,0)'],
-                                [29, 'rgba(67,150,197,0)'],
-                                [34, 'rgba(5,113,176,1.0)']
+                                [-128773, 'rgba(230,97,1,1.0)'],
+                                [-4132, 'rgba(241,136,44,1.0)'],
+                                [-1755, 'rgba(251,175,88,1.0)'],
+                                [-731, 'rgba(251,205,148,1.0)'],
+                                [-244, 'rgba(249,233,214,1.0)'],
+                                [-31, 'rgba(232,231,239,1.0)'],
+                                [-2, 'rgba(201,197,223,1.0)'],
+                                [9, 'rgba(169,159,204,1.0)'],
+                                [92, 'rgba(131,109,179,1.0)'],
+                                [617, 'rgba(94,60,153,1.0)']
                             ]
                         },
                         'circle-opacity': 0.5
@@ -219,12 +223,12 @@
         // After the last frame rendered before the map enters an "idle" state.
         map.on('idle', () => {
             // If these layers were not added to the map, abort
-            if (!map.getLayer('route') || !map.getLayer('milestones') || !map.getLayer('R95P_200005') || !map.getLayer('R95P_200510')) {
+            if (!map.getLayer('route') || !map.getLayer('milestones') || !map.getLayer('net_migration_200005') || !map.getLayer('net_migration_200510') || !map.getLayer('R95P_200005') || !map.getLayer('R95P_200510')) {
                 return;
             }
 
             // Enumerate ids of the layers.
-            const toggleableLayerIds = ['route', 'milestones', 'R95P_200005', 'R95P_200510'];
+            const toggleableLayerIds = ['route', 'milestones', 'net_migration_200005', 'net_migration_200510', 'R95P_200005', 'R95P_200510'];
 
             // Set up the corresponding toggle button for each layer.
             for (const id of toggleableLayerIds) {
@@ -255,6 +259,10 @@
                     if (visibility === 'visible') {
                         map.setLayoutProperty(clickedLayer, 'visibility', 'none');
                         this.className = '';
+                        socket.emit("groupScroll", {
+                            "index": id,
+                            "visible": 'false'
+                        });
                     } else {
                         this.className = 'active';
                         map.setLayoutProperty(
@@ -262,12 +270,36 @@
                             'visibility',
                             'visible'
                         );
+                        socket.emit("groupScroll", {
+                            "index": id,
+                            "visible": 'true'
+                        });
                     }
                 };
 
                 const layers = document.getElementById('menu');
                 layers.appendChild(link);
             }
+
+            socket.on("groupScroll", data => {
+                console.log("event recieved");
+
+                layer = data.index;
+
+                const visibility = map.getLayoutProperty(layer, 'visibility');
+
+                if (data.visible === 'false') {
+                    map.setLayoutProperty(layer, 'visibility', 'none');
+                    this.className = '';
+                } else {
+                    this.className = 'active';
+                    map.setLayoutProperty(
+                        layer,
+                        'visibility',
+                        'visible'
+                    );
+                }
+            });
         });
     </script>
 
