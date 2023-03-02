@@ -220,17 +220,17 @@
 
         });
 
-        // After the last frame rendered before the map enters an "idle" state.
-        // map.on('idle', () => {
-        //     // If these layers were not added to the map, abort
-        //     if (!map.getLayer('route') || !map.getLayer('milestones') || !map.getLayer('net_migration_200005') || !map.getLayer('net_migration_200510') || !map.getLayer('R95P_200005') || !map.getLayer('R95P_200510')) {
-        //         return;
-        //     }
+     // After the last frame rendered before the map enters an "idle" state.
+     // map.on('idle', () => {
+     //     // If these layers were not added to the map, abort
+     //     if (!map.getLayer('route') || !map.getLayer('milestones') || !map.getLayer('net_migration_200005') || !map.getLayer('net_migration_200510') || !map.getLayer('R95P_200005') || !map.getLayer('R95P_200510')) {
+     //         return;
+     //     }
 
-    // Enumerate ids of the layers.
-    const toggleableLayerIds = [{ 'name':'route', 'visible':false }, { 'name':'milestones', 'visible':false }, { 'name':'net_migration_200005', 'visible':false }, { 'name':'net_migration_201015', 'visible':false }, { 'name':'R95P_200005', 'visible':false }, { 'name':'R95P_200510', 'visible':false }];
+     // Enumerate ids of the layers.
+     const toggleableLayerIds = [{ 'name':'route', 'visible':false }, { 'name':'milestones', 'visible':false }, { 'name':'net_migration_200005', 'visible':false }, { 'name':'net_migration_200510', 'visible':false }, { 'name':'net_migration_201015', 'visible':false }, { 'name':'R95P_200005', 'visible':false }, { 'name':'R95P_200510', 'visible':false }];
 
-    let i = 0;
+     let i = 0;
     // Set up the corresponding toggle button for each layer.
     for (const id of toggleableLayerIds) {
         // Skip layers that already have a button set up.
