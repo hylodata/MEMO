@@ -82,193 +82,193 @@
 
         // Wait until the map has finished loading.
         map.on('load', () => {
-                    // Add a custom vector tileset source. This tileset contains
-                    // point features representing museums. Each feature contains
-                    // three properties. For example:
-                    // {
-                    //     alt_name: "Museo Arqueologico",
-                    //     name: "Museo Inka",
-                    //     tourism: "museum"
-                    // }
-                    map.addSource('milestones', {
-                        'type': 'geojson',
-                        'data': './data/mapbox/milestones.geojson'
-                    });
+            // Add a custom vector tileset source. This tileset contains
+            // point features representing museums. Each feature contains
+            // three properties. For example:
+            // {
+            //     alt_name: "Museo Arqueologico",
+            //     name: "Museo Inka",
+            //     tourism: "museum"
+            // }
+            map.addSource('milestones', {
+                'type': 'geojson',
+                'data': './data/mapbox/milestones.geojson'
+            });
 
-                    map.addSource('route', {
-                        'type': 'geojson',
-                        'data': './data/mapbox/fullRoute.geojson'
-                    });
+            map.addSource('route', {
+                'type': 'geojson',
+                'data': './data/mapbox/fullRoute.geojson'
+            });
 
-                    map.addSource('R95P_200005', {
-                        'type': 'geojson',
-                        'data': './data/mapbox/R95P_200005.geojson'
-                    });
+            map.addSource('R95P_200005', {
+                'type': 'geojson',
+                'data': './data/mapbox/R95P_200005.geojson'
+            });
 
-                    map.addSource('R95P_200510', {
-                        'type': 'geojson',
-                        'data': './data/mapbox/R95P_200510.geojson'
-                    });
+            map.addSource('R95P_200510', {
+                'type': 'geojson',
+                'data': './data/mapbox/R95P_200510.geojson'
+            });
 
-                    // Milestones Markers
-                    map.addLayer({
-                            'id': 'milestones',
-                            'type': 'circle',
-                            'source': 'milestones',
-                            'minzoom': 4,
-                            'maxzoom': 8,
-                            'layout': {
-                                'visibility': 'visible'
-                            },
-                            'paint': {
-                                'circle-radius': 12,
-                                'circle-color': '#dba11c',
-                                'circle-opacity': 0.7
-                            }
-                        });
-
-
-                        // Route
-                        map.addLayer({
-                            'id': 'route',
-                            'type': 'line',
-                            'source': 'route',
-                            'layout': {
-                                'visibility': 'visible',
-                                'line-join': 'round',
-                                'line-cap': 'round'
-                            },
-                            'minzoom': 4,
-                            'maxzoom': 15,
-                            'paint': {
-                                'line-color': '#0077c8',
-                                'line-width': 5,
-                                'line-opacity': 0.7
-                            }
-                        });
-
-                        // R95P 200005
-                        map.addLayer({
-                                'id': 'R95P_200005',
-                                'type': 'circle',
-                                'source': 'R95P_200005',
-                                'minzoom': 4,
-                                'maxzoom': 15,
-                                'layout': {
-                                    'visibility': 'none'
-                                },
-                                'paint': {
-                                    'circle-radius': 3,
-                                    'circle-color': {
-                                        property: '200005',
-                                        stops: [
-                                            [0, 'rgba(202,0,32,1.0)'],
-                                            [10, 'rgba(221,73,75,1.0)'],
-                                            [14, 'rgba(240,147,119,1.0)'],
-                                            [18, 'rgba(245,193,169,1.0)'],
-                                            [21, 'rgba(247,229,221,1.0)'],
-                                            [23, 'rgba(225,236,242,1.0)'],
-                                            [25, 'rgba(180,214,231,1.0)'],
-                                            [27, 'rgba(130,188,217,1.0)'],
-                                            [29, 'rgba(67,150,197,1.0)'],
-                                            [34, 'rgba(5,113,176,1.0)']
-                                        ]
-                                    },
-                                    'circle-opacity': 0.5
-                                }
-                            }
-
-                        );
-
-                        // R95P 200510
-                        map.addLayer({
-                                'id': 'R95P_200510',
-                                'type': 'circle',
-                                'source': 'R95P_200510',
-                                'minzoom': 4,
-                                'maxzoom': 15,
-                                'layout': {
-                                    'visibility': 'none'
-                                },
-                                'paint': {
-                                    'circle-radius': 3,
-                                    'circle-color': {
-                                        property: '200510',
-                                        stops: [
-                                            [0, 'rgba(202,0,32,1.0)'],
-                                            [10, 'rgba(221,73,75,1.0)'],
-                                            [14, 'rgba(240,147,119,1.0)'],
-                                            [18, 'rgba(245,193,169,1.0)'],
-                                            [21, 'rgba(247,229,221,1.0)'],
-                                            [23, 'rgba(225,236,242,1.0)'],
-                                            [25, 'rgba(180,214,231,1.0)'],
-                                            [27, 'rgba(130,188,217,1.0)'],
-                                            [29, 'rgba(67,150,197,1.0)'],
-                                            [34, 'rgba(5,113,176,1.0)']
-                                        ]
-                                    },
-                                    'circle-opacity': 0.5
-                                }
-                            }
-
-                        );
+            // Milestones Markers
+            map.addLayer({
+                'id': 'milestones',
+                'type': 'circle',
+                'source': 'milestones',
+                'minzoom': 4,
+                'maxzoom': 8,
+                'layout': {
+                    'visibility': 'visible'
+                },
+                'paint': {
+                    'circle-radius': 12,
+                    'circle-color': '#dba11c',
+                    'circle-opacity': 0.7
+                }
+            });
 
 
-                    });
+            // Route
+            map.addLayer({
+                'id': 'route',
+                'type': 'line',
+                'source': 'route',
+                'layout': {
+                    'visibility': 'visible',
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                'minzoom': 4,
+                'maxzoom': 15,
+                'paint': {
+                    'line-color': '#0077c8',
+                    'line-width': 5,
+                    'line-opacity': 0.7
+                }
+            });
 
-                // After the last frame rendered before the map enters an "idle" state.
-                map.on('idle', () => {
-                  // If these two layers were not added to the map, abort
-                  if (!map.getLayer('route') || !map.getLayer('milestones') || !map.getLayer('R95P_200005') || !map.getLayer('R95P_200510')) {
-                    return;
+            // R95P 200005
+            map.addLayer({
+                    'id': 'R95P_200005',
+                    'type': 'circle',
+                    'source': 'R95P_200005',
+                    'minzoom': 4,
+                    'maxzoom': 15,
+                    'layout': {
+                        'visibility': 'none'
+                    },
+                    'paint': {
+                        'circle-radius': 3,
+                        'circle-color': {
+                            property: '200005',
+                            stops: [
+                                [0, 'rgba(202,0,32,1.0)'],
+                                [10, 'rgba(221,73,75,0)'],
+                                [14, 'rgba(240,147,119,0)'],
+                                [18, 'rgba(245,193,169,0)'],
+                                [21, 'rgba(247,229,221,0)'],
+                                [23, 'rgba(225,236,242,0)'],
+                                [25, 'rgba(180,214,231,0)'],
+                                [27, 'rgba(130,188,217,0)'],
+                                [29, 'rgba(67,150,197,0)'],
+                                [34, 'rgba(5,113,176,1.0)']
+                            ]
+                        },
+                        'circle-opacity': 0.5
                     }
+                }
 
-                  // Enumerate ids of the layers.
-                  const toggleableLayerIds = ['route', 'milestones', 'R95P_200005', 'R95P_200510'];
+            );
 
-                  // Set up the corresponding toggle button for each layer.
-                  for (const id of toggleableLayerIds) {
-                        // Skip layers that already have a button set up.
-                        if (document.getElementById(id)) {
-                            continue;
-                        }
+            // R95P 200510
+            map.addLayer({
+                    'id': 'R95P_200510',
+                    'type': 'circle',
+                    'source': 'R95P_200510',
+                    'minzoom': 4,
+                    'maxzoom': 15,
+                    'layout': {
+                        'visibility': 'none'
+                    },
+                    'paint': {
+                        'circle-radius': 3,
+                        'circle-color': {
+                            property: '200510',
+                            stops: [
+                                [0, 'rgba(202,0,32,1.0)'],
+                                [10, 'rgba(221,73,75,0)'],
+                                [14, 'rgba(240,147,119,0)'],
+                                [18, 'rgba(245,193,169,0)'],
+                                [21, 'rgba(247,229,221,0)'],
+                                [23, 'rgba(225,236,242,0)'],
+                                [25, 'rgba(180,214,231,0)'],
+                                [27, 'rgba(130,188,217,0)'],
+                                [29, 'rgba(67,150,197,0)'],
+                                [34, 'rgba(5,113,176,1.0)']
+                            ]
+                        },
+                        'circle-opacity': 0.5
+                    }
+                }
 
-                        // Create a link.
-                        const link = document.createElement('a');
-                        link.id = id;
-                        link.href = '#';
-                        link.textContent = id;
-                        link.className = 'active';
+            );
 
-                        // Show or hide layer when the toggle is clicked.
-                        link.onclick = function(e) {
-                            const clickedLayer = this.textContent;
-                            e.preventDefault();
-                            e.stopPropagation();
 
-                            const visibility = map.getLayoutProperty(
-                                clickedLayer,
+        });
+
+        // After the last frame rendered before the map enters an "idle" state.
+        map.on('idle', () => {
+            // If these layers were not added to the map, abort
+            if (!map.getLayer('route') || !map.getLayer('milestones') || !map.getLayer('R95P_200005') || !map.getLayer('R95P_200510')) {
+                return;
+            }
+
+            // Enumerate ids of the layers.
+            const toggleableLayerIds = ['route', 'milestones', 'R95P_200005', 'R95P_200510'];
+
+            // Set up the corresponding toggle button for each layer.
+            for (const id of toggleableLayerIds) {
+                // Skip layers that already have a button set up.
+                if (document.getElementById(id)) {
+                    continue;
+                }
+
+                // Create a link.
+                const link = document.createElement('a');
+                link.id = id;
+                link.href = '#';
+                link.textContent = id;
+                link.className = 'active';
+
+                // Show or hide layer when the toggle is clicked.
+                link.onclick = function(e) {
+                    const clickedLayer = this.textContent;
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const visibility = map.getLayoutProperty(
+                        clickedLayer,
                         'visibility'
-                            );
+                    );
 
-                            // Toggle layer visibility by changing the layout object's visibility property.
-									      if (visibility === 'visible') {
-										map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-                                this.className = '';
-                            } else {
-                                this.className = 'active';
-                                map.setLayoutProperty(
-                                    clickedLayer,
-                                    'visibility',
-                                    'visible'
-                                );
-                            }
-                        };
-
-                        const layers = document.getElementById('menu');
-                        layers.appendChild(link);
+                    // Toggle layer visibility by changing the layout object's visibility property.
+                    if (visibility === 'visible') {
+                        map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                        this.className = '';
+                    } else {
+                        this.className = 'active';
+                        map.setLayoutProperty(
+                            clickedLayer,
+                            'visibility',
+                            'visible'
+                        );
                     }
-                });
+                };
+
+                const layers = document.getElementById('menu');
+                layers.appendChild(link);
+            }
+        });
     </script>
 
 </body>
