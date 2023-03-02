@@ -103,15 +103,15 @@
                 'data': './data/mapbox/fullRoute.geojson'
             });
 
-          map.addSource('net_migration_200005', {
-            'type': 'geojson',
-            'data': './data/mapbox/net_migration_200005.geojson'
-          });
+            map.addSource('net_migration_200005', {
+                'type': 'geojson',
+                'data': './data/mapbox/net_migration_200005.geojson'
+            });
 
-          map.addSource('net_migration_200510', {
-            'type': 'geojson',
-            'data': './data/mapbox/net_migration_200510.geojson'
-          });
+            map.addSource('net_migration_201015', {
+              'type': 'geojson',
+              'data': './data/mapbox/net_migration_201015.geojson'
+            });	  
 
           // Milestones Markers
           map.addLayer({
@@ -129,7 +129,6 @@
                     'circle-opacity': 0.7
                 }
             });
-
 
             // Route
             map.addLayer({
@@ -150,15 +149,14 @@
                 }
             });
 
-
-          // migration 200005
-          map.addLayer({
-            'id': 'net_migration_200005',
-            'type': 'circle',
-            'source': 'net_migration_200005',
-            'minzoom': 4,
-            'maxzoom': 15,
-            'layout': {
+            // migration 200005
+            map.addLayer({
+                    'id': 'net_migration_200005',
+                    'type': 'circle',
+                    'source': 'net_migration_200005',
+                    'minzoom': 4,
+                    'maxzoom': 15,
+                    'layout': {
                         'visibility': 'none'
                     },
                     'paint': {
@@ -184,14 +182,14 @@
 
             );
 
-          // migration 200005
-          map.addLayer({
-            'id': 'net_migration_200510',
-            'type': 'circle',
-            'source': 'net_migration_200510',
-            'minzoom': 4,
-            'maxzoom': 15,
-            'layout': {
+            // migration 200510
+            map.addLayer({
+                    'id': 'net_migration_201015',
+                    'type': 'circle',
+                    'source': 'net_migration_201015',
+                    'minzoom': 4,
+                    'maxzoom': 15,
+                    'layout': {
                         'visibility': 'none'
                     },
                     'paint': {
@@ -215,20 +213,19 @@
                     }
                 }
 
-          );
-
+            );	  
 
         });
 
      // After the last frame rendered before the map enters an "idle" state.
      map.on('idle', () => {
        // If these layers were not added to the map, abort
-       if (!map.getLayer('route') || !map.getLayer('milestones') || !map.getLayer('net_migration_200005') || !map.getLayer('net_migration_200510')) {
+       if (!map.getLayer('route') || !map.getLayer('milestones') || !map.getLayer('net_migration_200005') || !map.getLayer('net_migration_201015')) {
          return;
             }
 
        // Enumerate ids of the layers.
-       const toggleableLayerIds = ['route', 'milestones', 'net_migration_200005', 'net_migration_200510'];
+       const toggleableLayerIds = ['route', 'milestones', 'net_migration_200005', 'net_migration_201015'];
 
        // Set up the corresponding toggle button for each layer.
        for (const id of toggleableLayerIds) {
@@ -253,48 +250,54 @@
                     const visibility = map.getLayoutProperty(
                         clickedLayer,
                         'visibility'
-                            );
+                    );
 
-                            // Toggle layer visibility by changing the layout object's visibility property.
-									      if (visibility === 'visible') {
-										map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-                                this.className = '';
-                                socket.emit("groupScroll", {"index": id, "visible": 'false'});
-                            } else {
-                                this.className = 'active';
-                                map.setLayoutProperty(
-                                    clickedLayer,
-                                    'visibility',
-                                    'visible'
-                                );
-                                socket.emit("groupScroll", {"index": id, "visible": 'true'});
-                            }
-                        };
-
-                        const layers = document.getElementById('menu');
-                        layers.appendChild(link);
+                    // Toggle layer visibility by changing the layout object's visibility property.
+                    if (visibility === 'visible') {
+                        map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                        this.className = '';
+                        socket.emit("groupScroll", {
+                            "index": id,
+                            "visible": 'false'
+                        });
+                    } else {
+                        this.className = 'active';
+                        map.setLayoutProperty(
+                            clickedLayer,
+                            'visibility',
+                            'visible'
+                        );
+                        socket.emit("groupScroll", {
+                            "index": id,
+                            "visible": 'true'
+                        });
                     }
+                };
 
-                    socket.on("groupScroll", data => {
-                        console.log("event recieved"); 
+                const layers = document.getElementById('menu');
+                layers.appendChild(link);
+            }
 
-                        layer = data.index;
+            socket.on("groupScroll", data => {
+                console.log("event recieved");
 
-                        const visibility = map.getLayoutProperty(layer, 'visibility');
+                layer = data.index;
 
-                        if (data.visible === 'false') {
-                            map.setLayoutProperty(layer, 'visibility', 'none');
-                            this.className = '';
-                        } else {
-                            this.className = 'active';
-                            map.setLayoutProperty(
-                                layer,
-                                'visibility',
-                                'visible'
-                            );
-                        }
-                    });
-                });
+                const visibility = map.getLayoutProperty(layer, 'visibility');
+
+                if (data.visible === 'false') {
+                    map.setLayoutProperty(layer, 'visibility', 'none');
+                    this.className = '';
+                } else {
+                    this.className = 'active';
+                    map.setLayoutProperty(
+                        layer,
+                        'visibility',
+                        'visible'
+                    );
+                }
+            });
+        });
     </script>
 
 </body>
