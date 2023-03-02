@@ -7,6 +7,7 @@
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
     <style>
         body {
             margin: 0;
@@ -79,6 +80,8 @@
             zoom: 4,
             projection: 'globe'
         });
+
+        var socket = io('http://127.0.0.1:5001');
 
         // Wait until the map has finished loading.
         map.on('load', () => {
@@ -255,6 +258,7 @@
 									      if (visibility === 'visible') {
 										map.setLayoutProperty(clickedLayer, 'visibility', 'none');
                                 this.className = '';
+                                socket.emit("groupScroll", {"index": id, "visible": 'false'});
                             } else {
                                 this.className = 'active';
                                 map.setLayoutProperty(
@@ -262,12 +266,33 @@
                                     'visibility',
                                     'visible'
                                 );
+                                socket.emit("groupScroll", {"index": id, "visible": 'true'});
                             }
                         };
 
                         const layers = document.getElementById('menu');
                         layers.appendChild(link);
                     }
+
+                    socket.on("groupScroll", data => {
+                        console.log("event recieved"); 
+
+                        layer = data.index;
+
+                        const visibility = map.getLayoutProperty(layer, 'visibility');
+
+                        if (data.visible === 'false') {
+                            map.setLayoutProperty(layer, 'visibility', 'none');
+                            this.className = '';
+                        } else {
+                            this.className = 'active';
+                            map.setLayoutProperty(
+                                layer,
+                                'visibility',
+                                'visible'
+                            );
+                        }
+                    });
                 });
     </script>
 
