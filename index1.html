@@ -81,7 +81,7 @@
             projection: 'globe'
         });
 
-        var socket = io('http://127.0.0.1:5001');
+        var socket = io('http://10.0.1.98:5001');
 
         // Wait until the map has finished loading.
         map.on('load', () => {
@@ -221,86 +221,66 @@
         });
 
         // After the last frame rendered before the map enters an "idle" state.
-        map.on('idle', () => {
-            // If these layers were not added to the map, abort
-            if (!map.getLayer('route') || !map.getLayer('milestones') || !map.getLayer('net_migration_200005') || !map.getLayer('net_migration_200510') || !map.getLayer('R95P_200005') || !map.getLayer('R95P_200510')) {
-                return;
+        // map.on('idle', () => {
+        //     // If these layers were not added to the map, abort
+        //     if (!map.getLayer('route') || !map.getLayer('milestones') || !map.getLayer('net_migration_200005') || !map.getLayer('net_migration_200510') || !map.getLayer('R95P_200005') || !map.getLayer('R95P_200510')) {
+        //         return;
+        //     }
+
+    // Enumerate ids of the layers.
+    const toggleableLayerIds = [{ 'name':'route', 'visible':false }, { 'name':'milestones', 'visible':false }, { 'name':'net_migration_200005', 'visible':false }, { 'name':'net_migration_200510', 'visible':false }, { 'name':'R95P_200005', 'visible':false }, { 'name':'R95P_200510', 'visible':false }];
+
+    let i = 0;
+    // Set up the corresponding toggle button for each layer.
+    for (const id of toggleableLayerIds) {
+        // Skip layers that already have a button set up.
+        if (document.getElementById(id.name)) {
+            continue;
+        }
+
+        // Create a link.
+        const link = document.createElement('a');
+        link.id = id.name;
+        link.href = '#';
+        link.textContent = id.name;
+        link.className = 'active';
+
+        // Show or hide layer when the toggle is clicked.
+        link.onclick = function(e) {
+            const clickedLayer = this.textContent;
+            e.preventDefault();
+            e.stopPropagation();
+
+            // Toggle layer visibility by changing the layout object's visibility property.
+            if (id.visibility === true) {
+                //map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                //this.className = '';
+                socket.emit("groupScroll", {
+                    "index": id.name,
+                    "visible": id.visibility,
+                });
+                id.visibility = false;
+            } else {
+                //this.className = 'active';
+                // map.setLayoutProperty(
+                //     clickedLayer,
+                //     'visibility',
+                //     'visible'
+                // );
+                socket.emit("groupScroll", {
+                    "index": id.name,
+                    "visible": id.visibility,
+                });
+                id.visibility = true;
             }
+            console.log(toggleableLayerIds);
+        };
 
-            // Enumerate ids of the layers.
-            const toggleableLayerIds = ['route', 'milestones', 'net_migration_200005', 'net_migration_200510', 'R95P_200005', 'R95P_200510'];
-
-            // Set up the corresponding toggle button for each layer.
-            for (const id of toggleableLayerIds) {
-                // Skip layers that already have a button set up.
-                if (document.getElementById(id)) {
-                    continue;
-                }
-
-                // Create a link.
-                const link = document.createElement('a');
-                link.id = id;
-                link.href = '#';
-                link.textContent = id;
-                link.className = 'active';
-
-                // Show or hide layer when the toggle is clicked.
-                link.onclick = function(e) {
-                    const clickedLayer = this.textContent;
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    const visibility = map.getLayoutProperty(
-                        clickedLayer,
-                        'visibility'
-                    );
-
-                    // Toggle layer visibility by changing the layout object's visibility property.
-                    if (visibility === 'visible') {
-                        map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-                        this.className = '';
-                        socket.emit("groupScroll", {
-                            "index": id,
-                            "visible": 'false'
-                        });
-                    } else {
-                        this.className = 'active';
-                        map.setLayoutProperty(
-                            clickedLayer,
-                            'visibility',
-                            'visible'
-                        );
-                        socket.emit("groupScroll", {
-                            "index": id,
-                            "visible": 'true'
-                        });
-                    }
-                };
-
-                const layers = document.getElementById('menu');
-                layers.appendChild(link);
-            }
-
-            socket.on("groupScroll", data => {
-                console.log("event recieved");
-
-                layer = data.index;
-
-                const visibility = map.getLayoutProperty(layer, 'visibility');
-
-                if (data.visible === 'false') {
-                    map.setLayoutProperty(layer, 'visibility', 'none');
-                    this.className = '';
-                } else {
-                    this.className = 'active';
-                    map.setLayoutProperty(
-                        layer,
-                        'visibility',
-                        'visible'
-                    );
-                }
-            });
-        });
+        const layers = document.getElementById('menu');
+        layers.appendChild(link);
+        i += 1;
+    }
+        // });
     </script>
 
 </body>
