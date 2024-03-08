@@ -92,26 +92,24 @@
             //     alt_name: "Museo Arqueologico",
             //     name: "Museo Inka",
             //     tourism: "museum"
-            // }
-            map.addSource('milestones', {
-                'type': 'geojson',
-                'data': './data/mapbox/milestones.geojson'
-            });
+          // }
 
-            map.addSource('route', {
-                'type': 'geojson',
-                'data': './data/mapbox/fullRoute.geojson'
-            });
+	  // include below if we want drawn-on layers
+	  
+          /* map.addSource('milestones', {
+	   *     'type': 'geojson',
+	   *     'data': './data/mapbox/milestones.geojson'
+	   * });
+
+	   * map.addSource('route', {
+	   *     'type': 'geojson',
+	   *     'data': './data/mapbox/fullRoute.geojson'
+	   * }); */
 
             map.addSource('net_migration_200005', {
                 'type': 'geojson',
                 'data': './data/mapbox/net_migration_200005.geojson'
             });
-
-            map.addSource('net_migration_200510', {
-              'type': 'geojson',
-              'data': './data/mapbox/net_migration_200510.geojson'
-            });	  
 	  
           map.addSource('net_migration_201015', {
             'type': 'geojson',
@@ -119,40 +117,40 @@
           });	  
 
           // Milestones Markers
-          map.addLayer({
-            'id': 'milestones',
-            'type': 'circle',
-            'source': 'milestones',
-            'minzoom': 4,
-            'maxzoom': 8,
-            'layout': {
-                    'visibility': 'visible'
-                },
-                'paint': {
-                    'circle-radius': 12,
-                    'circle-color': '#dba11c',
-                    'circle-opacity': 0.7
-                }
-            });
+          /* map.addLayer({
+	   *   'id': 'milestones',
+	   *   'type': 'circle',
+	   *   'source': 'milestones',
+	   *   'minzoom': 4,
+	   *   'maxzoom': 8,
+	   *   'layout': {
+	   *           'visibility': 'visible'
+	   *       },
+	   *       'paint': {
+	   *           'circle-radius': 12,
+	   *           'circle-color': '#dba11c',
+	   *           'circle-opacity': 0.7
+	   *       }
+	   *   }); */
 
             // Route
-            map.addLayer({
-                'id': 'route',
-                'type': 'line',
-                'source': 'route',
-                'layout': {
-                    'visibility': 'visible',
-                    'line-join': 'round',
-                    'line-cap': 'round'
-                },
-                'minzoom': 4,
-                'maxzoom': 15,
-                'paint': {
-                    'line-color': '#0077c8',
-                    'line-width': 5,
-                    'line-opacity': 0.7
-                }
-            });
+          /* map.addLayer({
+	   *     'id': 'route',
+	   *     'type': 'line',
+	   *     'source': 'route',
+	   *     'layout': {
+	   *         'visibility': 'visible',
+	   *         'line-join': 'round',
+	   *         'line-cap': 'round'
+	   *     },
+	   *     'minzoom': 4,
+	   *     'maxzoom': 15,
+	   *     'paint': {
+	   *         'line-color': '#0077c8',
+	   *         'line-width': 5,
+	   *         'line-opacity': 0.7
+	   *     }
+	   * }); */
 
             // migration 200005
             map.addLayer({
@@ -165,7 +163,7 @@
                         'visibility': 'none'
                     },
                     'paint': {
-                        'circle-radius': 3,
+                        'circle-radius': 6,
                         'circle-color': {
                             property: 'Migration',
                             stops: [
@@ -187,40 +185,7 @@
 
             );
 
-            // migration 200005
-            map.addLayer({
-                    'id': 'net_migration_200510',
-                    'type': 'circle',
-                    'source': 'net_migration_200510',
-                    'minzoom': 4,
-                    'maxzoom': 15,
-                    'layout': {
-                        'visibility': 'none'
-                    },
-                    'paint': {
-                        'circle-radius': 3,
-                        'circle-color': {
-                            property: 'Migration',
-                            stops: [
-                                [-128773, 'rgba(230,97,1,1.0)'],
-                                [-4132, 'rgba(241,136,44,1.0)'],
-                                [-1755, 'rgba(251,175,88,1.0)'],
-                                [-731, 'rgba(251,205,148,1.0)'],
-                                [-244, 'rgba(249,233,214,1.0)'],
-                                [-31, 'rgba(232,231,239,1.0)'],
-                                [-2, 'rgba(201,197,223,1.0)'],
-                                [9, 'rgba(169,159,204,1.0)'],
-                                [92, 'rgba(131,109,179,1.0)'],
-                                [617, 'rgba(94,60,153,1.0)']
-                            ]
-                        },
-                        'circle-opacity': 0.5
-                    }
-                }
-
-            );	  
-
-          // migration 200510
+          // migration 201015
           map.addLayer({
             'id': 'net_migration_201015',
             'type': 'circle',
@@ -258,12 +223,12 @@
      // After the last frame rendered before the map enters an "idle" state.
      map.on('idle', () => {
        // If these layers were not added to the map, abort
-       if (!map.getLayer('route') || !map.getLayer('milestones') || !map.getLayer('net_migration_200005') || !map.getLayer('net_migration_200510') || !map.getLayer('net_migration_201015')) {
+       if (!map.getLayer('net_migration_200005') || !map.getLayer('net_migration_201015')) {
          return;
             }
 
        // Enumerate ids of the layers.
-       const toggleableLayerIds = ['route', 'milestones', 'net_migration_200005', 'net_migration_200510', 'net_migration_201015'];
+       const toggleableLayerIds = ['net_migration_200005', 'net_migration_201015'];
 
        // Set up the corresponding toggle button for each layer.
        for (const id of toggleableLayerIds) {
