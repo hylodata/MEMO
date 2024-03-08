@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Show and hide layers</title>
+    <title>Mapbox Layers Template</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
@@ -81,80 +81,28 @@
             projection: 'globe'
         });
 
+        // Necessary if working with server at Synlab
         var socket = io('http://10.0.1.98:5001');
 
         // Wait until the map has finished loading.
         map.on('load', () => {
-            // Add a custom vector tileset source. This tileset contains
-            // point features representing museums. Each feature contains
-            // three properties. For example:
-            // {
-            //     alt_name: "Museo Arqueologico",
-            //     name: "Museo Inka",
-            //     tourism: "museum"
-          // }
 
-	  // include below if we want drawn-on layers
-	  
-          /* map.addSource('milestones', {
-	   *     'type': 'geojson',
-	   *     'data': './data/mapbox/milestones.geojson'
-	   * });
-
-	   * map.addSource('route', {
-	   *     'type': 'geojson',
-	   *     'data': './data/mapbox/fullRoute.geojson'
-	   * }); */
-
+            // Load geojson data sources
             map.addSource('net_migration_200005', {
                 'type': 'geojson',
                 'data': './data/mapbox/net_migration_200005.geojson'
             });
-	  
-          map.addSource('net_migration_201015', {
-            'type': 'geojson',
-            'data': './data/mapbox/net_migration_201015.geojson'
-          });	  
 
-          // Milestones Markers
-          /* map.addLayer({
-	   *   'id': 'milestones',
-	   *   'type': 'circle',
-	   *   'source': 'milestones',
-	   *   'minzoom': 4,
-	   *   'maxzoom': 8,
-	   *   'layout': {
-	   *           'visibility': 'visible'
-	   *       },
-	   *       'paint': {
-	   *           'circle-radius': 12,
-	   *           'circle-color': '#dba11c',
-	   *           'circle-opacity': 0.7
-	   *       }
-	   *   }); */
+            map.addSource('net_migration_201015', {
+                'type': 'geojson',
+                'data': './data/mapbox/net_migration_201015.geojson'
+            });
 
-            // Route
-          /* map.addLayer({
-	   *     'id': 'route',
-	   *     'type': 'line',
-	   *     'source': 'route',
-	   *     'layout': {
-	   *         'visibility': 'visible',
-	   *         'line-join': 'round',
-	   *         'line-cap': 'round'
-	   *     },
-	   *     'minzoom': 4,
-	   *     'maxzoom': 15,
-	   *     'paint': {
-	   *         'line-color': '#0077c8',
-	   *         'line-width': 5,
-	   *         'line-opacity': 0.7
-	   *     }
-	   * }); */
+            // Aesthetics and layer settings
 
-            // migration 200005
+            // Migration 2000 - 2005
             map.addLayer({
-                    'id': 'net_migration_200005',
+                    'id': '2000 - 2005',
                     'type': 'circle',
                     'source': 'net_migration_200005',
                     'minzoom': 4,
@@ -185,14 +133,14 @@
 
             );
 
-          // migration 201015
-          map.addLayer({
-            'id': 'net_migration_201015',
-            'type': 'circle',
-            'source': 'net_migration_201015',
-            'minzoom': 4,
-            'maxzoom': 15,
-            'layout': {
+            // Migration 2010 - 2015
+            map.addLayer({
+                    'id': '2010 - 2015',
+                    'type': 'circle',
+                    'source': 'net_migration_201015',
+                    'minzoom': 4,
+                    'maxzoom': 15,
+                    'layout': {
                         'visibility': 'none'
                     },
                     'paint': {
@@ -216,22 +164,69 @@
                     }
                 }
 
-            );	  
+            );
 
         });
 
-     // After the last frame rendered before the map enters an "idle" state.
-     map.on('idle', () => {
-       // If these layers were not added to the map, abort
-       if (!map.getLayer('net_migration_200005') || !map.getLayer('net_migration_201015')) {
-         return;
+        // include below if we want drawn-on layers
+        /* map.addSource('milestones', {
+         *     'type': 'geojson',
+         *     'data': './data/mapbox/milestones.geojson'
+         * });
+
+         * map.addSource('route', {
+         *     'type': 'geojson',
+         *     'data': './data/mapbox/fullRoute.geojson'
+         * }); */
+
+        // Milestones Markers
+        /* map.addLayer({
+         *   'id': 'milestones',
+         *   'type': 'circle',
+         *   'source': 'milestones',
+         *   'minzoom': 4,
+         *   'maxzoom': 8,
+         *   'layout': {
+         *           'visibility': 'visible'
+         *       },
+         *       'paint': {
+         *           'circle-radius': 12,
+         *           'circle-color': '#dba11c',
+         *           'circle-opacity': 0.7
+         *       }
+         *   }); */
+
+        // Route
+        /* map.addLayer({
+         *     'id': 'route',
+         *     'type': 'line',
+         *     'source': 'route',
+         *     'layout': {
+         *         'visibility': 'visible',
+         *         'line-join': 'round',
+         *         'line-cap': 'round'
+         *     },
+         *     'minzoom': 4,
+         *     'maxzoom': 15,
+         *     'paint': {
+         *         'line-color': '#0077c8',
+         *         'line-width': 5,
+         *         'line-opacity': 0.7
+         *     }
+         * }); */
+
+        // After the last frame rendered before the map enters an "idle" state.
+        map.on('idle', () => {
+            // If these layers were not added to the map, abort
+            if (!map.getLayer('2000 - 2005') || !map.getLayer('2010 - 2015')) {
+                return;
             }
 
-       // Enumerate ids of the layers.
-       const toggleableLayerIds = ['net_migration_200005', 'net_migration_201015'];
+            // Enumerate ids of the layers.
+            const toggleableLayerIds = ['2000 - 2005', '2010 - 2015'];
 
-       // Set up the corresponding toggle button for each layer.
-       for (const id of toggleableLayerIds) {
+            // Set up the corresponding toggle button for each layer.
+            for (const id of toggleableLayerIds) {
                 // Skip layers that already have a button set up.
                 if (document.getElementById(id)) {
                     continue;
