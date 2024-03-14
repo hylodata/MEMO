@@ -88,6 +88,16 @@
         map.on('load', () => {
 
             // Load geojson data sources
+            map.addSource('adm1', {
+                'type': 'geojson',
+                'data': './data/mapbox/adm1.geojson'
+            });
+
+            map.addSource('adm2', {
+                'type': 'geojson',
+                'data': './data/mapbox/adm1.geojson'
+            });
+
             map.addSource('net_migration_200005', {
                 'type': 'geojson',
                 'data': './data/mapbox/net_migration_200005.geojson'
@@ -99,6 +109,42 @@
             });
 
             // Aesthetics and layer settings
+
+            // Adminstrative Boundaries Level 1
+            map.addLayer({
+                'id': 'adm1_fill',
+                'type': 'fill',
+                'source': 'adm1', // reference the data source
+                'layout': {},
+                'paint': {
+                    'fill-color': '#0080ff', // blue color fill
+                    'fill-opacity': 0.5
+                }
+            });
+
+            // Add a black outline around the polygon.
+            map.addLayer({
+                'id': 'adm1',
+                'type': 'line',
+                'source': 'adm1',
+                'layout': {},
+                'paint': {
+                    'line-color': '#000',
+                    'line-width': 2
+                }
+            });
+
+            // Adminstrative Boundaries Level 1
+            map.addLayer({
+                'id': 'adm2',
+                'type': 'fill',
+                'source': 'adm2', // reference the data source
+                'layout': {},
+                'paint': {
+                    'fill-color': '#25A063', // green color fill
+                    'fill-opacity': 0.5
+                }
+            });
 
             // Migration 2000 - 2005
             map.addLayer({
@@ -217,13 +263,13 @@
 
         // After the last frame rendered before the map enters an "idle" state.
         map.on('idle', () => {
-            // If these layers were not added to the map, abort
-            if (!map.getLayer('2000 - 2005') || !map.getLayer('2010 - 2015')) {
-                return;
+          // If these layers were not added to the map, abort
+          if (!map.getLayer('adm1_fill') || !map.getLayer('adm1') || !map.getLayer('adm2') || !map.getLayer('2000 - 2005') || !map.getLayer('2010 - 2015')) {
+            return;
             }
 
             // Enumerate ids of the layers.
-            const toggleableLayerIds = ['2000 - 2005', '2010 - 2015'];
+            const toggleableLayerIds = ['adm1_fill', 'adm1', 'adm2', '2000 - 2005', '2010 - 2015'];
 
             // Set up the corresponding toggle button for each layer.
             for (const id of toggleableLayerIds) {
