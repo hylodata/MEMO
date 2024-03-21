@@ -98,6 +98,16 @@
                 'data': './data/mapbox/adm2.geojson'
             });
 
+            map.addSource('adm3', {
+                'type': 'geojson',
+                'data': './data/mapbox/adm3.geojson'
+            });
+
+            map.addSource('Ghana', {
+                'type': 'geojson',
+                'data': './data/mapbox/Ghana.geojson'
+            });
+
             map.addSource('net_migration_200005', {
                 'type': 'geojson',
                 'data': './data/mapbox/net_migration_200005.geojson'
@@ -108,29 +118,22 @@
                 'data': './data/mapbox/net_migration_201015.geojson'
             });
 
-            map.addSource('R95P_200005', {
-                'type': 'geojson',
-                'data': './data/mapbox/R95P_200005.geojson'
-            });
+            /* map.addSource('R95P_200005', {
+	   *     'type': 'geojson',
+	   *     'data': './data/mapbox/R95P_200005.geojson'
+	   * });
 
-            map.addSource('R95P_200510', {
-              'type': 'geojson',
-              'data': './data/mapbox/R95P_200510.geojson'
-            });	  
+	   * map.addSource('R95P_200510', {
+	   *     'type': 'geojson',
+	   *     'data': './data/mapbox/R95P_200510.geojson'
+	   * }); */
 
-          /* map.addSource('accra_density', {
-           *   'type': 'geojson',
-           *   'data': './data/mapbox/accra_density.geojson'
-           * }); */
-
-          // Aesthetics and layer settings
-
-          // Adminstrative Boundaries Level 1
-          map.addLayer({
-            'id': 'adm1_fill',
-            'type': 'fill',
-            'source': 'adm1', // reference the data source
-            'layout': {
+            // Adminstrative Boundaries Level 1
+            map.addLayer({
+                'id': 'adm1_fill',
+                'type': 'fill',
+                'source': 'adm1', // reference the data source
+                'layout': {
                     'visibility': 'none'
                 },
                 'paint': {
@@ -179,16 +182,88 @@
                     'line-color': '#000',
                     'line-width': 2
                 }
-            });	  
+            });
 
-          // Migration 2000 - 2005
+            // Dummy choropleth pop density layer
+            map.addLayer({
+                'id': 'adm3',
+                'type': 'fill',
+                'source': 'adm3',
+                'layout': {
+                    'visibility': 'none'
+                },
+                'paint': {
+                    'fill-color': {
+                        property: 'density',
+                        stops: [
+                            [0, 'white'],
+                            [12, 'red']
+                        ]
+                    },
+                    'fill-opacity': 0.75
+                }
+            })
+
+            // 1985 Precipitation
+            map.addLayer({
+                'id': '1985 Precipitation',
+                'type': 'fill',
+                'source': 'Ghana',
+                'layout': {
+                    'visibility': 'none'
+                },
+                'paint': {
+                    'fill-color': {
+                      property: 'F1985raince',
+                      stops: [
+                        [791, '#ffffd9'],
+                        [1033, '#edf8b1'],
+                        [1110, '#c7e9b4'],
+                        [1250, '#7fcdbb'],
+                        [1361, '#41b6c4'],
+                        [1437, '#1d91c0'],
+                        [1519, '#225ea8'],
+                        [1861, '#0c2c84']
+                      ]
+                    },
+                  'fill-opacity': 0.75
+                }
+            })
+	  
+          // 2010 Precipitation
           map.addLayer({
-            'id': '2000 - 2005',
-            'type': 'circle',
-            'source': 'net_migration_200005',
-            'minzoom': 4,
-            'maxzoom': 15,
+            'id': '2010 Precipitation',
+            'type': 'fill',
+            'source': 'Ghana',
             'layout': {
+                    'visibility': 'none'
+                },
+                'paint': {
+                    'fill-color': {
+                        property: 'F2010rainCe',
+                        stops: [
+                            [725, '#ffffd9'],
+                            [961, '#edf8b1'],
+                            [1018, '#c7e9b4'],
+                            [1136, '#7fcdbb'],
+                            [1216, '#41b6c4'],
+                            [1306, '#1d91c0'],
+                            [1418, '#225ea8'],
+                            [1758, '#0c2c84']
+                        ]
+                    },
+                    'fill-opacity': 0.75
+                }
+            })
+
+            // Migration 2000 - 2005
+            map.addLayer({
+                    'id': '2000 - 2005',
+                    'type': 'circle',
+                    'source': 'net_migration_200005',
+                    'minzoom': 4,
+                    'maxzoom': 15,
+                    'layout': {
                         'visibility': 'none'
                     },
                     'paint': {
@@ -248,175 +323,135 @@
             );
 
             // R95P 200005
-            map.addLayer({
-                    'id': 'R95P_200005',
-                    'type': 'circle',
-                    'source': 'R95P_200005',
-                    'minzoom': 4,
-                    'maxzoom': 15,
-                    'layout': {
-                        'visibility': 'none'
-                    },
-                    'paint': {
-                        'circle-radius': 3,
-                        'circle-color': {
-                            property: '200005',
-                            stops: [
-                                [0, 'rgba(202,0,32,1.0)'],
-                                [10, 'rgba(221,73,75,0)'],
-                                [14, 'rgba(240,147,119,0)'],
-                                [18, 'rgba(245,193,169,0)'],
-                                [21, 'rgba(247,229,221,0)'],
-                                [23, 'rgba(225,236,242,0)'],
-                                [25, 'rgba(180,214,231,0)'],
-                                [27, 'rgba(130,188,217,0)'],
-                                [29, 'rgba(67,150,197,0)'],
-                                [34, 'rgba(5,113,176,1.0)']
-                            ]
-                        },
-                        'circle-opacity': 0.5
-                    }
-                }
+            /* map.addLayer({
+	   *         'id': 'R95P_200005',
+	   *         'type': 'circle',
+	   *         'source': 'R95P_200005',
+	   *         'minzoom': 4,
+	   *         'maxzoom': 15,
+	   *         'layout': {
+	   *             'visibility': 'none'
+	   *         },
+	   *         'paint': {
+	   *             'circle-radius': 3,
+	   *             'circle-color': {
+	   *                 property: '200005',
+	   *                 stops: [
+	   *                     [0, 'rgba(202,0,32,1.0)'],
+	   *                     [10, 'rgba(221,73,75,0)'],
+	   *                     [14, 'rgba(240,147,119,0)'],
+	   *                     [18, 'rgba(245,193,169,0)'],
+	   *                     [21, 'rgba(247,229,221,0)'],
+	   *                     [23, 'rgba(225,236,242,0)'],
+	   *                     [25, 'rgba(180,214,231,0)'],
+	   *                     [27, 'rgba(130,188,217,0)'],
+	   *                     [29, 'rgba(67,150,197,0)'],
+	   *                     [34, 'rgba(5,113,176,1.0)']
+	   *                 ]
+	   *             },
+	   *             'circle-opacity': 0.5
+	   *         }
+	   *     }
 
-            );
+	   * ); */
 
             // R95P 200510
-            map.addLayer({
-                    'id': 'R95P_200510',
-                    'type': 'circle',
-                    'source': 'R95P_200510',
-                    'minzoom': 4,
-                    'maxzoom': 15,
-                    'layout': {
-                        'visibility': 'none'
-                    },
-                    'paint': {
-                        'circle-radius': 3,
-                        'circle-color': {
-                            property: '200510',
-                            stops: [
-                                [0, 'rgba(202,0,32,1.0)'],
-                                [10, 'rgba(221,73,75,0)'],
-                                [14, 'rgba(240,147,119,0)'],
-                                [18, 'rgba(245,193,169,0)'],
-                                [21, 'rgba(247,229,221,0)'],
-                                [23, 'rgba(225,236,242,0)'],
-                                [25, 'rgba(180,214,231,0)'],
-                                [27, 'rgba(130,188,217,0)'],
-                                [29, 'rgba(67,150,197,0)'],
-                                [34, 'rgba(5,113,176,1.0)']
-                            ]
-                        },
-                        'circle-opacity': 0.5
-                    }
-                }
+            /* map.addLayer({
+	   *         'id': 'R95P_200510',
+	   *         'type': 'circle',
+	   *         'source': 'R95P_200510',
+	   *         'minzoom': 4,
+	   *         'maxzoom': 15,
+	   *         'layout': {
+	   *             'visibility': 'none'
+	   *         },
+	   *         'paint': {
+	   *             'circle-radius': 3,
+	   *             'circle-color': {
+	   *                 property: '200510',
+	   *                 stops: [
+	   *                     [0, 'rgba(202,0,32,1.0)'],
+	   *                     [10, 'rgba(221,73,75,0)'],
+	   *                     [14, 'rgba(240,147,119,0)'],
+	   *                     [18, 'rgba(245,193,169,0)'],
+	   *                     [21, 'rgba(247,229,221,0)'],
+	   *                     [23, 'rgba(225,236,242,0)'],
+	   *                     [25, 'rgba(180,214,231,0)'],
+	   *                     [27, 'rgba(130,188,217,0)'],
+	   *                     [29, 'rgba(67,150,197,0)'],
+	   *                     [34, 'rgba(5,113,176,1.0)']
+	   *                 ]
+	   *             },
+	   *             'circle-opacity': 0.5
+	   *         }
+	   *     }
 
-            );	  
-
-          /* map.addLayer(
-           *     {
-           *       'id': 'accra_density',
-           *       'source': 'density',
-           *       'source-layer': 'accra_density',
-           *       'minzoom': 4,
-           *       'maxzoom': 15,
-           *       'type': 'fill',
-           *       // only include features for which the "isState"
-           *       // property is "true"
-           *       // 'filter': ['==', 'isState', true],
-           *       'paint': {
-           *         'fill-color': [
-           *           'interpolate',
-           *           ['linear'],
-           *           ['get', 'population'],
-           *           0,
-           *           '#F2F12D',
-           *           300,
-           *           '#EED322',
-           *           1000,
-           *           '#E6B71E',
-           *           3000,
-           *           '#DA9C20',
-           *           5000,
-           *           '#CA8323',
-           *           7000,
-           *           '#B86B25',
-           *           10000,
-           *           '#A25626',
-           *           15000,
-           *           '#8B4225',
-           *           30000,
-           *           '#723122'
-           *         ],
-           *         'fill-opacity': 0.75
-           *       }
-           *     },
-           *   'road-label-simple' // Add layer below labels
-           * );	 */
+	   * ); */
 
         });
 
-     // include below if we want drawn-on layers
-     /* map.addSource('milestones', {
-      *     'type': 'geojson',
-      *     'data': './data/mapbox/milestones.geojson'
-      * });
+        // include below if we want drawn-on layers
+        /* map.addSource('milestones', {
+         *     'type': 'geojson',
+         *     'data': './data/mapbox/milestones.geojson'
+         * });
 
-      * map.addSource('route', {
-      *     'type': 'geojson',
-      *     'data': './data/mapbox/fullRoute.geojson'
-      * }); */
+         * map.addSource('route', {
+         *     'type': 'geojson',
+         *     'data': './data/mapbox/fullRoute.geojson'
+         * }); */
 
-     // Milestones Markers
-     /* map.addLayer({
-      *   'id': 'milestones',
-      *   'type': 'circle',
-      *   'source': 'milestones',
-      *   'minzoom': 4,
-      *   'maxzoom': 8,
-      *   'layout': {
-      *           'visibility': 'visible'
-      *       },
-      *       'paint': {
-      *           'circle-radius': 12,
-      *           'circle-color': '#dba11c',
-      *           'circle-opacity': 0.7
-      *       }
-      *   }); */
+        // Milestones Markers
+        /* map.addLayer({
+         *   'id': 'milestones',
+         *   'type': 'circle',
+         *   'source': 'milestones',
+         *   'minzoom': 4,
+         *   'maxzoom': 8,
+         *   'layout': {
+         *           'visibility': 'visible'
+         *       },
+         *       'paint': {
+         *           'circle-radius': 12,
+         *           'circle-color': '#dba11c',
+         *           'circle-opacity': 0.7
+         *       }
+         *   }); */
 
-     // Route
-     /* map.addLayer({
-      *     'id': 'route',
-      *     'type': 'line',
-      *     'source': 'route',
-      *     'layout': {
-      *         'visibility': 'visible',
-      *         'line-join': 'round',
-      *         'line-cap': 'round'
-      *     },
-      *     'minzoom': 4,
-      *     'maxzoom': 15,
-      *     'paint': {
-      *         'line-color': '#0077c8',
-      *         'line-width': 5,
-      *         'line-opacity': 0.7
-      *     }
-      * }); */
+        // Route
+        /* map.addLayer({
+         *     'id': 'route',
+         *     'type': 'line',
+         *     'source': 'route',
+         *     'layout': {
+         *         'visibility': 'visible',
+         *         'line-join': 'round',
+         *         'line-cap': 'round'
+         *     },
+         *     'minzoom': 4,
+         *     'maxzoom': 15,
+         *     'paint': {
+         *         'line-color': '#0077c8',
+         *         'line-width': 5,
+         *         'line-opacity': 0.7
+         *     }
+         * }); */
 
-     // After the last frame rendered before the map enters an "idle" state.
-     map.on('idle', () => {
-       // If these layers were not added to the map, abort
-       // add || !map.getLayer('accra_density')       
-       if (!map.getLayer('adm1_fill') || !map.getLayer('adm1') || !map.getLayer('adm2_fill') || !map.getLayer('adm2') || !map.getLayer('2000 - 2005') || !map.getLayer('2010 - 2015') || !map.getLayer('R95P_200005') || !map.getLayer('R95P_200510')) {
-         return;
+        // After the last frame rendered before the map enters an "idle" state.
+        map.on('idle', () => {
+          // If these layers were not added to the map, abort
+          // add || !map.getLayer('accra_density')
+
+          if (!map.getLayer('adm1_fill') || !map.getLayer('adm1') || !map.getLayer('adm2_fill') || !map.getLayer('adm2') || !map.getLayer('adm3') || !map.getLayer('1985 Precipitation') || !map.getLayer('2010 Precipitation') || !map.getLayer('2000 - 2005') || !map.getLayer('2010 - 2015')) {
+            return;
             }
 
-       // add , 'accra_density'
-       // Enumerate ids of the layers.
-       const toggleableLayerIds = ['adm1_fill', 'adm1', 'adm2_fill', 'adm2', '2000 - 2005', '2010 - 2015', 'R95P_200005', 'R95P_200510'];
+          // add , 'accra_density'
+          // Enumerate ids of the layers.
+          const toggleableLayerIds = ['adm1_fill', 'adm1', 'adm2_fill', 'adm2', 'adm3', '1985 Precipitation', '2010 Precipitation', '2000 - 2005', '2010 - 2015'];
 
-       // Set up the corresponding toggle button for each layer.
-       for (const id of toggleableLayerIds) {
+          // Set up the corresponding toggle button for each layer.
+          for (const id of toggleableLayerIds) {
                 // Skip layers that already have a button set up.
                 if (document.getElementById(id)) {
                     continue;
@@ -437,12 +472,12 @@
 
                     const visibility = map.getLayoutProperty(
                         clickedLayer,
-                'visibility'
+                        'visibility'
                     );
 
                     // Toggle layer visibility by changing the layout object's visibility property.
-									      if (visibility === 'visible') {
-										map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                    if (visibility === 'visible') {
+                        map.setLayoutProperty(clickedLayer, 'visibility', 'none');
                         this.className = '';
                         socket.emit("groupScroll", {
                             "index": id,
