@@ -5,6 +5,8 @@ import json
 # Define the nested menu structure. Maybe we can make this dynamic later?
 menu_structure = {
     "Driver Menu": {
+        "adm1": {"action": "Show adm1 Options"},
+        "adm2": {"action": "Show adm2 Options"},
         "Social": {"action": "Show Social Options"},
         "Environmental": {
             "Acid Rain": {"action": "Show Acid Rain Years"},
