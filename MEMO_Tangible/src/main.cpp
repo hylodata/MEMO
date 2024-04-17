@@ -4,9 +4,9 @@
 #include <ArduinoWebsockets.h>
 #include <ArduinoJson.h>
 
-const char* ssid = "AliCapsule";
-const char* password = "synlab123";
-const char* websocketServerHost = "ws://10.0.1.98:12345"; // WebSocket server address
+const char* ssid = "memoRouter_24GHz";
+const char* password = "memo1234";
+const char* websocketServerHost = "ws://192.168.0.166:12345"; // WebSocket server address
 
 using namespace websockets;
 WebsocketsClient client;
@@ -29,9 +29,34 @@ static m5::touch_state_t prev_state;
 void refreshScreen(){
     M5Dial.Display.clear();
     M5Dial.Display.setTextSize(0.5);
+    M5Dial.Display.setTextColor(LIGHTGREY);
+
+    if (global_selection == "1985"){
+        M5Dial.Display.setTextColor(GREEN);
+    }
+
+    else if (global_selection == "2010"){
+        M5Dial.Display.setTextColor(GREEN);
+    }
+
+    else if (global_selection == "Precipitation"){
+        M5Dial.Display.setTextColor(GREEN);
+    }
+
+    else if (global_selection == "Environmental"){
+        M5Dial.Display.setTextColor(GREEN);
+    }
+
+    else {
+        M5Dial.Display.setTextColor(LIGHTGREY);
+    };
+
     M5Dial.Display.drawString(global_currentPath, M5Dial.Display.width() / 2, M5Dial.Display.height() / 2 - 30);
     M5Dial.Display.setTextSize(0.7);
     M5Dial.Display.drawString(global_selection, M5Dial.Display.width() / 2, M5Dial.Display.height() / 2 + 30);
+
+    Serial.print("global_selection =");
+    Serial.println(global_selection);
 }
 
 void receiveAndParseEvent(String message) {
@@ -54,7 +79,8 @@ void receiveAndParseEvent(String message) {
     JsonObject menuState = doc["menuState"].as<JsonObject>();
 
     // Example on how to further extract nested information from "menuState"
-    // This depends on how your menuState is structured, adjust accordingly
+    // This depends on how your menuState is structured, adjust accordingly...
+
     JsonArray pathArray = menuState["path"].as<JsonArray>();
     String currentPath;
     if (!pathArray.isNull() && pathArray.size() > 0) {
@@ -118,7 +144,7 @@ void reconnectWebSocket() {
 void setup() {
     auto cfg = M5.config();
     M5Dial.begin(cfg, true, false);
-    M5Dial.Display.setTextColor(GREEN);
+    M5Dial.Display.setTextColor(LIGHTGREY);
     M5Dial.Display.setTextDatum(middle_center);
     M5Dial.Display.setTextFont(&fonts::Orbitron_Light_32);
     M5Dial.Display.setTextSize(0.8);

@@ -1,3 +1,4 @@
+@ -0,0 +1,639 @@
 <!DOCTYPE html>
 <html>
 
@@ -584,20 +585,51 @@
             //         );
             //     }
             // });
-        ws.onmessage = (event) => {
-                const data = JSON.parse(event.data);
-                //console.log(event.data);
-                
-                if (data.type === 'menuStateUpdate') {
-                    // Update the display with the new menu state
-                    const menuState = data.menuState;
-                    //console.log(data.menuState);
-                }
-                
-                pathSize = data.menuState.path.length;
-                currentPath = data.menuState.path[pathSize-1];
-                currentSelection = data.menuState.selection;
 
+    //need to make multiple of these for multiple dials
+    let menuStateCache = {
+        path: [],
+        dialID: '',
+        currentPath: '',
+        currentSelection: ''
+    };
+   
+    ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            
+            if (data.type === 'menuStateUpdate' && data.menuState) {
+                // Update global state with new menu state information
+                menuStateCache.path = data.menuState.path;
+                menuStateCache.currentPath = menuStateCache.path[menuStateCache.path.length - 1];
+                menuStateCache.currentSelection = data.menuState.selection;
+            }
+
+            if (data.type === 'menuAction') {
+                const menuAction = data.action;
+                console.log("menuAction recieved = " + menuAction);
+                // Now you can also use menuStateCache here
+                toggleVisibilityBasedOnMenuState();
+            }
+
+            // Function to toggle visibility based on the cached menu state
+            function toggleVisibilityBasedOnMenuState() {
+                if (menuStateCache.currentPath === 'Precipitation') {
+                    const visibilityProperty = menuStateCache.currentSelection + ' Precipitation';
+                    const visibility = map.getLayoutProperty(visibilityProperty, 'visibility');
+                    if (visibility === 'visible') {
+                        map.setLayoutProperty(visibilityProperty, 'visibility', 'none');
+                    } else {
+                        map.setLayoutProperty(visibilityProperty, 'visibility', 'visible');
+                    }
+                    console.log("TOGGLING " + menuStateCache.currentSelection + " PRECIPITATION");
+                }
+            }
+    };
+                
+
+
+
+/*
                 if (currentPath == 'Precipitation' && currentSelection == '1985'){
                     console.log("TOGGLE 1985 PRECIPITATION")
                     const visibility = map.getLayoutProperty('1985 Precipitation', 'visibility');
@@ -619,6 +651,7 @@
                 }
 
             }
+*/
 
     
 
