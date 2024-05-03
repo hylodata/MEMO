@@ -10,5 +10,7 @@
 			"path": "../MEMO_Mapbox"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "MEMO"
+	}
 }
