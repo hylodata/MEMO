@@ -113,11 +113,16 @@
                 'data': './data/mapbox/accra_density.geojson'
             });
 
-            // next ones are point files
-            map.addSource('net_migration_200005', {
-                'type': 'geojson',
-                'data': './data/mapbox/net_migration_200005.geojson'
+            map.addSource('gold', {
+              'type': 'geojson',
+              'data': './data/mapbox/goldmines.geojson'
             });
+	  
+          // next ones are point files
+          map.addSource('net_migration_200005', {
+            'type': 'geojson',
+            'data': './data/mapbox/net_migration_200005.geojson'
+          });
 
             map.addSource('net_migration_201015', {
                 'type': 'geojson',
@@ -164,12 +169,26 @@
                 }
             });
 
-            // Adminstrative Boundaries Level 1
+	    // gold
             map.addLayer({
-                'id': 'adm2_fill',
-                'type': 'fill',
-                'source': 'adm2', // reference the data source
+                'id': 'gold',
+                'type': 'line',
+                'source': 'gold',
                 'layout': {
+                    'visibility': 'none'
+                },
+                'paint': {
+                  'line-color': '#336',
+                  'line-width': 2
+                }
+            });
+	  
+          // Adminstrative Boundaries Level 1
+          map.addLayer({
+            'id': 'adm2_fill',
+            'type': 'fill',
+            'source': 'adm2', // reference the data source
+            'layout': {
                     'visibility': 'none'
                 },
                 'paint': {
@@ -462,15 +481,15 @@
 
         // After the last frame rendered before the map enters an "idle" state.
         map.on('idle', () => {
-            // If these layers were not added to the map, abort
-            // add || !map.getLayer('accra_density')
+          // If these layers were not added to the map, abort
+          // add || !map.getLayer('accra_density')
 
-            if (!map.getLayer('adm1_fill') || !map.getLayer('adm1') || !map.getLayer('adm2_fill') || !map.getLayer('adm2') || !map.getLayer('adm3') || !map.getLayer('Accra_density') || !map.getLayer('1985 Precipitation') || !map.getLayer('2010 Precipitation') || !map.getLayer('Net Migration 2015') || !map.getLayer('2000 - 2005') || !map.getLayer('2010 - 2015')) {
-                return;
+          if (!map.getLayer('adm1_fill') || !map.getLayer('adm1') || !map.getLayer('adm2_fill') || !map.getLayer('adm2') || !map.getLayer('adm3') || !map.getLayer('Accra_density') || !map.getLayer('gold') || !map.getLayer('1985 Precipitation') || !map.getLayer('2010 Precipitation') || !map.getLayer('Net Migration 2015') || !map.getLayer('2000 - 2005') || !map.getLayer('2010 - 2015')) {
+            return;
             }
 
             // Enumerate ids of the layers.
-            const toggleableLayerIds = ['adm1_fill', 'adm1', 'adm2_fill', 'adm2', 'adm3', 'Accra_density', '1985 Precipitation', '2010 Precipitation', 'Net Migration 2015', '2000 - 2005', '2010 - 2015'];
+            const toggleableLayerIds = ['adm1_fill', 'adm1', 'adm2_fill', 'adm2', 'adm3', 'Accra_density', 'gold', '1985 Precipitation', '2010 Precipitation', 'Net Migration 2015', '2000 - 2005', '2010 - 2015'];
 
             // Set up the corresponding toggle button for each layer.
             for (const id of toggleableLayerIds) {
