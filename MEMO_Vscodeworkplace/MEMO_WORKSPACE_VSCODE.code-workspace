@@ -1,12 +1,16 @@
 {
 	"folders": [
 		{
-			"name": "MEMO_TANGIBLE",
-			"path": "../MEMO_TANGIBLE"
+			"path": ".."
 		},
 		{
-			"path": "../MEMO_MAPBOX"
+			"path": "../MEMO_Tangible"
+		},
+		{
+			"path": "../MEMO_Mapbox"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "MEMO"
+	}
 }

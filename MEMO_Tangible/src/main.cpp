@@ -4,9 +4,9 @@
 #include <ArduinoWebsockets.h>
 #include <ArduinoJson.h>
 
-const char* ssid = "AliCapsule";
-const char* password = "synlab123";
-const char* websocketServerHost = "ws://10.0.1.98:12345"; // WebSocket server address
+const char* ssid = "CastleOmalley";
+const char* password = "sirfelix";
+const char* websocketServerHost = "ws://10.0.0.190:12345"; // WebSocket server address
 
 using namespace websockets;
 WebsocketsClient client;
@@ -29,9 +29,34 @@ static m5::touch_state_t prev_state;
 void refreshScreen(){
     M5Dial.Display.clear();
     M5Dial.Display.setTextSize(0.5);
+    M5Dial.Display.setTextColor(LIGHTGREY);
+
+    if (global_selection == "1985"){
+        M5Dial.Display.setTextColor(GREEN);
+    }
+
+    else if (global_selection == "2010"){
+        M5Dial.Display.setTextColor(GREEN);
+    }
+
+    else if (global_selection == "Precipitation"){
+        M5Dial.Display.setTextColor(GREEN);
+    }
+
+    else if (global_selection == "Environmental"){
+        M5Dial.Display.setTextColor(GREEN);
+    }
+
+    else {
+        M5Dial.Display.setTextColor(LIGHTGREY);
+    };
+
     M5Dial.Display.drawString(global_currentPath, M5Dial.Display.width() / 2, M5Dial.Display.height() / 2 - 30);
     M5Dial.Display.setTextSize(0.7);
     M5Dial.Display.drawString(global_selection, M5Dial.Display.width() / 2, M5Dial.Display.height() / 2 + 30);
+
+    Serial.print("global_selection =");
+    Serial.println(global_selection);
 }
 
 void receiveAndParseEvent(String message) {
@@ -41,30 +66,32 @@ void receiveAndParseEvent(String message) {
     // Parse the incoming JSON message
     DeserializationError error = deserializeJson(doc, message);
     
-    if (error) { // Check for errors in parsing
+    // Check for errors in parsing
+    if (error) { 
         Serial.print("deserializeJson() failed: ");
         Serial.println(error.f_str());
         return;
     }
 
     // Extracting data from the JSON document
-    // Assume "type", "dialID", and "menuState" are keys in your JSON structure
+    // Assume "type", "dialID", and "menuState" are keys in JSON structure
     const char* type = doc["type"]; // You can replace these keys with whatever your JSON structure uses
     int dialID = doc["dialID"];
     JsonObject menuState = doc["menuState"].as<JsonObject>();
 
     // Example on how to further extract nested information from "menuState"
-    // This depends on how your menuState is structured, adjust accordingly
+    // This depends on how your menuState is structured, adjust accordingly...
+
     JsonArray pathArray = menuState["path"].as<JsonArray>();
     String currentPath;
     if (!pathArray.isNull() && pathArray.size() > 0) {
         // Get the last element of the path array
         currentPath = pathArray[pathArray.size() - 1].as<String>();
-        global_currentPath = currentPath; //make the local variable global
+        global_currentPath = currentPath; //make the local string into global string 
     }
 
     String selection = menuState["selection"]; // Assuming "selection" is a string
-    global_selection = selection; //make the local 'selection' variable global
+    global_selection = selection; //make the local 'selection' string into global string
     JsonArray history = menuState["history"].as<JsonArray>(); // Assuming "history" is an array
 
     // Now you have the variables 'type', 'dialID', 'path', 'selection', and the 'history' array
@@ -80,6 +107,8 @@ void receiveAndParseEvent(String message) {
     Serial.print("Current Selection: ");
     Serial.println(selection);
     // To print the history, you'd iterate over the 'history' JsonArray if necessary
+
+    //adding this to force refresh of the screen after parsing data
     refreshScreen();
 }
 
@@ -118,7 +147,7 @@ void reconnectWebSocket() {
 void setup() {
     auto cfg = M5.config();
     M5Dial.begin(cfg, true, false);
-    M5Dial.Display.setTextColor(GREEN);
+    M5Dial.Display.setTextColor(LIGHTGREY);
     M5Dial.Display.setTextDatum(middle_center);
     M5Dial.Display.setTextFont(&fonts::Orbitron_Light_32);
     M5Dial.Display.setTextSize(0.8);
