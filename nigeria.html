@@ -372,7 +372,7 @@
                 <div class="step invisible">
                 </div>
 		
-                <div class="step" data-center="-1.023194, 7.946527" data-zoom="6" data-pitch="15" data-bearing="0" data-speed="0.7" data-toggle_layer="Nigeria_MLDS">
+                <div class="step" data-center="-1.023194, 7.946527" data-zoom="6" data-pitch="15" data-bearing="0" data-speed="0.7" data-toggle_layer="Nigeria_test">
                     <p>
                         In recent years, prevalent trends of migration have involved growing numbers of young Ghanaian men and women seeking to embark on perilous journeys or what is popularly referred to as ‘boat migration’ to Europe and the Middle East, as well as internal rural-to-urban migration involving youngsters structured along a north-south direction and often spearheaded largely by economic motives.
                     </p>
@@ -495,10 +495,20 @@
                 'data': './data/mapbox/Ghana.geojson'
             });
 
-            map.addSource('Nigeria', {
+            map.addSource('Nigeria_MLDS', {
                 'type': 'geojson',
                 'data': './data/mapbox/nigeria_MLDS_test.geojson'
-            });            
+            });
+
+            map.addSource('Nigeria_test', {
+                'type': 'geojson',
+                'data': './data/mapbox/nigeria_test.geojson'
+            });
+
+            map.addSource('Nigeria_migration', {
+                'type': 'geojson',
+                'data': './data/mapbox/Nigera_migration.geojson'
+            });                              
 
             map.addSource('ghana_urban', {
                 'type': 'geojson',
@@ -702,15 +712,15 @@
 
           // 2015 Migration urban pathways
           map.addLayer({
-            'id': '2015 NM Urban',
+            'id': 'Nigeria',
             'type': 'fill',
-            'source': 'ghana_urban',
+            'source': 'Nigeria',
             'layout': {
                     'visibility': 'none'
                 },
                 'paint': {
                     'fill-color': {
-                        property: 'Net_Migrat',
+                        property: 'MLDSRate2010',
                         stops: [
                             [-128773, 'rgba(230,97,1,1.0)'],
                             [-4132, 'rgba(241,136,44,1.0)'],
@@ -754,17 +764,17 @@
                 }
             })
 
-            // 1985 Precipitation
+            // Nigeria MLDS
             map.addLayer({
                 'id': 'Nigeria_MLDS',
                 'type': 'fill',
-                'source': 'Nigeria',
+                'source': 'Nigeria_MLDS',
                 'layout': {
                     'visibility': 'none'
                 },
                 'paint': {
                     'fill-color': {
-                        property: 'MLDSRate2010',
+                        property: 'MLDSRate2005',
                         stops: [
                             [-0.43825, '#ffffd9'],
                             [-0.1196, '#edf8b1'],
@@ -777,6 +787,30 @@
                     'fill-opacity': 0.75
                 }
             })            
+
+            // Nigeria Test
+            map.addLayer({
+                'id': 'Nigeria_test',
+                'type': 'fill',
+                'source': 'Nigeria_test',
+                'layout': {
+                    'visibility': 'none'
+                },
+                'paint': {
+                    'fill-color': {
+                        property: 'Nigeria_MLDS_Yrs25km_MLDSRate2005',
+                        stops: [
+                            [-0.43825, '#ffffd9'],
+                            [-0.1196, '#edf8b1'],
+                            [-0.05186, '#c7e9b4'],
+                            [-0.01236, '#7fcdbb'],
+                            [0.03785, '#41b6c4'],
+                            [0.33, '#1d91c0']
+                        ]
+                    },
+                    'fill-opacity': 0.75
+                }
+            })
 
             // filtered 1985 Precipitation
             map.addLayer({
