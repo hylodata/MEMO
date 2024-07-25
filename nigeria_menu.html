@@ -210,15 +210,16 @@
                     'fill-color': {
                         property: 'Nigeria_MLDS_Yrs25km_MLDSRate2005',
                         stops: [
-                            [-0.43825, '#ffffd9'],
-                            [-0.1196, '#edf8b1'],
-                            [-0.05186, '#c7e9b4'],
-                            [-0.01236, '#7fcdbb'],
-                            [0.03785, '#41b6c4'],
-                            [0.33, '#1d91c0']
+                            [-0.33651, "#feedde"],
+                            [-0.116, '#fdd0a2'],
+                            [-0.05818, '#fdae6b'],
+                            [-0.01087, '#fd8d3c'],
+                            [0.03989, '#f16913'],
+                            [0.09784,'#d94801'],
+                            [0.64773, '#8c2d04']
                         ]
                     },
-                    'fill-opacity': 0.75
+                    'fill-opacity': 0.95
                 }
             });
 
@@ -234,19 +235,21 @@
                     'fill-color': {
                         property: 'Nigeria_MLDS_Yrs25km_MLDSRate2010',
                         stops: [
-                            [-0.43825, '#ffffd9'],
-                            [-0.1196, '#edf8b1'],
-                            [-0.05186, '#c7e9b4'],
-                            [-0.01236, '#7fcdbb'],
-                            [0.03785, '#41b6c4'],
-                            [0.33, '#1d91c0']
+                            [-0.43825, "#feedde"],
+                            [-0.14286, '#fdd0a2'],
+                            [-0.07128, '#fdae6b'],
+                            [-0.03079, '#fd8d3c'],
+                            [0.00054, '#f16913'],
+                            [0.04896,'#d94801'],
+                            [0.33, '#8c2d04']
                         ]
                     },
-                    'fill-opacity': 0.75
+                    'fill-opacity': 0.95
                 }
             });
 
             // Net Migration 2000s
+            // Hex string: ['#b35806','#f1a340','#fee0b6','#f7f7f7','#d8daeb','#998ec3','#542788']
             map.addLayer({
                 'id': 'NM 2000',
                 'type': 'fill',
@@ -258,25 +261,22 @@
                     'fill-color': {
                         property: 'NetMigr200',
                         stops: [
-                            [-128773, 'rgba(230,97,1,1.0)'],
-                            [-4132, 'rgba(241,136,44,1.0)'],
-                            [-1755, 'rgba(251,175,88,1.0)'],
-                            [-731, 'rgba(251,205,148,1.0)'],
-                            [-244, 'rgba(249,233,214,1.0)'],
-                            [-31, 'rgba(232,231,239,1.0)'],
-                            [-2, 'rgba(201,197,223,1.0)'],
-                            [9, 'rgba(169,159,204,1.0)'],
-                            [92, 'rgba(131,109,179,1.0)'],
-                            [617, 'rgba(94,60,153,1.0)']
+                            [-26131, '#b35806'],
+                            [-570.33, '#f1a340'],
+                            [0, '#fee0b6'],
+                            [460.50, '#f7f7f7'],
+                            [1476, '#d8daeb'],
+                            [3866.50, '#998ec3'],
+                            [262201, '#542788']
                         ]
                     },
-                    'fill-opacity': 0.75
+                    'fill-opacity': 0.95
                 }
             });    
             
             // Net Migration 2000s
             map.addLayer({
-                'id': 'NM 3000',
+                'id': 'NM 2015',
                 'type': 'fill',
                 'source': 'Nigeria_test',
                 'layout': {
@@ -286,19 +286,16 @@
                     'fill-color': {
                         property: 'NetMigr2_1',
                         stops: [
-                            [-128773, 'rgba(230,97,1,1.0)'],
-                            [-4132, 'rgba(241,136,44,1.0)'],
-                            [-1755, 'rgba(251,175,88,1.0)'],
-                            [-731, 'rgba(251,205,148,1.0)'],
-                            [-244, 'rgba(249,233,214,1.0)'],
-                            [-31, 'rgba(232,231,239,1.0)'],
-                            [-2, 'rgba(201,197,223,1.0)'],
-                            [9, 'rgba(169,159,204,1.0)'],
-                            [92, 'rgba(131,109,179,1.0)'],
-                            [617, 'rgba(94,60,153,1.0)']
+                            [-42434, '#b35806'],
+                            [-2393.50, '#f1a340'],
+                            [-499.33, '#fee0b6'],
+                            [0, '#f7f7f7'],
+                            [367.33, '#d8daeb'],
+                            [1409.67, '#998ec3'],
+                            [216667, '#542788']
                         ]
                     },
-                    'fill-opacity': 0.75
+                    'fill-opacity': 0.95
                 }
             });               
 
@@ -309,12 +306,12 @@
             // If these layers were not added to the map, abort
             // add || !map.getLayer('accra_density')
 
-            if (!map.getLayer('adm0') || !map.getLayer('adm1') || !map.getLayer('adm1_fill') || !map.getLayer('adm2') || !map.getLayer('adm2_fill') || !map.getLayer('MLDS 2005') || !map.getLayer('MLDS 2010') || !map.getLayer('NM 2000') || !map.getLayer('NM 3000')) {
+            if (!map.getLayer('adm0') || !map.getLayer('adm1') || !map.getLayer('adm1_fill') || !map.getLayer('adm2') || !map.getLayer('adm2_fill') || !map.getLayer('MLDS 2005') || !map.getLayer('MLDS 2010') || !map.getLayer('NM 2000') || !map.getLayer('NM 2015')) {
                 return;
             }
 
             // Enumerate ids of the layers.
-            const toggleableLayerIds = ['adm0', 'adm1', 'adm1_fill', 'adm2', 'adm2_fill', 'MLDS 2005', 'MLDS 2010', 'NM 2000', 'NM 3000'];
+            const toggleableLayerIds = ['adm0', 'adm1', 'adm1_fill', 'adm2', 'adm2_fill', 'MLDS 2005', 'MLDS 2010', 'NM 2000', 'NM 2015'];
 
             // Set up the corresponding toggle button for each layer.
             for (const id of toggleableLayerIds) {
