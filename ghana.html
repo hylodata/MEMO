@@ -410,6 +410,9 @@
                 <div class="step" data-center="-1.023194, 7.946527" data-zoom="6" data-pitch="15" data-bearing="0" data-speed="0.7" data-toggle_layer="Net Migration 2015" style="background-color: rgba(0, 0, 0, 0);">
                 </div>
 
+                <div class="step" data-center="-1.023194, 7.946527" data-zoom="6" data-pitch="15" data-bearing="0" data-speed="0.7" data-toggle_layer="Net Migration 2010" style="background-color: rgba(0, 0, 0, 0);">
+                </div>
+		
                 <div class="step" data-center="-0.1511, 5.5796" data-zoom="7" data-pitch="20" data-bearing="0" data-speed="0.7" data-toggle_layer="2015 NM Urban">
                   <p>
                     Throughout almost all of the intervals examined, coastal cities such as Sekondi, Cape Coast, Winneba, and Accra (the capital) exhibited significant changes in net migration.
@@ -434,7 +437,7 @@
                 <div class="step" data-center="-1.023194, 7.946527" data-zoom="6" data-pitch="15" data-bearing="0" data-speed="0.7" data-toggle_layer="2010 Precipitation" style="background-color: rgba(0, 0, 0, 0);">
                 </div>
 		
-                <div class="step" data-center="-1.023194, 7.946527" data-zoom="6" data-pitch="15" data-bearing="0" data-speed="0.7" data-toggle_layer="unemployment">
+                <div class="step" data-center="-2.142101, 5.433729" data-zoom="9" data-pitch="15" data-bearing="0" data-speed="0.7" data-toggle_layer="gold">
                     <p>
                         Varying levels of unemployment across the 16 administrative regions might account for some of these trends.
                     </p>
@@ -532,12 +535,17 @@
                 'data': './data/mapbox/net_migration_200510.geojson'
             });
 
-            // Ghana adm0
-            map.addLayer({
-                'id': 'adm0',
-                'type': 'line',
-                'source': 'adm0',
-                'layout': {
+            map.addSource('gold', {
+              'type': 'geojson',
+              'data': './data/mapbox/goldmines.geojson'
+            });
+	  
+          // Ghana adm0
+          map.addLayer({
+            'id': 'adm0',
+            'type': 'line',
+            'source': 'adm0',
+            'layout': {
                     'visibility': 'none'
                 },
                 'paint': {
@@ -597,12 +605,26 @@
                 }
             })
 
-            // Accra density choropleth
+            // Ghana adm2
             map.addLayer({
-                'id': 'Accra_density',
-                'type': 'fill',
-                'source': 'Accra',
+                'id': 'gold',
+                'type': 'line',
+                'source': 'gold',
                 'layout': {
+                    'visibility': 'none'
+                },
+                'paint': {
+                  'line-color': '#336',
+                  'line-width': 2
+                }
+            });
+	  
+          // Accra density choropleth
+          map.addLayer({
+            'id': 'Accra_density',
+            'type': 'fill',
+            'source': 'Accra',
+            'layout': {
                     'visibility': 'none'
                 },
                 'paint': {
@@ -645,12 +667,40 @@
                 }
             })
 
-            // 2015 Migration urban pathways
+            // 2010 Migration
             map.addLayer({
-                'id': '2015 NM Urban',
+                'id': 'Net Migration 2010',
                 'type': 'fill',
-                'source': 'ghana_urban',
+                'source': 'Ghana',
                 'layout': {
+                    'visibility': 'none'
+                },
+                'paint': {
+                    'fill-color': {
+                        property: 'NetMigra_5',
+                        stops: [
+                            [-128773, 'rgba(230,97,1,1.0)'],
+                            [-4132, 'rgba(241,136,44,1.0)'],
+                            [-1755, 'rgba(251,175,88,1.0)'],
+                            [-731, 'rgba(251,205,148,1.0)'],
+                            [-244, 'rgba(249,233,214,1.0)'],
+                            [-31, 'rgba(232,231,239,1.0)'],
+                            [-2, 'rgba(201,197,223,1.0)'],
+                            [9, 'rgba(169,159,204,1.0)'],
+                            [92, 'rgba(131,109,179,1.0)'],
+                            [617, 'rgba(94,60,153,1.0)']
+                        ]
+                    },
+                    'fill-opacity': 0.75
+                }
+            })	  
+
+          // 2015 Migration urban pathways
+          map.addLayer({
+            'id': '2015 NM Urban',
+            'type': 'fill',
+            'source': 'ghana_urban',
+            'layout': {
                     'visibility': 'none'
                 },
                 'paint': {
