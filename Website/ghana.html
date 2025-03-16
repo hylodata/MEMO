@@ -7,73 +7,187 @@
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
-    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
+    <!-- <script src="https://unpkg.com/mapbox-gl-draw-additional-tools"></script> -->
+<!--     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
         integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>      -->
+
+    <link href="https://cdn.jsdelivr.net/npm/@watergis/mapbox-gl-export@3.5.7/dist/mapbox-gl-export.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@watergis/mapbox-gl-export@3.5.7/dist/mapbox-gl-export.umd.js"></script>        
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.3/mapbox-gl-draw.js'></script>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.3/mapbox-gl-draw.css'
+        type='text/css' />
     <style>
-        body {
+        html, body {
             margin: 0;
             padding: 0;
-        }
-
-        #map {
-            position: absolute;
-            top: 0;
-            bottom: 0;
             width: 100%;
+            height: 100%;
+            overflow: hidden;
         }
+        #map {
+            width: 100%;
+            height: 100%;
+        }      
     </style>
 </head>
 
 <body>
     <style>
         #menu {
-            background: #fff;
-            position: absolute;
-            z-index: 1;
-            top: 20px;
-            right: 10px;
-            border-radius: 3px;
-            width: 120px;
-            border: 5px solid rgba(0, 0, 0, 0.4);
-            font-family: 'Open Sans', sans-serif;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: white;
+        padding-top: 8px;
+        padding-left: 8px;
+        padding-right: 8px;
+        padding-bottom: 2px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        z-index: 9999; /* Keep it above the map */
+        width: 220px;
         }
 
-        #menu a {
-            font-size: 13px;
-            color: #404040;
-            display: block;
-            margin: 0;
-            padding: 0;
-            padding: 10px;
-            text-decoration: none;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.25);
-            text-align: center;
+        .category {
+        margin-bottom: 10px;
         }
 
-        #menu a:last-child {
-            border: none;
+        .submenu {
+        list-style: none;
+        padding-left: 15px;
+        display: none;
         }
 
-        #menu a:hover {
-            background-color: #f8f8f8;
-            color: #404040;
+        .toggle-btn {
+        background: #007cbf;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        width: 100%;
+        text-align: left;
+        border-radius: 3px;
         }
 
-        #menu a.active {
-            background-color: #3887be;
-            color: #ffffff;
-        }
-
-        #menu a.active:hover {
-            background: #3074a4;
+        .toggle-btn:hover {
+        background: #005f8d;
         }
     </style>
 
-    <nav id="menu"></nav>
+    <div id="menu">
+        <div class="category">
+            <button class="toggle-btn">Net Migration</button>
+            <ul class="submenu">
+                <p>Rate between net migration estimates for 25 x 25km grid</p>
+                <li><input type="checkbox" id="NETRa1990"> 1990</li>
+                <li><input type="checkbox" id="NETRa1995"> 1995</li>
+                <li><input type="checkbox" id="NETRa2000"> 2000</li>
+                <li><input type="checkbox" id="NETRa2005"> 2005</li>
+                <li><input type="checkbox" id="NETRa2010"> 2010</li>
+            </ul>
+        </div> 
+        
+        <div class="category">
+            <button class="toggle-btn">Precipitation</button>
+            <ul class="submenu">
+                <li><input type="checkbox" id="PRECRa1990"> 1990</li>
+                <li><input type="checkbox" id="PRECRa1995"> 1995</li>
+                <li><input type="checkbox" id="PRECRa2000"> 2000</li>
+                <li><input type="checkbox" id="PRECRa2005"> 2005</li>
+                <li><input type="checkbox" id="PRECRa2010"> 2010</li>
+            </ul>
+        </div> 
+        
+        <div class="category">
+            <button class="toggle-btn">Consecutive Wet Days</button>
+            <ul class="submenu">
+                <li><input type="checkbox" id="MLWSRa1990"> 1990</li>
+                <li><input type="checkbox" id="MLWSRa1995"> 1995</li>
+                <li><input type="checkbox" id="MLWSRa2000"> 2000</li>
+                <li><input type="checkbox" id="MLWSRa2005"> 2005</li>
+                <li><input type="checkbox" id="MLWSRa2010"> 2010</li>
+            </ul>
+        </div>
+        
+        <div class="category">
+            <button class="toggle-btn">Consecutive Dry Days</button>
+            <ul class="submenu">
+                <li><input type="checkbox" id="MLDSRa1990"> 1990</li>
+                <li><input type="checkbox" id="MLDSRa1995"> 1995</li>
+                <li><input type="checkbox" id="MLDSRa2000"> 2000</li>
+                <li><input type="checkbox" id="MLDSRa2005"> 2005</li>
+                <li><input type="checkbox" id="MLDSRa2010"> 2010</li>
+            </ul>
+        </div>
+        
+        <div class="category">
+            <button class="toggle-btn">Max Temp Extremes</button>
+            <ul class="submenu">
+                <li><input type="checkbox" id="TMAXRa1990"> 1990</li>
+                <li><input type="checkbox" id="TMAXRa1995"> 1995</li>
+                <li><input type="checkbox" id="TMAXRa2000"> 2000</li>
+                <li><input type="checkbox" id="TMAXRa2005"> 2005</li>
+                <li><input type="checkbox" id="TMAXRa2010"> 2010</li>
+            </ul>
+        </div>
+        
+        <div class="category">
+            <button class="toggle-btn">Min Temp Extremes</button>
+            <ul class="submenu">
+                <li><input type="checkbox" id="TMINRa1990"> 1990</li>
+                <li><input type="checkbox" id="TMINRa1995"> 1995</li>
+                <li><input type="checkbox" id="TMINRa2000"> 2000</li>
+                <li><input type="checkbox" id="TMINRa2005"> 2005</li>
+                <li><input type="checkbox" id="TMINRa2010"> 2010</li>
+            </ul>
+        </div>
+
+        <div class="category">
+            <button class="toggle-btn">Conflict</button>
+            <ul class="submenu">
+                <li><input type="checkbox" id="CONFRa1990"> 1990</li>
+                <li><input type="checkbox" id="CONFRa1995"> 1995</li>
+                <li><input type="checkbox" id="CONFRa2000"> 2000</li>
+                <li><input type="checkbox" id="CONFRa2005"> 2005</li>
+                <li><input type="checkbox" id="CONFRa2010"> 2010</li>
+            </ul>
+        </div>        
+        
+        <div class="category">
+            <button class="toggle-btn">Admin Boundaries</button>
+            <ul class="submenu">
+                <li><input type="checkbox" id="adm0"> Adm 0</li>
+                <li><input type="checkbox" id="adm1"> Adm 1</li>
+                <li><input type="checkbox" id="adm2"> Adm 2</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Toggle submenu visibility
+        document.querySelectorAll(".toggle-btn").forEach(button => {
+            button.addEventListener("click", function () {
+                const submenu = this.nextElementSibling;
+                submenu.style.display = submenu.style.display === "block" ? "none" : "block";
+            });
+        });
+
+        // Handle layer visibility toggles
+        document.querySelectorAll("input[type='checkbox']").forEach(checkbox => {
+            checkbox.addEventListener("change", function () {
+                const layerId = this.id;
+                if (map.getLayer(layerId)) {
+                    map.setLayoutProperty(layerId, "visibility", this.checked ? "visible" : "none");
+                }
+            });
+        }); 
+    </script>
+
     <div id="map"></div>
 
-    <script src="js/main.js" type="text/javascript"></script>
+    <script src="js/ghana.js" type="text/javascript"></script>
 
 </body>
 

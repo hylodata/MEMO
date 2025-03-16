@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Sync movement of multiple maps</title>
+  <meta property="og:description" content="Synchronize two maps." />
+  <meta charset='utf-8'>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel='stylesheet' href='https://unpkg.com/maplibre-gl@5.0.1/dist/maplibre-gl.css' />
+  <script src='https://unpkg.com/maplibre-gl@5.0.1/dist/maplibre-gl.js'></script>
+  <script src="https://unpkg.com/@mapbox/mapbox-gl-sync-move@0.3.1"></script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    #map1,
+    #map2 {
+      height: 100%;
+      width: 100%;
+    }
+
+    .maps {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
+
+    .vl {
+  border-left: 4px solid green;
+}
+  </style>
+</head>
+
+<body>
+  <div class="maps">
+    <div id="map1"></div>
+    <div class="vl"></div>
+    <div id="map2"></div>
+  </div>
+  <script>
+    const map1 = new maplibregl.Map({
+      container: 'map1',
+      style: 'https://api.maptiler.com/maps/dataviz/style.json?key=fitCQCECviQQwUUkMoTE',
+      center: [-0.5, 7.1],
+      zoom: 6,
+      maplibreLogo: true
+    });
+
+    const map2 = new maplibregl.Map({
+      container: 'map2',
+      style: 'https://api.maptiler.com/maps/dataviz/style.json?key=fitCQCECviQQwUUkMoTE',
+      center: [-0.5, 7.1],
+      zoom: 6,
+      maplibreLogo: true
+    });
+
+    // Wait until the map has finished loading.
+    map1.on('load', () => {
+
+      map1.addSource('gold', {
+        'type': 'geojson',
+        'data': './data/mapbox/goldmines.geojson'
+      });
+
+      map1.addLayer({
+        'id': 'gold',
+        'type': 'line',
+        'source': 'gold',        
+        'paint': {
+          'line-color': '#336',
+          'line-width': 2
+        }
+      });
+    })
+
+    // Wait until the map has finished loading.
+    map2.on('load', () => {
+
+      map2.addSource('ghana', {
+        'type': 'geojson',
+        'data': './data/mapbox/ghana.geojson'
+      });
+
+      // Net Migration Rate 2010
+      map2.addLayer({
+        'id': 'Net Migration 2010',
+        'type': 'fill',
+        'source': 'ghana',
+        'paint': {
+          'fill-color': {
+            property: 'NETRa2010',
+            stops: [
+              [-128.60, 'rgba(230,97,1,1.0)'],
+              [-0.75534, 'rgba(241,136,44,1.0)'],
+              [-0.36167, 'rgba(251,175,88,1.0)'],
+              [-0.25497, 'rgba(251,205,148,1.0)'],
+              [-0.18417, 'rgba(249,233,214,1.0)'],
+              [-0.02218, 'rgba(232,231,239,1.0)'],
+              [0, 'rgba(201,197,223,1.0)'],
+              [0.0498, 'rgba(169,159,204,1.0)'],
+              [0.13257, 'rgba(131,109,179,1.0)'],
+              [0.3471, 'rgba(94,60,153,1.0)']
+            ]
+          },
+          'fill-opacity': 0.75
+        }
+      });
+    })
+    syncMaps(map1, map2);
+
+  </script>
+</body>
+
+</html>

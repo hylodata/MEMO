@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Nigeria Layers</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
+    <!-- <script src="https://unpkg.com/mapbox-gl-draw-additional-tools"></script> -->
+<!--     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
+        integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
+        crossorigin="anonymous"></script>      -->
+
+    <link href="https://cdn.jsdelivr.net/npm/@watergis/mapbox-gl-export@3.5.7/dist/mapbox-gl-export.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@watergis/mapbox-gl-export@3.5.7/dist/mapbox-gl-export.umd.js"></script>        
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.3/mapbox-gl-draw.js'></script>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.3/mapbox-gl-draw.css'
+        type='text/css' />
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        #map {
+            width: 100%;
+            height: 100%;
+        }      
+    </style>
+</head>
+
+<body>
+    <style>
+        #menu {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: white;
+        padding: 8px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        z-index: 9999; /* Keep it above the map */
+        width: 180px;
+        }
+
+        .category {
+        margin-bottom: 10px;
+        }
+
+        .submenu {
+        list-style: none;
+        padding-left: 15px;
+        display: none;
+        }
+
+        .toggle-btn {
+        background: #007cbf;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        width: 100%;
+        text-align: left;
+        border-radius: 3px;
+        }
+
+        .toggle-btn:hover {
+        background: #005f8d;
+        }
+    </style>
+
+    <div id="menu">
+        <div class="category">
+            <button class="toggle-btn">Boundaries</button>
+            <ul class="submenu">
+                <li><input type="checkbox" id="adm0"> Adm 0</li>
+                <li><input type="checkbox" id="adm1"> Adm 1</li>
+                <li><input type="checkbox" id="adm2"> Adm 2</li>
+            </ul>
+        </div>
+
+        <div class="category">
+            <button class="toggle-btn">Net Migration</button>
+            <ul class="submenu">
+                <li><input type="checkbox" id="NM 2000"> 2000</li>
+                <li><input type="checkbox" id="NM 2015"> 2015</li>
+            </ul>
+        </div>
+
+        <div class="category">
+            <button class="toggle-btn">Dry Days</button>
+            <ul class="submenu">
+                <li><input type="checkbox" id="MLDS 2005"> 2005</li>
+                <li><input type="checkbox" id="MLDS 2010"> 2010</li>
+            </ul>
+        </div>        
+    </div>
+
+    <script>
+        // Toggle submenu visibility
+        document.querySelectorAll(".toggle-btn").forEach(button => {
+            button.addEventListener("click", function () {
+                const submenu = this.nextElementSibling;
+                submenu.style.display = submenu.style.display === "block" ? "none" : "block";
+            });
+        });
+
+        // Handle layer visibility toggles
+        document.querySelectorAll("input[type='checkbox']").forEach(checkbox => {
+            checkbox.addEventListener("change", function () {
+                const layerId = this.id;
+                if (map.getLayer(layerId)) {
+                    map.setLayoutProperty(layerId, "visibility", this.checked ? "visible" : "none");
+                }
+            });
+        }); 
+    </script>
+
+    <div id="map"></div>
+
+    <script src="js/nigeria.js" type="text/javascript"></script>
+
+</body>
+
+</html>
