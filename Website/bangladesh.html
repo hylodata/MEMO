@@ -1,152 +1,207 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapbox Draw & Export with Local GeoJSON</title>
-    <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.0/mapbox-gl.js"></script>
-    <script src="https://unpkg.com/@mapbox/mapbox-gl-draw@1.3.0/dist/mapbox-gl-draw.js"></script>
-    <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.0/mapbox-gl.css" rel="stylesheet">
-    <link href="https://unpkg.com/@mapbox/mapbox-gl-draw@1.3.0/dist/mapbox-gl-draw.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <title>Bangladesh Layers</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/@watergis/mapbox-gl-export@3.5.7/dist/mapbox-gl-export.css"
+        rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@watergis/mapbox-gl-export@3.5.7/dist/mapbox-gl-export.umd.js"></script>
+
+    <!-- <script src="https://unpkg.com/mapbox-gl-draw-additional-tools"></script> -->    
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.3/mapbox-gl-draw.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.3/mapbox-gl-draw.css' rel='stylesheet' type='text/css' />
+
     <style>
-        body { margin: 0; padding: 0; }
-        #map { width: 100vw; height: 100vh; }
-        .buttons {
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        #menu {
             position: absolute;
             top: 10px;
             right: 10px;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        .btn {
             background: white;
-            padding: 10px;
+            padding-top: 8px;
+            padding-left: 8px;
+            padding-right: 8px;
             border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            border: 1px solid #ccc;
-            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            /* Keep it above the map */
+            width: 220px;
         }
+
+        #menu2 {
+            position: absolute;
+            bottom: 40px;
+            right: 10px;
+            background: white;
+            padding-top: 8px;
+            padding-left: 8px;
+            padding-right: 8px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            /* Keep it above the map */
+            width: 220px;
+        }        
+
+        .category {
+            margin-bottom: 10px;
+        }
+
+        .submenu {
+            list-style: none;
+            padding-left: 15px;
+            display: none;
+        }
+
+        .toggle-btn {
+            background: #007cbf;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            border-radius: 3px;
+        }
+
+        .toggle-btn:hover {
+            background: #005f8d;
+        }
+
+        .legend {
+            list-style: none;
+            text-align: left;
+            margin-left: -30px;
+            margin-top: -10px;
+        }
+
+        .legend li {
+            display: inline-block;
+            margin-right: -5px;
+        }
+
+        .legend span {
+            border: 0px solid #000;
+            float: left;
+            width: 20px;
+            height: 10px;
+            margin: .5px;
+        }
+
+        /* migration colours */
+        .legend .NETstep1 {
+            background-color: #7F3B08;
+        }
+
+        .legend .NETstep2 {
+            background-color: #B35806;
+        }
+
+        .legend .NETstep3 {
+            background-color: #E08214;
+        }
+
+        .legend .NETstep4 {
+            background-color: #FDB863;
+        }
+
+        .legend .NETstep5 {
+            background-color: #EDEDBC;
+        }
+
+        .legend .NETstep6 {
+            background-color: #B2ABD2;
+        }
+
+        .legend .NETstep7 {
+            background-color: #5E3C99;
+        }    
     </style>
 </head>
+
 <body>
+    <div id="menu">
+<!--         <div class="category">
+            <button class="toggle-btn">Admin Boundaries</button>
+            <ul class="submenu">
+                <li><input type="checkbox" id="adm0"> Adm 0</li>
+                <li><input type="checkbox" id="adm1"> Adm 1</li>
+                <li><input type="checkbox" id="adm2"> Adm 2</li>
+            </ul>
+        </div> -->
 
-<div id="map"></div>
+        <div class="category">
+            <button class="toggle-btn">Net Migration</button>
+            <ul class="submenu">
+                <li><input type="checkbox" id="NetRa2000"> 2000</li>
+            </ul>
+        </div>
 
-<div class="buttons">
-    <button class="btn" id="add-layer">Add Local GeoJSON Layer</button>
-    <button class="btn" id="export-geojson">Export GeoJSON</button>
-</div>
+<!--         <div class="category">
+            <button class="toggle-btn">Dry Days</button>
+            <ul class="submenu">
+                <li><input type="checkbox" id="MLDS 2005"> 2005</li>
+                <li><input type="checkbox" id="MLDS 2010"> 2010</li>
+            </ul>
+        </div>   -->      
+    </div>
 
-<script>
-mapboxgl.accessToken = 'pk.eyJ1IjoiZ2JieSIsImEiOiJjbDRnMnhpcWowOTZ0M2ltYmVidmFlYzUyIn0.YMvE-Zv6jfxhACw69xOvLQ';
-const map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/gbby/cl59w4ws5000v15qti5ts2dlf',
-    center: [8.134336, 8.867609],
-    zoom: 6,
-    preserveDrawingBuffer: true,
-    projection: 'globe'
-});
+    <div id="menu2">
+<!--         <div class="category">
+            <a href="ghana_sync.html"><button class="toggle-btn">Compare Variables</button></a>
+        </div>
 
-    // Initialize Draw Control
-    const draw = new MapboxDraw({
-        displayControlsDefault: false,
-        controls: {
-            polygon: true,
-            line_string: true,
-            point: true,
-            trash: true
-        }
-    });
+        <div class="category">
+            <a href="ghana_scrolling.html"><button class="toggle-btn">Modelling Results</button></a>
+        </div> -->
 
-    map.addControl(draw, 'top-left');
+        <div class="category">
+            <a href="index.html"><button class="toggle-btn">Home</button></a>
+        </div>
+    </div>    
 
-    let addedLayer = false; // Track if the local layer has been added
+    <script>
+        // Toggle submenu visibility
+        document.querySelectorAll(".toggle-btn").forEach(button => {
+            button.addEventListener("click", function () {
+                const submenu = this.nextElementSibling;
+                submenu.style.display = submenu.style.display === "block" ? "none" : "block";
+            });
+        });
 
-    // Function to load a local GeoJSON file and add it to the map
-    async function addLocalGeoJSON() {
-        if (addedLayer) return; // Prevent multiple additions
+        // Handle layer visibility toggles
+        document.querySelectorAll("input[type='checkbox']").forEach(checkbox => {
+            checkbox.addEventListener("change", function () {
+                const layerId = this.id;
+                if (map.getLayer(layerId)) {
+                    map.setLayoutProperty(layerId, "visibility", this.checked ? "visible" : "none");
+                }
+            });
+        }); 
+    </script>
 
-        try {
-            const response = await fetch('nigeria_test.geojson'); // Load GeoJSON from local directory
-            if (!response.ok) throw new Error("Failed to load GeoJSON file");
+    <div id="map"></div>
 
-            const geojsonData = await response.json();
-
-            map.addSource('Nigeria_test', {
-        'type': 'geojson',
-        'data': geojsonData
-    });
-
-    // MLDS 2005
-    map.addLayer({
-        'id': 'Nigeria_test',
-        'type': 'fill',
-        'source': 'Nigeria_test',
-        'layout': {
-            'visibility': 'none'
-        },
-        'paint': {
-            'fill-color': {
-                property: 'Nigeria_MLDS_Yrs25km_MLDSRate2005',
-                stops: [
-                    [-0.33651, "#feedde"],
-                    [-0.116, '#fdd0a2'],
-                    [-0.05818, '#fdae6b'],
-                    [-0.01087, '#fd8d3c'],
-                    [0.03989, '#f16913'],
-                    [0.09784, '#d94801'],
-                    [0.64773, '#8c2d04']
-                ]
-            },
-            'fill-opacity': 0.95
-        }
-    });
-
-            addedLayer = true;
-        } catch (error) {
-            alert("Error loading GeoJSON: " + error.message);
-        }
-    }
-
-    // Button click event to load the local GeoJSON file
-    document.getElementById('add-layer').addEventListener('click', addLocalGeoJSON);
-
-    // Export function
-    document.getElementById('export-geojson').addEventListener('click', async () => {
-        const drawnData = draw.getAll();
-
-        // Get added layer data if available
-        let addedLayerData = map.getSource('Nigeria_test') ? map.getSource('Nigeria_test')._data : null;
-
-        // Merge both drawn and added data
-        let mergedGeoJSON = {
-            type: "FeatureCollection",
-            features: [...drawnData.features]
-        };
-
-        if (addedLayerData) {
-            mergedGeoJSON.features.push(...addedLayerData.features);
-        }
-
-        if (mergedGeoJSON.features.length === 0) {
-            alert("No data to export!");
-            return;
-        }
-
-        // Convert merged data to a downloadable file
-        const blob = new Blob([JSON.stringify(mergedGeoJSON)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'exported-data.geojson';
-        a.click();
-        URL.revokeObjectURL(url);
-    });
-</script>
+    <script src="js/bangladesh.js" type="text/javascript"></script>
 
 </body>
+
 </html>

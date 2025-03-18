@@ -1,8 +1,8 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoiZ2JieSIsImEiOiJjbDRnMnhpcWowOTZ0M2ltYmVidmFlYzUyIn0.YMvE-Zv6jfxhACw69xOvLQ';
 const map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/gbby/cl59w4ws5000v15qti5ts2dlf',
-    center: [8.134336, 8.867609],
+    style: 'mapbox://styles/gbby/cm8azkjqf003c01rxdyxofu26',
+    center: [90.3900326, 23.754335],
     zoom: 6,
     preserveDrawingBuffer: true,
     projection: 'globe'
@@ -64,6 +64,12 @@ map.on('load', () => {
         'type': 'geojson',
         'data': './data/mapbox/Nigera_migration.geojson'
     });
+
+    map.addSource('bangladesh', {
+        'type': 'geojson',
+        'data': './data/mapbox/bangladesh.geojson'
+    });    
+
 
     // ADD LAYERS
 
@@ -156,106 +162,28 @@ map.on('load', () => {
         filter: ["==", "admin0Name", "Nigeria"]
     });  
 
-    // Net Migration 2000s
-    // Hex string: ['#b35806','#f1a340','#fee0b6','#f7f7f7','#d8daeb','#998ec3','#542788']
     map.addLayer({
-        'id': 'NM 2000',
+        'id': 'NetRa2000',
         'type': 'fill',
-        'source': 'Nigeria_test',
+        'source': 'bangladesh',
         'layout': {
             'visibility': 'none'
         },
         'paint': {
-            'fill-color': {
-                property: 'NetMigr200',
-                stops: [
-                    [-26131, '#b35806'],
-                    [-570.33, '#f1a340'],
-                    [0, '#fee0b6'],
-                    [460.50, '#f7f7f7'],
-                    [1476, '#d8daeb'],
-                    [3866.50, '#998ec3'],
-                    [262201, '#542788']
-                ]
-            },
-            'fill-opacity': 0.95
+            "fill-color": [
+                "step",
+                ["get", "NetRa2000"], // Using equal count quantile with 7 breaks
+                "#7F3B08",  // Dark Brown (≤ -282)
+                -282, "#B35806",  // Burnt Orange (-282 to -0.85)
+                -0.85, "#E08214",  // Orange (-0.85 to -0.30)
+                -0.30, "#FDB863",  // Light Orange (-0.30 to -0.16)
+                -0.16, "#EDEDBC",  // Light Neutral (-0.16 to 0.00)
+                0.00, "#B2ABD2",  // Light Purple (0.00 to 0.05)
+                0.05, "#5E3C99"   // Dark Purple (≥ 0.05)
+            ],
+            'fill-opacity': 0.75
         }
     });
-
-    // Net Migration 2000s
-    map.addLayer({
-        'id': 'NM 2015',
-        'type': 'fill',
-        'source': 'Nigeria_test',
-        'layout': {
-            'visibility': 'none'
-        },
-        'paint': {
-            'fill-color': {
-                property: 'NetMigr2_1',
-                stops: [
-                    [-42434, '#b35806'],
-                    [-2393.50, '#f1a340'],
-                    [-499.33, '#fee0b6'],
-                    [0, '#f7f7f7'],
-                    [367.33, '#d8daeb'],
-                    [1409.67, '#998ec3'],
-                    [216667, '#542788']
-                ]
-            },
-            'fill-opacity': 0.95
-        }
-    });
-
-    // MLDS 2005
-    map.addLayer({
-        'id': 'MLDS 2005',
-        'type': 'fill',
-        'source': 'Nigeria_test',
-        'layout': {
-            'visibility': 'none'
-        },
-        'paint': {
-            'fill-color': {
-                property: 'Nigeria_MLDS_Yrs25km_MLDSRate2005',
-                stops: [
-                    [-0.33651, "#feedde"],
-                    [-0.116, '#fdd0a2'],
-                    [-0.05818, '#fdae6b'],
-                    [-0.01087, '#fd8d3c'],
-                    [0.03989, '#f16913'],
-                    [0.09784, '#d94801'],
-                    [0.64773, '#8c2d04']
-                ]
-            },
-            'fill-opacity': 0.95
-        }
-    });
-
-    // MLDS 2010
-    map.addLayer({
-        'id': 'MLDS 2010',
-        'type': 'fill',
-        'source': 'Nigeria_test',
-        'layout': {
-            'visibility': 'none'
-        },
-        'paint': {
-            'fill-color': {
-                property: 'Nigeria_MLDS_Yrs25km_MLDSRate2010',
-                stops: [
-                    [-0.43825, "#feedde"],
-                    [-0.14286, '#fdd0a2'],
-                    [-0.07128, '#fdae6b'],
-                    [-0.03079, '#fd8d3c'],
-                    [0.00054, '#f16913'],
-                    [0.04896, '#d94801'],
-                    [0.33, '#8c2d04']
-                ]
-            },
-            'fill-opacity': 0.95
-        }
-    });    
 
 });
 

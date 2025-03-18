@@ -1,7 +1,7 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoiZ2JieSIsImEiOiJjbDRnMnhpcWowOTZ0M2ltYmVidmFlYzUyIn0.YMvE-Zv6jfxhACw69xOvLQ';
 const map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/gbby/clhb7frzz021n01pa1scr6r2e',
+    style: 'mapbox://styles/gbby/cl4g7cfhv001n14qxgenegeqn',
     center: [-0.750892, 8.208771],
     zoom: 6,
     preserveDrawingBuffer: true,
@@ -23,7 +23,7 @@ const draw = new MapboxDraw({
 // If no position is specified the control defaults to `top-right`. See the docs
 // for more details: https://docs.mapbox.com/mapbox-gl-js/api/#map#addcontrol
 
-map.addControl(draw, 'top-left');
+map.addControl(draw, 'top-right');
 
 map.addControl(new MapboxExportControl.MapboxExportControl({
     PageSize: MapboxExportControl.Size.A4,
@@ -34,7 +34,7 @@ map.addControl(new MapboxExportControl.MapboxExportControl({
     PrintableArea: true,
     Local: 'en',
     accessToken: mapboxgl.accessToken
-}), 'top-left');
+}), 'top-right');
 
 // Wait until the map has finished loading.
 map.on('load', () => {
@@ -177,16 +177,14 @@ map.on('load', () => {
         'paint': {
             "fill-color": [
                 "step",
-                ["get", "NETRa1990"],
-                "#7f3b08", // using quantile breaks
-                -225, "#b35806",
-                -150, "#e08214",
-                -75, "#fdb863",
-                0, "#fee0b6",
-                50, "#f7f7f7",
-                100, "#d8daeb",
-                150, "#b2abd2",
-                200, "#542788"
+                ["get", "NETRa1990"], // Using equal count quantile with 7 breaks
+                "#7F3B08",  // Dark Brown (≤ -282)
+                -282, "#B35806",  // Burnt Orange (-282 to -0.85)
+                -0.85, "#E08214",  // Orange (-0.85 to -0.30)
+                -0.30, "#FDB863",  // Light Orange (-0.30 to -0.16)
+                -0.16, "#EDEDBC",  // Light Neutral (-0.16 to 0.00)
+                0.00, "#B2ABD2",  // Light Purple (0.00 to 0.05)
+                0.05, "#5E3C99"   // Dark Purple (≥ 0.05)
             ],
             'fill-opacity': 0.75
         }
@@ -202,16 +200,14 @@ map.on('load', () => {
         'paint': {
             "fill-color": [
                 "step",
-                ["get", "NETRa1995"],
-                "#762a83",  // using pretty breaks
-                -225, "#9970ab",
-                -150, "#c2a5cf",
-                -75, "#e7d4e8",
-                0, "#f7f7f7",
-                50, "#fdb863",
-                100, "#e08214",
-                150, "#b35806",
-                200, "#7f3b08"
+                ["get", "NETRa1995"], // Using equal count quantile with 7 breaks
+                "#7F3B08",  // Dark Brown (≤ -282)
+                -282, "#B35806",  // Burnt Orange (-282 to -0.85)
+                -0.85, "#E08214",  // Orange (-0.85 to -0.30)
+                -0.30, "#FDB863",  // Light Orange (-0.30 to -0.16)
+                -0.16, "#EDEDBC",  // Light Neutral (-0.16 to 0.00)
+                0.00, "#B2ABD2",  // Light Purple (0.00 to 0.05)
+                0.05, "#5E3C99"   // Dark Purple (≥ 0.05)
             ],
             'fill-opacity': 0.75
         }
@@ -227,16 +223,14 @@ map.on('load', () => {
         'paint': {
             "fill-color": [
                 "step",
-                ["get", "NETRa2000"],
-                "#762a83",  // using log breaks
-                -280.85, "#9970ab",
-                -278.38, "#c2a5cf",
-                -273.08, "#e7d4e8",
-                -261.68, "#f7f7f7",
-                -237.2, "#fdb863",
-                -184.59, "#e08214",
-                -71.55, "#b35806",
-                171.33, "#7f3b08"
+                ["get", "NETRa2000"], // Using equal count quantile with 7 breaks
+                "#7F3B08",  // Dark Brown (≤ -282)
+                -282, "#B35806",  // Burnt Orange (-282 to -0.85)
+                -0.85, "#E08214",  // Orange (-0.85 to -0.30)
+                -0.30, "#FDB863",  // Light Orange (-0.30 to -0.16)
+                -0.16, "#EDEDBC",  // Light Neutral (-0.16 to 0.00)
+                0.00, "#B2ABD2",  // Light Purple (0.00 to 0.05)
+                0.05, "#5E3C99"   // Dark Purple (≥ 0.05)
             ],
             'fill-opacity': 0.75
         }
@@ -275,16 +269,14 @@ map.on('load', () => {
         'paint': {
             "fill-color": [
                 "step",
-                ["get", "NETRa2010"],
-                "#762a83",  // Default color (for anything < -300)
-                -225, "#9970ab",
-                -150, "#c2a5cf",
-                -75, "#e7d4e8",
-                0, "#f7f7f7",
-                50, "#fdb863",
-                100, "#e08214",
-                150, "#b35806",
-                200, "#7f3b08"
+                ["get", "NETRa2010"], // Using equal count quantile with 7 breaks
+                "#7F3B08",  // Dark Brown (≤ -282)
+                -282, "#B35806",  // Burnt Orange (-282 to -0.85)
+                -0.85, "#E08214",  // Orange (-0.85 to -0.30)
+                -0.30, "#FDB863",  // Light Orange (-0.30 to -0.16)
+                -0.16, "#EDEDBC",  // Light Neutral (-0.16 to 0.00)
+                0.00, "#B2ABD2",  // Light Purple (0.00 to 0.05)
+                0.05, "#5E3C99"   // Dark Purple (≥ 0.05)
             ],
             'fill-opacity': 0.75
         }
@@ -302,13 +294,13 @@ map.on('load', () => {
             "fill-color": [
                 "step",
                 ["get", "PRECRa1990"],
-                "#440154",  // Default color (for anything < -300)
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
+                "#FFFFD9",  // ≤ -0.2 (Light Yellow)
+                -0.1, "#EDF8B1",  // Pale Yellow-Green
+                -0.06, "#C7E9B4",  // Light Green
+                -0.03, "#7FCDBB",  // Teal-Green
+                0.02, "#41B6C4",   // Teal-Blue
+                0.08, "#1D91C0",   // Blue
+                0.22, "#225EA8"    // ≥ 0.22 (Dark Blue)            
             ],
             'fill-opacity': 0.75
         }
@@ -325,13 +317,13 @@ map.on('load', () => {
             "fill-color": [
                 "step",
                 ["get", "PRECRa1995"],
-                "#440154",  
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
+                "#FFFFD9",  // ≤ -0.2 (Light Yellow)
+                -0.1, "#EDF8B1",  // Pale Yellow-Green
+                -0.06, "#C7E9B4",  // Light Green
+                -0.03, "#7FCDBB",  // Teal-Green
+                0.02, "#41B6C4",   // Teal-Blue
+                0.08, "#1D91C0",   // Blue
+                0.22, "#225EA8"    // ≥ 0.22 (Dark Blue)            
             ],
             'fill-opacity': 0.75
         }
@@ -348,13 +340,13 @@ map.on('load', () => {
             "fill-color": [
                 "step",
                 ["get", "PRECRa2000"],
-                "#440154", 
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
+                "#FFFFD9",  // ≤ -0.2 (Light Yellow)
+                -0.1, "#EDF8B1",  // Pale Yellow-Green
+                -0.06, "#C7E9B4",  // Light Green
+                -0.03, "#7FCDBB",  // Teal-Green
+                0.02, "#41B6C4",   // Teal-Blue
+                0.08, "#1D91C0",   // Blue
+                0.22, "#225EA8"    // ≥ 0.22 (Dark Blue)            
             ],
             'fill-opacity': 0.75
         }
@@ -371,13 +363,13 @@ map.on('load', () => {
             "fill-color": [
                 "step",
                 ["get", "PRECRa2005"],
-                "#440154", 
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
+                "#FFFFD9",  // ≤ -0.2 (Light Yellow)
+                -0.1, "#EDF8B1",  // Pale Yellow-Green
+                -0.06, "#C7E9B4",  // Light Green
+                -0.03, "#7FCDBB",  // Teal-Green
+                0.02, "#41B6C4",   // Teal-Blue
+                0.08, "#1D91C0",   // Blue
+                0.22, "#225EA8"    // ≥ 0.22 (Dark Blue)            
             ],
             'fill-opacity': 0.75
         }
@@ -394,13 +386,13 @@ map.on('load', () => {
             "fill-color": [
                 "step",
                 ["get", "PRECRa2010"],
-                "#440154", 
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
+                "#FFFFD9",  // ≤ -0.2 (Light Yellow)
+                -0.1, "#EDF8B1",  // Pale Yellow-Green
+                -0.06, "#C7E9B4",  // Light Green
+                -0.03, "#7FCDBB",  // Teal-Green
+                0.02, "#41B6C4",   // Teal-Blue
+                0.08, "#1D91C0",   // Blue
+                0.22, "#225EA8"    // ≥ 0.22 (Dark Blue)            
             ],
             'fill-opacity': 0.75
         }
@@ -418,17 +410,17 @@ map.on('load', () => {
             "fill-color": [
                 "step",
                 ["get", "MLWSRa1990"],
-                "#440154", 
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
+                "#F7FBFF",  // ≤ -0.49 (Very Light Blue)
+                -0.22, "#DEEBF7",  // Light Blue
+                -0.13, "#C6DBEF",  // Soft Blue
+                -0.06, "#9ECAE1",  // Medium Light Blue
+                0.02, "#6BAED6",   // Medium Blue
+                0.12, "#3182BD",   // Dark Blue
+                0.73, "#08519C"    // ≥ 0.73 (Very Dark Blue)
             ],
             'fill-opacity': 0.75
         }
-    });    
+    });
 
     map.addLayer({
         'id': 'MLWSRa1995',
@@ -441,17 +433,17 @@ map.on('load', () => {
             "fill-color": [
                 "step",
                 ["get", "MLWSRa1995"],
-                "#440154", 
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
+                "#F7FBFF",  // ≤ -0.49 (Very Light Blue)
+                -0.22, "#DEEBF7",  // Light Blue
+                -0.13, "#C6DBEF",  // Soft Blue
+                -0.06, "#9ECAE1",  // Medium Light Blue
+                0.02, "#6BAED6",   // Medium Blue
+                0.12, "#3182BD",   // Dark Blue
+                0.73, "#08519C"    // ≥ 0.73 (Very Dark Blue)
             ],
             'fill-opacity': 0.75
         }
-    });    
+    });
 
     map.addLayer({
         'id': 'MLWSRa2000',
@@ -464,18 +456,18 @@ map.on('load', () => {
             "fill-color": [
                 "step",
                 ["get", "MLWSRa2000"],
-                "#440154",  
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
+                "#F7FBFF",  // ≤ -0.49 (Very Light Blue)
+                -0.22, "#DEEBF7",  // Light Blue
+                -0.13, "#C6DBEF",  // Soft Blue
+                -0.06, "#9ECAE1",  // Medium Light Blue
+                0.02, "#6BAED6",   // Medium Blue
+                0.12, "#3182BD",   // Dark Blue
+                0.73, "#08519C"    // ≥ 0.73 (Very Dark Blue)
             ],
             'fill-opacity': 0.75
         }
     });
-    
+
     map.addLayer({
         'id': 'MLWSRa2005',
         'type': 'fill',
@@ -487,17 +479,17 @@ map.on('load', () => {
             "fill-color": [
                 "step",
                 ["get", "MLWSRa2005"],
-                "#440154", 
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
+                "#F7FBFF",  // ≤ -0.49 (Very Light Blue)
+                -0.22, "#DEEBF7",  // Light Blue
+                -0.13, "#C6DBEF",  // Soft Blue
+                -0.06, "#9ECAE1",  // Medium Light Blue
+                0.02, "#6BAED6",   // Medium Blue
+                0.12, "#3182BD",   // Dark Blue
+                0.73, "#08519C"    // ≥ 0.73 (Very Dark Blue)
             ],
             'fill-opacity': 0.75
         }
-    });    
+    });
 
     map.addLayer({
         'id': 'MLWSRa2010',
@@ -510,18 +502,18 @@ map.on('load', () => {
             "fill-color": [
                 "step",
                 ["get", "MLWSRa2010"],
-                "#440154", 
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
+                "#F7FBFF",  // ≤ -0.49 (Very Light Blue)
+                -0.22, "#DEEBF7",  // Light Blue
+                -0.13, "#C6DBEF",  // Soft Blue
+                -0.06, "#9ECAE1",  // Medium Light Blue
+                0.02, "#6BAED6",   // Medium Blue
+                0.12, "#3182BD",   // Dark Blue
+                0.73, "#08519C"    // ≥ 0.73 (Very Dark Blue)
             ],
             'fill-opacity': 0.75
         }
     });
-    
+
     // Consecutive Dry Days 
     map.addLayer({
         'id': 'MLDSRa1990',
@@ -534,17 +526,17 @@ map.on('load', () => {
             "fill-color": [
                 "step",
                 ["get", "MLDSRa1990"],
-                "#440154", 
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
+                "#FFF5EB",  // ≤ -0.38 (Very Light Orange)
+                -0.13, "#FEE6CE",  // Light Orange
+                -0.05, "#FDD0A2",  // Peach Orange
+                0.02, "#FDAE6B",   // Medium Orange
+                0.08, "#FD8D3C",   // Burnt Orange
+                0.18, "#E6550D",   // Dark Orange
+                0.81, "#A63603"    // ≥ 0.81 (Very Dark Orange)
             ],
             'fill-opacity': 0.75
         }
-    });    
+    });
 
     map.addLayer({
         'id': 'MLDSRa1995',
@@ -557,17 +549,17 @@ map.on('load', () => {
             "fill-color": [
                 "step",
                 ["get", "MLDSRa1995"],
-                "#440154", 
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
+                "#FFF5EB",  // ≤ -0.38 (Very Light Orange)
+                -0.13, "#FEE6CE",  // Light Orange
+                -0.05, "#FDD0A2",  // Peach Orange
+                0.02, "#FDAE6B",   // Medium Orange
+                0.08, "#FD8D3C",   // Burnt Orange
+                0.18, "#E6550D",   // Dark Orange
+                0.81, "#A63603"    // ≥ 0.81 (Very Dark Orange)
             ],
             'fill-opacity': 0.75
         }
-    });    
+    });
 
     map.addLayer({
         'id': 'MLDSRa2000',
@@ -580,18 +572,18 @@ map.on('load', () => {
             "fill-color": [
                 "step",
                 ["get", "MLDSRa2000"],
-                "#440154",  
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
+                "#FFF5EB",  // ≤ -0.38 (Very Light Orange)
+                -0.13, "#FEE6CE",  // Light Orange
+                -0.05, "#FDD0A2",  // Peach Orange
+                0.02, "#FDAE6B",   // Medium Orange
+                0.08, "#FD8D3C",   // Burnt Orange
+                0.18, "#E6550D",   // Dark Orange
+                0.81, "#A63603"    // ≥ 0.81 (Very Dark Orange)
             ],
             'fill-opacity': 0.75
         }
     });
-    
+
     map.addLayer({
         'id': 'MLDSRa2005',
         'type': 'fill',
@@ -603,17 +595,17 @@ map.on('load', () => {
             "fill-color": [
                 "step",
                 ["get", "MLDSRa2005"],
-                "#440154", 
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
+                "#FFF5EB",  // ≤ -0.38 (Very Light Orange)
+                -0.13, "#FEE6CE",  // Light Orange
+                -0.05, "#FDD0A2",  // Peach Orange
+                0.02, "#FDAE6B",   // Medium Orange
+                0.08, "#FD8D3C",   // Burnt Orange
+                0.18, "#E6550D",   // Dark Orange
+                0.81, "#A63603"    // ≥ 0.81 (Very Dark Orange)
             ],
             'fill-opacity': 0.75
         }
-    });    
+    });
 
     map.addLayer({
         'id': 'MLDSRa2010',
@@ -626,18 +618,18 @@ map.on('load', () => {
             "fill-color": [
                 "step",
                 ["get", "MLDSRa2010"],
-                "#440154", 
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
+                "#FFF5EB",  // ≤ -0.38 (Very Light Orange)
+                -0.13, "#FEE6CE",  // Light Orange
+                -0.05, "#FDD0A2",  // Peach Orange
+                0.02, "#FDAE6B",   // Medium Orange
+                0.08, "#FD8D3C",   // Burnt Orange
+                0.18, "#E6550D",   // Dark Orange
+                0.81, "#A63603"    // ≥ 0.81 (Very Dark Orange)
             ],
             'fill-opacity': 0.75
         }
     });
-    
+
     // Max Temp Extremes 
     map.addLayer({
         'id': 'TMAXRa1990',
@@ -650,17 +642,17 @@ map.on('load', () => {
             "fill-color": [
                 "step",
                 ["get", "TMAXRa1990"],
-                "#440154", 
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
+                "#fee5d9", -0.05,  // Very Light Red
+                "#fcae91", -0.02,  // Light Red
+                "#fb6a4a", -0.01,  // Medium Red
+                "#de2d26", 0.00,   // Strong Red
+                "#a50f15", 0.01,   // Dark Red
+                "#67000d", 0.02,   // Very Dark Red
+                "#49000d"  // Deepest Red (default for ≥ 0.06)
             ],
             'fill-opacity': 0.75
         }
-    });    
+    });
 
     map.addLayer({
         'id': 'TMAXRa1995',
@@ -673,17 +665,17 @@ map.on('load', () => {
             "fill-color": [
                 "step",
                 ["get", "TMAXRa1995"],
-                "#440154", 
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
+                "#fee5d9", -0.05,  // Very Light Red
+                "#fcae91", -0.02,  // Light Red
+                "#fb6a4a", -0.01,  // Medium Red
+                "#de2d26", 0.00,   // Strong Red
+                "#a50f15", 0.01,   // Dark Red
+                "#67000d", 0.02,   // Very Dark Red
+                "#49000d"  // Deepest Red (default for ≥ 0.06)
             ],
             'fill-opacity': 0.75
         }
-    });    
+    });
 
     map.addLayer({
         'id': 'TMAXRa2000',
@@ -696,18 +688,18 @@ map.on('load', () => {
             "fill-color": [
                 "step",
                 ["get", "TMAXRa2000"],
-                "#440154",  
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
+                "#fee5d9", -0.05,  // Very Light Red
+                "#fcae91", -0.02,  // Light Red
+                "#fb6a4a", -0.01,  // Medium Red
+                "#de2d26", 0.00,   // Strong Red
+                "#a50f15", 0.01,   // Dark Red
+                "#67000d", 0.02,   // Very Dark Red
+                "#49000d"  // Deepest Red (default for ≥ 0.06)
             ],
             'fill-opacity': 0.75
         }
     });
-    
+
     map.addLayer({
         'id': 'TMAXRa2005',
         'type': 'fill',
@@ -719,17 +711,17 @@ map.on('load', () => {
             "fill-color": [
                 "step",
                 ["get", "TMAXRa2005"],
-                "#440154", 
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
+                "#fee5d9", -0.05,  // Very Light Red
+                "#fcae91", -0.02,  // Light Red
+                "#fb6a4a", -0.01,  // Medium Red
+                "#de2d26", 0.00,   // Strong Red
+                "#a50f15", 0.01,   // Dark Red
+                "#67000d", 0.02,   // Very Dark Red
+                "#49000d"  // Deepest Red (default for ≥ 0.06)
             ],
             'fill-opacity': 0.75
         }
-    });    
+    });
 
     map.addLayer({
         'id': 'TMAXRa2010',
@@ -742,17 +734,17 @@ map.on('load', () => {
             "fill-color": [
                 "step",
                 ["get", "TMAXRa2010"],
-                "#440154", 
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
+                "#fee5d9", -0.05,  // Very Light Red
+                "#fcae91", -0.02,  // Light Red
+                "#fb6a4a", -0.01,  // Medium Red
+                "#de2d26", 0.00,   // Strong Red
+                "#a50f15", 0.01,   // Dark Red
+                "#67000d", 0.02,   // Very Dark Red
+                "#49000d"  // Deepest Red (default for ≥ 0.06)
             ],
             'fill-opacity': 0.75
         }
-    });    
+    });
 
     // Min Temp Extremes 
     map.addLayer({
@@ -766,17 +758,17 @@ map.on('load', () => {
             "fill-color": [
                 "step",
                 ["get", "TMINRa1990"],
-                "#440154", 
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
+                "#edf8fb", -0.18,  // Very Light Blue
+                "#b3cde3", -0.08,  // Light Blue
+                "#8c96c6", -0.03,  // Medium Blue
+                "#8856a7", 0.01,   // Blue-Purple
+                "#810f7c", 0.04,   // Dark Purple
+                "#4d004b", 0.09,   // Very Dark Purple
+                "#2e004b"  // Deepest Purple (default for ≥ 0.28)
             ],
             'fill-opacity': 0.75
         }
-    });    
+    });
 
     map.addLayer({
         'id': 'TMINRa1995',
@@ -789,17 +781,17 @@ map.on('load', () => {
             "fill-color": [
                 "step",
                 ["get", "TMINRa1995"],
-                "#440154", 
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
+                "#edf8fb", -0.18,  // Very Light Blue
+                "#b3cde3", -0.08,  // Light Blue
+                "#8c96c6", -0.03,  // Medium Blue
+                "#8856a7", 0.01,   // Blue-Purple
+                "#810f7c", 0.04,   // Dark Purple
+                "#4d004b", 0.09,   // Very Dark Purple
+                "#2e004b"  // Deepest Purple (default for ≥ 0.28)
             ],
             'fill-opacity': 0.75
         }
-    });    
+    });
 
     map.addLayer({
         'id': 'TMINRa2000',
@@ -812,18 +804,18 @@ map.on('load', () => {
             "fill-color": [
                 "step",
                 ["get", "TMINRa2000"],
-                "#440154",  
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
+                "#edf8fb", -0.18,  // Very Light Blue
+                "#b3cde3", -0.08,  // Light Blue
+                "#8c96c6", -0.03,  // Medium Blue
+                "#8856a7", 0.01,   // Blue-Purple
+                "#810f7c", 0.04,   // Dark Purple
+                "#4d004b", 0.09,   // Very Dark Purple
+                "#2e004b"  // Deepest Purple (default for ≥ 0.28)
             ],
             'fill-opacity': 0.75
         }
     });
-    
+
     map.addLayer({
         'id': 'TMINRa2005',
         'type': 'fill',
@@ -835,17 +827,17 @@ map.on('load', () => {
             "fill-color": [
                 "step",
                 ["get", "TMINRa2005"],
-                "#440154", 
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
+                "#edf8fb", -0.18,  // Very Light Blue
+                "#b3cde3", -0.08,  // Light Blue
+                "#8c96c6", -0.03,  // Medium Blue
+                "#8856a7", 0.01,   // Blue-Purple
+                "#810f7c", 0.04,   // Dark Purple
+                "#4d004b", 0.09,   // Very Dark Purple
+                "#2e004b"  // Deepest Purple (default for ≥ 0.28)
             ],
             'fill-opacity': 0.75
         }
-    });    
+    });
 
     map.addLayer({
         'id': 'TMINRa2010',
@@ -858,133 +850,17 @@ map.on('load', () => {
             "fill-color": [
                 "step",
                 ["get", "TMINRa2010"],
-                "#440154", 
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
+                "#edf8fb", -0.18,  // Very Light Blue
+                "#b3cde3", -0.08,  // Light Blue
+                "#8c96c6", -0.03,  // Medium Blue
+                "#8856a7", 0.01,   // Blue-Purple
+                "#810f7c", 0.04,   // Dark Purple
+                "#4d004b", 0.09,   // Very Dark Purple
+                "#2e004b"  // Deepest Purple (default for ≥ 0.28)
             ],
             'fill-opacity': 0.75
         }
     });
-
-    // Conflict 
-    map.addLayer({
-        'id': 'CONFRa1990',
-        'type': 'fill',
-        'source': 'ghana',
-        'layout': {
-            'visibility': 'none'
-        },
-        'paint': {
-            "fill-color": [
-                "step",
-                ["get", "CONFRa1990"],
-                "#440154", 
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
-            ],
-            'fill-opacity': 0.75
-        }
-    });    
-
-    map.addLayer({
-        'id': 'CONFRa1995',
-        'type': 'fill',
-        'source': 'ghana',
-        'layout': {
-            'visibility': 'none'
-        },
-        'paint': {
-            "fill-color": [
-                "step",
-                ["get", "CONFRa1995"],
-                "#440154", 
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
-            ],
-            'fill-opacity': 0.75
-        }
-    });    
-
-    map.addLayer({
-        'id': 'CONFRa2000',
-        'type': 'fill',
-        'source': 'ghana',
-        'layout': {
-            'visibility': 'none'
-        },
-        'paint': {
-            "fill-color": [
-                "step",
-                ["get", "CONFRa2000"],
-                "#440154",  
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
-            ],
-            'fill-opacity': 0.75
-        }
-    });
-    
-    map.addLayer({
-        'id': 'CONFRa2005',
-        'type': 'fill',
-        'source': 'ghana',
-        'layout': {
-            'visibility': 'none'
-        },
-        'paint': {
-            "fill-color": [
-                "step",
-                ["get", "CONFRa2005"],
-                "#440154", 
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
-            ],
-            'fill-opacity': 0.75
-        }
-    });    
-
-    map.addLayer({
-        'id': 'CONFRa2010',
-        'type': 'fill',
-        'source': 'ghana',
-        'layout': {
-            'visibility': 'none'
-        },
-        'paint': {
-            "fill-color": [
-                "step",
-                ["get", "CONFRa2010"],
-                "#440154", 
-                -200, "#482677",
-                -100, "#3e4989",
-                0, "#26828e",
-                75, "#1f9e89",
-                150, "#6cce5a",
-                200, "#fde725"
-            ],
-            'fill-opacity': 0.75
-        }
-    });    
 
 });
 
@@ -1045,3 +921,19 @@ exportBtn.onclick = () => {
 };
 
 document.body.appendChild(exportBtn);
+
+
+/* 'paint': {
+    "fill-color": [
+        "step",
+        ["get", "NETRa1990"],
+        "#7f3b08", // using quantile breaks
+        -225, "#b35806",
+        -150, "#e08214",
+        -75, "#fdb863",
+        0, "#fee0b6",
+        50, "#f7f7f7",
+        100, "#d8daeb",
+        150, "#b2abd2",
+        200, "#542788"
+    ], */

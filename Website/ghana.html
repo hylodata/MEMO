@@ -7,102 +7,351 @@
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
-    <!-- <script src="https://unpkg.com/mapbox-gl-draw-additional-tools"></script> -->
-<!--     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
-        integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
-        crossorigin="anonymous"></script>      -->
 
-    <link href="https://cdn.jsdelivr.net/npm/@watergis/mapbox-gl-export@3.5.7/dist/mapbox-gl-export.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/@watergis/mapbox-gl-export@3.5.7/dist/mapbox-gl-export.umd.js"></script>        
+    <link href="https://cdn.jsdelivr.net/npm/@watergis/mapbox-gl-export@3.5.7/dist/mapbox-gl-export.css"
+        rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@watergis/mapbox-gl-export@3.5.7/dist/mapbox-gl-export.umd.js"></script>
 
+    <!-- <script src="https://unpkg.com/mapbox-gl-draw-additional-tools"></script> -->    
     <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.3/mapbox-gl-draw.js'></script>
-    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.3/mapbox-gl-draw.css'
-        type='text/css' />
+    <link href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.3/mapbox-gl-draw.css' rel='stylesheet' type='text/css' />
+
     <style>
-        html, body {
+        html,
+        body {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
             overflow: hidden;
         }
+
         #map {
             width: 100%;
             height: 100%;
-        }      
+        }
+
+        #menu {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: white;
+            padding-top: 8px;
+            padding-left: 8px;
+            padding-right: 8px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            /* Keep it above the map */
+            width: 220px;
+        }
+
+        #menu2 {
+            position: absolute;
+            bottom: 40px;
+            left: 10px;
+            background: white;
+            padding-top: 8px;
+            padding-left: 8px;
+            padding-right: 8px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            /* Keep it above the map */
+            width: 220px;
+        }        
+
+        .category {
+            margin-bottom: 10px;
+        }
+
+        .submenu {
+            list-style: none;
+            padding-left: 15px;
+            display: none;
+        }
+
+        .toggle-btn {
+            background: #007cbf;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            border-radius: 3px;
+        }
+
+        .toggle-btn:hover {
+            background: #005f8d;
+        }
+
+        .legend {
+            list-style: none;
+            text-align: left;
+            margin-left: -30px;
+            margin-top: -10px;
+        }
+
+        .legend li {
+            display: inline-block;
+            margin-right: -5px;
+        }
+
+        .legend span {
+            border: 0px solid #000;
+            float: left;
+            width: 20px;
+            height: 10px;
+            margin: .5px;
+        }
+
+        /* migration colours */
+        .legend .NETstep1 {
+            background-color: #7F3B08;
+        }
+
+        .legend .NETstep2 {
+            background-color: #B35806;
+        }
+
+        .legend .NETstep3 {
+            background-color: #E08214;
+        }
+
+        .legend .NETstep4 {
+            background-color: #FDB863;
+        }
+
+        .legend .NETstep5 {
+            background-color: #EDEDBC;
+        }
+
+        .legend .NETstep6 {
+            background-color: #B2ABD2;
+        }
+
+        .legend .NETstep7 {
+            background-color: #5E3C99;
+        }
+
+        /* precipitation colours */
+        .legend .PRECstep1 {
+            background-color: #FFFFD9;
+        }
+
+        .legend .PRECstep2 {
+            background-color: #EDF8B1;
+        }
+
+        .legend .PRECstep3 {
+            background-color: #C7E9B4;
+        }
+
+        .legend .PRECstep4 {
+            background-color: #7FCDBB;
+        }
+
+        .legend .PRECstep5 {
+            background-color: #41B6C4;
+        }
+
+        .legend .PRECstep6 {
+            background-color: #1D91C0;
+        }
+
+        .legend .PRECstep7 {
+            background-color: #225EA8;
+        }
+
+        /* MLWS colours */
+        .legend .MLWSstep1 {
+            background-color: #F7FBFF;
+        }
+
+        .legend .MLWSstep2 {
+            background-color: #DEEBF7;
+        }
+
+        .legend .MLWSstep3 {
+            background-color: #C6DBEF;
+        }
+
+        .legend .MLWSstep4 {
+            background-color: #9ECAE1;
+        }
+
+        .legend .MLWSstep5 {
+            background-color: #6BAED6;
+        }
+
+        .legend .MLWSstep6 {
+            background-color: #3182BD;
+        }
+
+        .legend .MLWSstep7 {
+            background-color: #08519C;
+        }
+        
+        /* MLDS colours */
+        .legend .MLDSstep1 {
+            background-color: #FFF5EB;
+        }
+
+        .legend .MLDSstep2 {
+            background-color: #FEE6CE;
+        }
+
+        .legend .MLDSstep3 {
+            background-color: #FDD0A2;
+        }
+
+        .legend .MLDSstep4 {
+            background-color: #FDAE6B;
+        }
+
+        .legend .MLDSstep5 {
+            background-color: #FD8D3C;
+        }
+
+        .legend .MLDSstep6 {
+            background-color: #E6550D;
+        }
+
+        .legend .MLDSstep7 {
+            background-color: #A63603;
+        }  
+        
+        /* TMAX colours */
+        .legend .TMAXstep1 {
+            background-color: #fee5d9;
+        }
+
+        .legend .TMAXstep2 {
+            background-color: #fcae91;
+        }
+
+        .legend .TMAXstep3 {
+            background-color: #fb6a4a;
+        }
+
+        .legend .TMAXstep4 {
+            background-color: #de2d26;
+        }
+
+        .legend .TMAXstep5 {
+            background-color: #a50f15;
+        }
+
+        .legend .TMAXstep6 {
+            background-color: #67000d;
+        }
+
+        .legend .TMAXstep7 {
+            background-color: #49000d;
+        } 
+        
+        /* TMIN colours */
+        .legend .TMINstep1 {
+            background-color: #edf8fb;
+        }
+
+        .legend .TMINstep2 {
+            background-color: #b3cde3;
+        }
+
+        .legend .TMINstep3 {
+            background-color: #8c96c6;
+        }
+
+        .legend .TMINstep4 {
+            background-color: #8856a7;
+        }
+
+        .legend .TMINstep5 {
+            background-color: #810f7c;
+        }
+
+        .legend .TMINstep6 {
+            background-color: #4d004b;
+        }
+
+        .legend .TMINstep7 {
+            background-color: #2e004b;
+        }       
     </style>
 </head>
 
 <body>
-    <style>
-        #menu {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background: white;
-        padding-top: 8px;
-        padding-left: 8px;
-        padding-right: 8px;
-        padding-bottom: 2px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        z-index: 9999; /* Keep it above the map */
-        width: 220px;
-        }
-
-        .category {
-        margin-bottom: 10px;
-        }
-
-        .submenu {
-        list-style: none;
-        padding-left: 15px;
-        display: none;
-        }
-
-        .toggle-btn {
-        background: #007cbf;
-        color: white;
-        border: none;
-        padding: 5px 10px;
-        cursor: pointer;
-        width: 100%;
-        text-align: left;
-        border-radius: 3px;
-        }
-
-        .toggle-btn:hover {
-        background: #005f8d;
-        }
-    </style>
-
     <div id="menu">
+        <div class="category">
+            <button class="toggle-btn">Admin Boundaries</button>
+            <ul class="submenu">
+                <li><input type="checkbox" id="adm0"> Adm 0</li>
+                <li><input type="checkbox" id="adm1"> Adm 1</li>
+                <li><input type="checkbox" id="adm2"> Adm 2</li>
+            </ul>
+        </div>
+
         <div class="category">
             <button class="toggle-btn">Net Migration</button>
             <ul class="submenu">
-                <p>Rate between net migration estimates for 25 x 25km grid</p>
+                <!-- <p>Rate between net migration estimates for 25 x 25km grid</p> -->
+                <ul class="legend">
+                    <li>-&nbsp;</li>
+                    <li><span class="NETstep1"></span></li>
+                    <li><span class="NETstep2"></span></li>
+                    <li><span class="NETstep3"></span></li>
+                    <li><span class="NETstep4"></span></li>
+                    <li><span class="NETstep5"></span></li>
+                    <li><span class="NETstep6"></span></li>
+                    <li><span class="NETstep7"></span></li>
+                    <li>&nbsp;+</li>
+                </ul>
                 <li><input type="checkbox" id="NETRa1990"> 1990</li>
                 <li><input type="checkbox" id="NETRa1995"> 1995</li>
                 <li><input type="checkbox" id="NETRa2000"> 2000</li>
                 <li><input type="checkbox" id="NETRa2005"> 2005</li>
                 <li><input type="checkbox" id="NETRa2010"> 2010</li>
             </ul>
-        </div> 
-        
+        </div>
+
         <div class="category">
             <button class="toggle-btn">Precipitation</button>
             <ul class="submenu">
+                <ul class="legend">
+                    <li>-&nbsp;</li>
+                    <li><span class="PRECstep1"></span></li>
+                    <li><span class="PRECstep2"></span></li>
+                    <li><span class="PRECstep3"></span></li>
+                    <li><span class="PRECstep4"></span></li>
+                    <li><span class="PRECstep5"></span></li>
+                    <li><span class="PRECstep6"></span></li>
+                    <li><span class="PRECstep7"></span></li>
+                    <li>&nbsp;+</li>
+                </ul>
                 <li><input type="checkbox" id="PRECRa1990"> 1990</li>
                 <li><input type="checkbox" id="PRECRa1995"> 1995</li>
                 <li><input type="checkbox" id="PRECRa2000"> 2000</li>
                 <li><input type="checkbox" id="PRECRa2005"> 2005</li>
                 <li><input type="checkbox" id="PRECRa2010"> 2010</li>
             </ul>
-        </div> 
-        
+        </div>
+
         <div class="category">
             <button class="toggle-btn">Consecutive Wet Days</button>
             <ul class="submenu">
+                <ul class="legend">
+                    <li>-&nbsp;</li>
+                    <li><span class="MLWSstep1"></span></li>
+                    <li><span class="MLWSstep2"></span></li>
+                    <li><span class="MLWSstep3"></span></li>
+                    <li><span class="MLWSstep4"></span></li>
+                    <li><span class="MLWSstep5"></span></li>
+                    <li><span class="MLWSstep6"></span></li>
+                    <li><span class="MLWSstep7"></span></li>
+                    <li>&nbsp;+</li>
+                </ul>                
                 <li><input type="checkbox" id="MLWSRa1990"> 1990</li>
                 <li><input type="checkbox" id="MLWSRa1995"> 1995</li>
                 <li><input type="checkbox" id="MLWSRa2000"> 2000</li>
@@ -110,10 +359,21 @@
                 <li><input type="checkbox" id="MLWSRa2010"> 2010</li>
             </ul>
         </div>
-        
+
         <div class="category">
             <button class="toggle-btn">Consecutive Dry Days</button>
             <ul class="submenu">
+                <ul class="legend">
+                    <li>-&nbsp;</li>
+                    <li><span class="MLDSstep1"></span></li>
+                    <li><span class="MLDSstep2"></span></li>
+                    <li><span class="MLDSstep3"></span></li>
+                    <li><span class="MLDSstep4"></span></li>
+                    <li><span class="MLDSstep5"></span></li>
+                    <li><span class="MLDSstep6"></span></li>
+                    <li><span class="MLDSstep7"></span></li>
+                    <li>&nbsp;+</li>
+                </ul>                
                 <li><input type="checkbox" id="MLDSRa1990"> 1990</li>
                 <li><input type="checkbox" id="MLDSRa1995"> 1995</li>
                 <li><input type="checkbox" id="MLDSRa2000"> 2000</li>
@@ -121,10 +381,21 @@
                 <li><input type="checkbox" id="MLDSRa2010"> 2010</li>
             </ul>
         </div>
-        
+
         <div class="category">
             <button class="toggle-btn">Max Temp Extremes</button>
             <ul class="submenu">
+                <ul class="legend">
+                    <li>-&nbsp;</li>
+                    <li><span class="TMAXstep1"></span></li>
+                    <li><span class="TMAXstep2"></span></li>
+                    <li><span class="TMAXstep3"></span></li>
+                    <li><span class="TMAXstep4"></span></li>
+                    <li><span class="TMAXstep5"></span></li>
+                    <li><span class="TMAXstep6"></span></li>
+                    <li><span class="TMAXstep7"></span></li>
+                    <li>&nbsp;+</li>
+                </ul>                  
                 <li><input type="checkbox" id="TMAXRa1990"> 1990</li>
                 <li><input type="checkbox" id="TMAXRa1995"> 1995</li>
                 <li><input type="checkbox" id="TMAXRa2000"> 2000</li>
@@ -132,10 +403,21 @@
                 <li><input type="checkbox" id="TMAXRa2010"> 2010</li>
             </ul>
         </div>
-        
+
         <div class="category">
             <button class="toggle-btn">Min Temp Extremes</button>
             <ul class="submenu">
+                <ul class="legend">
+                    <li>-&nbsp;</li>
+                    <li><span class="TMINstep1"></span></li>
+                    <li><span class="TMINstep2"></span></li>
+                    <li><span class="TMINstep3"></span></li>
+                    <li><span class="TMINstep4"></span></li>
+                    <li><span class="TMINstep5"></span></li>
+                    <li><span class="TMINstep6"></span></li>
+                    <li><span class="TMINstep7"></span></li>
+                    <li>&nbsp;+</li>
+                </ul>                
                 <li><input type="checkbox" id="TMINRa1990"> 1990</li>
                 <li><input type="checkbox" id="TMINRa1995"> 1995</li>
                 <li><input type="checkbox" id="TMINRa2000"> 2000</li>
@@ -144,24 +426,19 @@
             </ul>
         </div>
 
+    </div>
+
+    <div id="menu2">
         <div class="category">
-            <button class="toggle-btn">Conflict</button>
-            <ul class="submenu">
-                <li><input type="checkbox" id="CONFRa1990"> 1990</li>
-                <li><input type="checkbox" id="CONFRa1995"> 1995</li>
-                <li><input type="checkbox" id="CONFRa2000"> 2000</li>
-                <li><input type="checkbox" id="CONFRa2005"> 2005</li>
-                <li><input type="checkbox" id="CONFRa2010"> 2010</li>
-            </ul>
-        </div>        
-        
+            <a href="ghana_sync.html"><button class="toggle-btn">Compare Variables</button></a>
+        </div>
+
         <div class="category">
-            <button class="toggle-btn">Admin Boundaries</button>
-            <ul class="submenu">
-                <li><input type="checkbox" id="adm0"> Adm 0</li>
-                <li><input type="checkbox" id="adm1"> Adm 1</li>
-                <li><input type="checkbox" id="adm2"> Adm 2</li>
-            </ul>
+            <a href="ghana_scrolling.html"><button class="toggle-btn">Modelling Results</button></a>
+        </div>
+
+        <div class="category">
+            <a href="index.html"><button class="toggle-btn">Home</button></a>
         </div>
     </div>
 
