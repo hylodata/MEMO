@@ -8,7 +8,9 @@
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
-    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
+        integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
+        crossorigin="anonymous"></script>
     <style>
         body {
             margin: 0;
@@ -73,24 +75,34 @@
     <div id="map"></div>
 
     <script>
+        /*         mapboxgl.accessToken = 'pk.eyJ1IjoiZ2JieSIsImEiOiJjbDRnMnhpcWowOTZ0M2ltYmVidmFlYzUyIn0.YMvE-Zv6jfxhACw69xOvLQ';
+                const map = new mapboxgl.Map({
+                    container: 'map',
+                    style: 'mapbox://styles/gbby/cl59w4ws5000v15qti5ts2dlf',
+                    center: [0.47773, 7.15319],
+                    zoom: 4,
+                    projection: 'globe'
+                }); */
+
         mapboxgl.accessToken = 'pk.eyJ1IjoiZ2JieSIsImEiOiJjbDRnMnhpcWowOTZ0M2ltYmVidmFlYzUyIn0.YMvE-Zv6jfxhACw69xOvLQ';
         const map = new mapboxgl.Map({
             container: 'map',
-            style: 'mapbox://styles/gbby/cl59w4ws5000v15qti5ts2dlf',
-            center: [0.47773, 7.15319],
-            zoom: 4,
+            style: 'mapbox://styles/gbby/cl4g7cfhv001n14qxgenegeqn',
+            center: [-0.750892, 8.208771],
+            zoom: 6,
+            preserveDrawingBuffer: true,
             projection: 'globe'
         });
 
         // Necessary if working with server at Synlab
-       // var socket = io('http://10.0.1.98:5001');
+        // var socket = io('http://10.0.1.98:5001');
         const ws = new WebSocket('ws://localhost:12345');
 
-    ws.onopen = () => {
-        console.log('Connected to the server');
-        // Send an initial message if necessary, e.g., to identify this client
-        ws.send(JSON.stringify({dialID: 'mapBox'}));
-    };
+        ws.onopen = () => {
+            console.log('Connected to the server');
+            // Send an initial message if necessary, e.g., to identify this client
+            ws.send(JSON.stringify({ dialID: 'mapBox' }));
+        };
 
         // Wait until the map has finished loading.
         map.on('load', () => {
@@ -117,15 +129,20 @@
             });
 
             map.addSource('Accra', {
-              'type': 'geojson',
-              'data': './data/mapbox/accra_density.geojson'
-            });	  
+                'type': 'geojson',
+                'data': './data/mapbox/accra_density.geojson'
+            });
 
-          // next ones are point files
-          map.addSource('net_migration_200005', {
-            'type': 'geojson',
-            'data': './data/mapbox/net_migration_200005.geojson'
-          });
+            map.addSource('ghana', {
+                'type': 'geojson',
+                'data': './data/mapbox/ghana.geojson'
+            });
+
+            // next ones are point files
+            map.addSource('net_migration_200005', {
+                'type': 'geojson',
+                'data': './data/mapbox/net_migration_200005.geojson'
+            });
 
             map.addSource('net_migration_201015', {
                 'type': 'geojson',
@@ -221,22 +238,22 @@
                 },
                 'paint': {
                     'fill-color': {
-                      property: 'Population Density',
-                      stops: [
-                        [112, 'white'],
-                        [29479, 'red']
-                      ]
+                        property: 'Population Density',
+                        stops: [
+                            [112, 'white'],
+                            [29479, 'red']
+                        ]
                     },
-                  'fill-opacity': 0.75
+                    'fill-opacity': 0.75
                 }
             })
-	  
-          // 1985 Precipitation
-          map.addLayer({
-            'id': '1985 Precipitation',
-            'type': 'fill',
-            'source': 'Ghana',
-            'layout': {
+
+            // 1985 Precipitation
+            map.addLayer({
+                'id': '1985 Precipitation',
+                'type': 'fill',
+                'source': 'Ghana',
+                'layout': {
                     'visibility': 'none'
                 },
                 'paint': {
@@ -256,13 +273,13 @@
                     'fill-opacity': 0.75
                 }
             })
-	  
-          // 2010 Precipitation
-          map.addLayer({
-            'id': '2010 Precipitation',
-            'type': 'fill',
-            'source': 'Ghana',
-            'layout': {
+
+            // 2010 Precipitation
+            map.addLayer({
+                'id': '2010 Precipitation',
+                'type': 'fill',
+                'source': 'Ghana',
+                'layout': {
                     'visibility': 'none'
                 },
                 'paint': {
@@ -283,224 +300,135 @@
                 }
             })
 
-          // 2015 Migration
-          map.addLayer({
-            'id': 'Net Migration 2015',
-            'type': 'fill',
-            'source': 'Ghana',
-            'layout': {
+            // 2015 Migration
+            map.addLayer({
+                'id': 'Net Migration 2015',
+                'type': 'fill',
+                'source': 'Ghana',
+                'layout': {
                     'visibility': 'none'
                 },
                 'paint': {
                     'fill-color': {
-                      property: 'Net_Migrat',
-                      stops: [
-                        [-128773, 'rgba(230,97,1,1.0)'],
-                        [-4132, 'rgba(241,136,44,1.0)'],
-                        [-1755, 'rgba(251,175,88,1.0)'],
-                        [-731, 'rgba(251,205,148,1.0)'],
-                        [-244, 'rgba(249,233,214,1.0)'],
-                        [-31, 'rgba(232,231,239,1.0)'],
-                        [-2, 'rgba(201,197,223,1.0)'],
-                        [9, 'rgba(169,159,204,1.0)'],
-                        [92, 'rgba(131,109,179,1.0)'],
-                        [617, 'rgba(94,60,153,1.0)']
-                      ]
+                        property: 'Net_Migrat',
+                        stops: [
+                            [-128773, 'rgba(230,97,1,1.0)'],
+                            [-4132, 'rgba(241,136,44,1.0)'],
+                            [-1755, 'rgba(251,175,88,1.0)'],
+                            [-731, 'rgba(251,205,148,1.0)'],
+                            [-244, 'rgba(249,233,214,1.0)'],
+                            [-31, 'rgba(232,231,239,1.0)'],
+                            [-2, 'rgba(201,197,223,1.0)'],
+                            [9, 'rgba(169,159,204,1.0)'],
+                            [92, 'rgba(131,109,179,1.0)'],
+                            [617, 'rgba(94,60,153,1.0)']
+                        ]
                     },
-                  'fill-opacity': 0.75
+                    'fill-opacity': 0.75
                 }
-          })
-	  
-          // Migration 2000 - 2005
-          map.addLayer({
-            'id': '2000 - 2005',
-            'type': 'circle',
-            'source': 'net_migration_200005',
-            'minzoom': 4,
-            'maxzoom': 15,
-            'layout': {
-                        'visibility': 'none'
+            })
+
+            // Migration 2000 - 2005
+            map.addLayer({
+                'id': '2000 - 2005',
+                'type': 'circle',
+                'source': 'net_migration_200005',
+                'minzoom': 4,
+                'maxzoom': 15,
+                'layout': {
+                    'visibility': 'none'
+                },
+                'paint': {
+                    'circle-radius': 3,
+                    'circle-color': {
+                        property: 'Migration',
+                        stops: [
+                            [-128773, 'rgba(230,97,1,1.0)'],
+                            [-4132, 'rgba(241,136,44,1.0)'],
+                            [-1755, 'rgba(251,175,88,1.0)'],
+                            [-731, 'rgba(251,205,148,1.0)'],
+                            [-244, 'rgba(249,233,214,1.0)'],
+                            [-31, 'rgba(232,231,239,1.0)'],
+                            [-2, 'rgba(201,197,223,1.0)'],
+                            [9, 'rgba(169,159,204,1.0)'],
+                            [92, 'rgba(131,109,179,1.0)'],
+                            [617, 'rgba(94,60,153,1.0)']
+                        ]
                     },
-                    'paint': {
-                        'circle-radius': 3,
-                        'circle-color': {
-                            property: 'Migration',
-                            stops: [
-                                [-128773, 'rgba(230,97,1,1.0)'],
-                                [-4132, 'rgba(241,136,44,1.0)'],
-                                [-1755, 'rgba(251,175,88,1.0)'],
-                                [-731, 'rgba(251,205,148,1.0)'],
-                                [-244, 'rgba(249,233,214,1.0)'],
-                                [-31, 'rgba(232,231,239,1.0)'],
-                                [-2, 'rgba(201,197,223,1.0)'],
-                                [9, 'rgba(169,159,204,1.0)'],
-                                [92, 'rgba(131,109,179,1.0)'],
-                                [617, 'rgba(94,60,153,1.0)']
-                            ]
-                        },
-                        'circle-opacity': 0.5
-                    }
+                    'circle-opacity': 0.5
                 }
+            }
 
             );
 
             // Migration 2010 - 2015
             map.addLayer({
-                    'id': '2010 - 2015',
-                    'type': 'circle',
-                    'source': 'net_migration_201015',
-                    'minzoom': 4,
-                    'maxzoom': 15,
-                    'layout': {
-                        'visibility': 'none'
+                'id': '2010 - 2015',
+                'type': 'circle',
+                'source': 'net_migration_201015',
+                'minzoom': 4,
+                'maxzoom': 15,
+                'layout': {
+                    'visibility': 'none'
+                },
+                'paint': {
+                    'circle-radius': 3,
+                    'circle-color': {
+                        property: 'Migration',
+                        stops: [
+                            [-128773, 'rgba(230,97,1,1.0)'],
+                            [-4132, 'rgba(241,136,44,1.0)'],
+                            [-1755, 'rgba(251,175,88,1.0)'],
+                            [-731, 'rgba(251,205,148,1.0)'],
+                            [-244, 'rgba(249,233,214,1.0)'],
+                            [-31, 'rgba(232,231,239,1.0)'],
+                            [-2, 'rgba(201,197,223,1.0)'],
+                            [9, 'rgba(169,159,204,1.0)'],
+                            [92, 'rgba(131,109,179,1.0)'],
+                            [617, 'rgba(94,60,153,1.0)']
+                        ]
                     },
-                    'paint': {
-                        'circle-radius': 3,
-                        'circle-color': {
-                            property: 'Migration',
-                            stops: [
-                                [-128773, 'rgba(230,97,1,1.0)'],
-                                [-4132, 'rgba(241,136,44,1.0)'],
-                                [-1755, 'rgba(251,175,88,1.0)'],
-                                [-731, 'rgba(251,205,148,1.0)'],
-                                [-244, 'rgba(249,233,214,1.0)'],
-                                [-31, 'rgba(232,231,239,1.0)'],
-                                [-2, 'rgba(201,197,223,1.0)'],
-                                [9, 'rgba(169,159,204,1.0)'],
-                                [92, 'rgba(131,109,179,1.0)'],
-                                [617, 'rgba(94,60,153,1.0)']
-                            ]
-                        },
-                        'circle-opacity': 0.5
-                    }
+                    'circle-opacity': 0.5
                 }
+            }
 
             );
 
-            // R95P 200005
-            /* map.addLayer({
-	   *         'id': 'R95P_200005',
-	   *         'type': 'circle',
-	   *         'source': 'R95P_200005',
-	   *         'minzoom': 4,
-	   *         'maxzoom': 15,
-	   *         'layout': {
-	   *             'visibility': 'none'
-	   *         },
-	   *         'paint': {
-	   *             'circle-radius': 3,
-	   *             'circle-color': {
-	   *                 property: '200005',
-	   *                 stops: [
-	   *                     [0, 'rgba(202,0,32,1.0)'],
-	   *                     [10, 'rgba(221,73,75,0)'],
-	   *                     [14, 'rgba(240,147,119,0)'],
-	   *                     [18, 'rgba(245,193,169,0)'],
-	   *                     [21, 'rgba(247,229,221,0)'],
-	   *                     [23, 'rgba(225,236,242,0)'],
-	   *                     [25, 'rgba(180,214,231,0)'],
-	   *                     [27, 'rgba(130,188,217,0)'],
-	   *                     [29, 'rgba(67,150,197,0)'],
-	   *                     [34, 'rgba(5,113,176,1.0)']
-	   *                 ]
-	   *             },
-	   *             'circle-opacity': 0.5
-	   *         }
-	   *     }
-
-	   * ); */
-
-            // R95P 200510
-            /* map.addLayer({
-	   *         'id': 'R95P_200510',
-	   *         'type': 'circle',
-	   *         'source': 'R95P_200510',
-	   *         'minzoom': 4,
-	   *         'maxzoom': 15,
-	   *         'layout': {
-	   *             'visibility': 'none'
-	   *         },
-	   *         'paint': {
-	   *             'circle-radius': 3,
-	   *             'circle-color': {
-	   *                 property: '200510',
-	   *                 stops: [
-	   *                     [0, 'rgba(202,0,32,1.0)'],
-	   *                     [10, 'rgba(221,73,75,0)'],
-	   *                     [14, 'rgba(240,147,119,0)'],
-	   *                     [18, 'rgba(245,193,169,0)'],
-	   *                     [21, 'rgba(247,229,221,0)'],
-	   *                     [23, 'rgba(225,236,242,0)'],
-	   *                     [25, 'rgba(180,214,231,0)'],
-	   *                     [27, 'rgba(130,188,217,0)'],
-	   *                     [29, 'rgba(67,150,197,0)'],
-	   *                     [34, 'rgba(5,113,176,1.0)']
-	   *                 ]
-	   *             },
-	   *             'circle-opacity': 0.5
-	   *         }
-	   *     }
-
-	   * ); */
+            // Net Migration
+            map.addLayer({
+                'id': 'NETRa1990',
+                'type': 'fill',
+                'source': 'ghana',
+                'layout': {
+                    'visibility': 'none'
+                },
+                'paint': {
+                    "fill-color": [
+                        "step",
+                        ["get", "NETRa1990"], // Using equal count quantile with 7 breaks
+                        "#7F3B08",  // Dark Brown (≤ -282)
+                        -282, "#B35806",  // Burnt Orange (-282 to -0.85)
+                        -0.85, "#E08214",  // Orange (-0.85 to -0.30)
+                        -0.30, "#FDB863",  // Light Orange (-0.30 to -0.16)
+                        -0.16, "#EDEDBC",  // Light Neutral (-0.16 to 0.00)
+                        0.00, "#B2ABD2",  // Light Purple (0.00 to 0.05)
+                        0.05, "#5E3C99"   // Dark Purple (≥ 0.05)
+                    ],
+                    'fill-opacity': 0.75
+                }
+            });
 
         });
 
-        // include below if we want drawn-on layers
-        /* map.addSource('milestones', {
-         *     'type': 'geojson',
-         *     'data': './data/mapbox/milestones.geojson'
-         * });
-
-         * map.addSource('route', {
-         *     'type': 'geojson',
-         *     'data': './data/mapbox/fullRoute.geojson'
-         * }); */
-
-        // Milestones Markers
-        /* map.addLayer({
-         *   'id': 'milestones',
-         *   'type': 'circle',
-         *   'source': 'milestones',
-         *   'minzoom': 4,
-         *   'maxzoom': 8,
-         *   'layout': {
-         *           'visibility': 'visible'
-         *       },
-         *       'paint': {
-         *           'circle-radius': 12,
-         *           'circle-color': '#dba11c',
-         *           'circle-opacity': 0.7
-         *       }
-         *   }); */
-
-        // Route
-        /* map.addLayer({
-         *     'id': 'route',
-         *     'type': 'line',
-         *     'source': 'route',
-         *     'layout': {
-         *         'visibility': 'visible',
-         *         'line-join': 'round',
-         *         'line-cap': 'round'
-         *     },
-         *     'minzoom': 4,
-         *     'maxzoom': 15,
-         *     'paint': {
-         *         'line-color': '#0077c8',
-         *         'line-width': 5,
-         *         'line-opacity': 0.7
-         *     }
-         * }); */
-
         // After the last frame rendered before the map enters an "idle" state.
-        const toggleableLayerIds = ['adm1_fill', 'adm1', 'adm2_fill', 'adm2', 'adm3', 'Accra_density', '1985 Precipitation', '2010 Precipitation', 'Net Migration 2015', '2000 - 2005', '2010 - 2015'];
-        
-        map.on('idle', () => {
-          // If these layers were not added to the map, abort
-          // add || !map.getLayer('accra_density')
+        const toggleableLayerIds = ['adm1_fill', 'adm1', 'adm2_fill', 'adm2', 'adm3', 'Accra_density', '1985 Precipitation', '2010 Precipitation', 'Net Migration 2015', '2000 - 2005', '2010 - 2015', 'NETRa1990'];
 
-          if (!map.getLayer('adm1_fill') || !map.getLayer('adm1') || !map.getLayer('adm2_fill') || !map.getLayer('adm2') || !map.getLayer('adm3') ||  !map.getLayer('Accra_density') || !map.getLayer('1985 Precipitation') || !map.getLayer('2010 Precipitation') || !map.getLayer('Net Migration 2015') || !map.getLayer('2000 - 2005') || !map.getLayer('2010 - 2015')) {
-            return;
+        map.on('idle', () => {
+            // If these layers were not added to the map, abort
+            // add || !map.getLayer('accra_density')
+
+            if (!map.getLayer('adm1_fill') || !map.getLayer('adm1') || !map.getLayer('adm2_fill') || !map.getLayer('adm2') || !map.getLayer('adm3') || !map.getLayer('Accra_density') || !map.getLayer('1985 Precipitation') || !map.getLayer('2010 Precipitation') || !map.getLayer('Net Migration 2015') || !map.getLayer('2000 - 2005') || !map.getLayer('2010 - 2015') || !map.getLayer('NETRa1990')) {
+                return;
             }
 
             // add , 'accra_density'
@@ -521,7 +449,7 @@
                 link.className = 'active';
 
                 // Show or hide layer when the toggle is clicked.
-                link.onclick = function(e) {
+                link.onclick = function (e) {
                     const clickedLayer = this.textContent;
                     e.preventDefault();
                     e.stopPropagation();
@@ -556,7 +484,7 @@
                 const layers = document.getElementById('menu');
                 layers.appendChild(link);
             }
-            
+
             // socket.on("groupScroll", data => {
             //     console.log("event recieved");
 
@@ -577,85 +505,83 @@
             //     }
             // });
 
-    //need to make multiple of these for multiple dials
-    let menuStateCache = {
-        path: [],
-        dialID: '',
-        currentPath: '',
-        currentSelection: ''
-    };
-   
-    ws.onmessage = (event) => {
-            const data = JSON.parse(event.data);
+            //need to make multiple of these for multiple dials
+            let menuStateCache = {
+                path: [],
+                dialID: '',
+                currentPath: '',
+                currentSelection: ''
+            };
+
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+
+                if (data.type === 'menuStateUpdate' && data.menuState) {
+                    // Update global state with new menu state information
+                    menuStateCache.path = data.menuState.path;
+                    menuStateCache.currentPath = menuStateCache.path[menuStateCache.path.length - 1];
+                    menuStateCache.currentSelection = data.menuState.selection;
+                }
+
+                if (data.type === 'menuAction') {
+                    const menuAction = data.action;
+                    console.log("menuAction recieved = " + menuAction);
+                    // Now you can also use menuStateCache here
+                    toggleVisibilityBasedOnMenuState();
+                }
+
+                // Function to toggle visibility based on the cached menu state
+                function toggleVisibilityBasedOnMenuState() {
+                    if (menuStateCache.currentPath === 'Precipitation') {
+                        const visibilityProperty = menuStateCache.currentSelection + ' Precipitation';
+                        const visibility = map.getLayoutProperty(visibilityProperty, 'visibility');
+                        if (visibility === 'visible') {
+                            map.setLayoutProperty(visibilityProperty, 'visibility', 'none');
+                        } else {
+                            map.setLayoutProperty(visibilityProperty, 'visibility', 'visible');
+                        }
+                        console.log("TOGGLING " + menuStateCache.currentSelection + " PRECIPITATION");
+                    }
+                }
+            };
+
+
+
+
+            /*
+                            if (currentPath == 'Precipitation' && currentSelection == '1985'){
+                                console.log("TOGGLE 1985 PRECIPITATION")
+                                const visibility = map.getLayoutProperty('1985 Precipitation', 'visibility');
+                                if (visibility === 'visible') {
+                                    map.setLayoutProperty('1985 Precipitation', 'visibility', 'none');
+                                } else {
+                                    map.setLayoutProperty('1985 Precipitation', 'visibility', 'visible');
+                                }
+                                }
             
-            if (data.type === 'menuStateUpdate' && data.menuState) {
-                // Update global state with new menu state information
-                menuStateCache.path = data.menuState.path;
-                menuStateCache.currentPath = menuStateCache.path[menuStateCache.path.length - 1];
-                menuStateCache.currentSelection = data.menuState.selection;
-            }
+                            if (currentPath == 'Precipitation' && currentSelection == '2010'){
+                                console.log("TOGGLE 2010 PRECIPITATION");
+                                const visibility = map.getLayoutProperty('2010 Precipitation', 'visibility');
+                                if (visibility === 'visible') {
+                                    map.setLayoutProperty('2010 Precipitation', 'visibility', 'none');
+                                } else {
+                                    map.setLayoutProperty('2010 Precipitation', 'visibility', 'visible');
+                                }
+                            }
+            
+                        }
+            */
 
-            if (data.type === 'menuAction') {
-                const menuAction = data.action;
-                console.log("menuAction recieved = " + menuAction);
-                // Now you can also use menuStateCache here
-                toggleVisibilityBasedOnMenuState();
-            }
+            ws.onerror = (error) => {
+                console.log('WebSocket Error: ', error);
+                menuDisplay.innerText = 'WebSocket connection error. Please check the console for more details.';
+            };
 
-            // Function to toggle visibility based on the cached menu state
-            function toggleVisibilityBasedOnMenuState() {
-                if (menuStateCache.currentPath === 'Precipitation') {
-                    const visibilityProperty = menuStateCache.currentSelection + ' Precipitation';
-                    const visibility = map.getLayoutProperty(visibilityProperty, 'visibility');
-                    if (visibility === 'visible') {
-                        map.setLayoutProperty(visibilityProperty, 'visibility', 'none');
-                    } else {
-                        map.setLayoutProperty(visibilityProperty, 'visibility', 'visible');
-                    }
-                    console.log("TOGGLING " + menuStateCache.currentSelection + " PRECIPITATION");
-                }
-            }
-    };
-                
-
-
-
-/*
-                if (currentPath == 'Precipitation' && currentSelection == '1985'){
-                    console.log("TOGGLE 1985 PRECIPITATION")
-                    const visibility = map.getLayoutProperty('1985 Precipitation', 'visibility');
-                    if (visibility === 'visible') {
-                        map.setLayoutProperty('1985 Precipitation', 'visibility', 'none');
-                    } else {
-                        map.setLayoutProperty('1985 Precipitation', 'visibility', 'visible');
-                    }
-                    }
-
-                if (currentPath == 'Precipitation' && currentSelection == '2010'){
-                    console.log("TOGGLE 2010 PRECIPITATION");
-                    const visibility = map.getLayoutProperty('2010 Precipitation', 'visibility');
-                    if (visibility === 'visible') {
-                        map.setLayoutProperty('2010 Precipitation', 'visibility', 'none');
-                    } else {
-                        map.setLayoutProperty('2010 Precipitation', 'visibility', 'visible');
-                    }
-                }
-
-            }
-*/
-
-    
-
-        ws.onerror = (error) => {
-            console.log('WebSocket Error: ', error);
-            menuDisplay.innerText = 'WebSocket connection error. Please check the console for more details.';
-        };
-
-        ws.onclose = () => {
-            console.log('Disconnected from the server');
-            menuDisplay.innerText = 'Disconnected from the server.';
-        };
-    });
+            ws.onclose = () => {
+                console.log('Disconnected from the server');
+                menuDisplay.innerText = 'Disconnected from the server.';
+            };
+        });
     </script>
 
 </body>
