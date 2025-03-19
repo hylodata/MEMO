@@ -10,7 +10,7 @@ menu_structure = {
             "Acid Rain": {"action": "Show Acid Rain Years"},
             "Invasive Species": {"action": "Show Invasive Species Years"},
             "Biodiversity": {"action": "Show Biodiversity Years"},
-            "Temperature": {"action": "Show Temperature Years"}, 
+            "Migration": {"action": "Show NETRa1990"}, 
             "Precipitation": {
                 "1985": {"action": "Show 1985 Precipitation"},
                 "2010": {"action": "Show 2010 Precipitation"},
