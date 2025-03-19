@@ -4,9 +4,9 @@
 #include <ArduinoWebsockets.h>
 #include <ArduinoJson.h>
 
-const char* ssid = "CastleOmalley";
-const char* password = "sirfelix";
-const char* websocketServerHost = "ws://10.0.0.190:12345"; // WebSocket server address
+const char* ssid = "AliCapsule";
+const char* password = "synlab123";
+const char* websocketServerHost = "ws://10.0.1.85:12345"; // WebSocket server address
 
 using namespace websockets;
 WebsocketsClient client;
@@ -66,15 +66,14 @@ void receiveAndParseEvent(String message) {
     // Parse the incoming JSON message
     DeserializationError error = deserializeJson(doc, message);
     
-    // Check for errors in parsing
-    if (error) { 
+    if (error) { // Check for errors in parsing
         Serial.print("deserializeJson() failed: ");
         Serial.println(error.f_str());
         return;
     }
 
     // Extracting data from the JSON document
-    // Assume "type", "dialID", and "menuState" are keys in JSON structure
+    // Assume "type", "dialID", and "menuState" are keys in your JSON structure
     const char* type = doc["type"]; // You can replace these keys with whatever your JSON structure uses
     int dialID = doc["dialID"];
     JsonObject menuState = doc["menuState"].as<JsonObject>();
@@ -87,11 +86,11 @@ void receiveAndParseEvent(String message) {
     if (!pathArray.isNull() && pathArray.size() > 0) {
         // Get the last element of the path array
         currentPath = pathArray[pathArray.size() - 1].as<String>();
-        global_currentPath = currentPath; //make the local string into global string 
+        global_currentPath = currentPath; //make the local variable global
     }
 
     String selection = menuState["selection"]; // Assuming "selection" is a string
-    global_selection = selection; //make the local 'selection' string into global string
+    global_selection = selection; //make the local 'selection' variable global
     JsonArray history = menuState["history"].as<JsonArray>(); // Assuming "history" is an array
 
     // Now you have the variables 'type', 'dialID', 'path', 'selection', and the 'history' array
@@ -107,8 +106,6 @@ void receiveAndParseEvent(String message) {
     Serial.print("Current Selection: ");
     Serial.println(selection);
     // To print the history, you'd iterate over the 'history' JsonArray if necessary
-
-    //adding this to force refresh of the screen after parsing data
     refreshScreen();
 }
 

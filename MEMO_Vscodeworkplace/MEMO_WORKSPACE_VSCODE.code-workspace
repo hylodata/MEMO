@@ -11,6 +11,6 @@
 		}
 	],
 	"settings": {
-		"liveServer.settings.multiRootWorkspaceName": "MEMO"
+		"r.lsp.promptToInstall": false
 	}
 }
