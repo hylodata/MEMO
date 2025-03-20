@@ -453,7 +453,9 @@ map.on('idle', () => {
             toggleVisibilityBasedOnMenuState();
         }
 
-        // try this function instead of the one commented out below (and re-write actionToLayerMap below based on what is actually in tangibleServer.py)
+        // try this function instead of the one commented out below 
+        // (and re-write actionToLayerMap below based on what is actually in tangibleServer.py)
+        // test this with an actual tangible
         function toggleVisibilityBasedOnMenuState() {
             const action = menuStateCache.currentAction || (menuStateCache.currentSelection + " " + menuStateCache.currentPath);
             console.log("TOGGLING action:", action);
