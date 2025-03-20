@@ -503,6 +503,17 @@ map.on('idle', () => {
                 }
                 console.log("TOGGLING " + menuStateCache.currentSelection + " PRECIPITATION");
             }
+
+            if (menuStateCache.currentPath === 'NETRa1990') {
+                const visibilityProperty = menuStateCache.currentSelection + ' NETRa1990';
+                const visibility = map.getLayoutProperty(visibilityProperty, 'visibility');
+                if (visibility === 'visible') {
+                    map.setLayoutProperty(visibilityProperty, 'visibility', 'none');
+                } else {
+                    map.setLayoutProperty(visibilityProperty, 'visibility', 'visible');
+                }
+                console.log("TOGGLING " + menuStateCache.currentSelection + " NETRa1990");
+            }
         }
     }; */
 
