@@ -453,8 +453,46 @@ map.on('idle', () => {
             toggleVisibilityBasedOnMenuState();
         }
 
-        // Function to toggle visibility based on the cached menu state
+        // try this function instead of the one commented out below (and re-write actionToLayerMap below based on what is actually in tangibleServer.py)
         function toggleVisibilityBasedOnMenuState() {
+            const action = menuStateCache.currentAction || (menuStateCache.currentSelection + " " + menuStateCache.currentPath);
+            console.log("TOGGLING action:", action);
+        
+            // Define a map from actions to one or more layer IDs
+            const actionToLayerMap = {
+                "1985 Precipitation": ["precipitation1985Layer"],
+                "2010 Precipitation": ["precipitation2010Layer"],
+                "Show Acid Rain Years": ["acidRainLayer1", "acidRainLayer2"],
+                "Show Invasive Species Years": ["invasiveSpeciesLayer"],
+                "Show Biodiversity Years": ["biodiversityLayer"],
+                "Show Temperature Years": ["temperatureLayer"],
+                "Show Social Options": ["socialLayer"],
+                "Show Political Options": ["politicalLayer"],
+                "Show Demographic Options": ["demographicLayer"],
+                "Show Economic Options": ["economicLayer"],
+            };
+        
+            const layersToToggle = actionToLayerMap[action];
+            if (!layersToToggle) {
+                console.warn("No layers mapped for action:", action);
+                return;
+            }
+        
+            // Toggle visibility for each layer associated with this action
+            layersToToggle.forEach(layerId => {
+                if (map.getLayer(layerId)) {
+                    const currentVisibility = map.getLayoutProperty(layerId, 'visibility');
+                    const newVisibility = currentVisibility === 'visible' ? 'none' : 'visible';
+                    map.setLayoutProperty(layerId, 'visibility', newVisibility);
+                    console.log(`Toggled ${layerId} to ${newVisibility}`);
+                } else {
+                    console.warn("Layer not found:", layerId);
+                }
+            });
+        }
+
+        // Function to toggle visibility based on the cached menu state
+/*         function toggleVisibilityBasedOnMenuState() {
             if (menuStateCache.currentPath === 'Precipitation') {
                 const visibilityProperty = menuStateCache.currentSelection + ' Precipitation';
                 const visibility = map.getLayoutProperty(visibilityProperty, 'visibility');
@@ -466,10 +504,7 @@ map.on('idle', () => {
                 console.log("TOGGLING " + menuStateCache.currentSelection + " PRECIPITATION");
             }
         }
-    };
-
-
-
+    }; */
 
     /*
                     if (currentPath == 'Precipitation' && currentSelection == '1985'){
