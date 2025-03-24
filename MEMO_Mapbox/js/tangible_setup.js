@@ -492,9 +492,10 @@ map.on('idle', () => {
                 }
             });
         }
+    };        
 
         // Function to toggle visibility based on the cached menu state
-/*         function toggleVisibilityBasedOnMenuState() {
+/*          function toggleVisibilityBasedOnMenuState() {
             if (menuStateCache.currentPath === 'Precipitation') {
                 const visibilityProperty = menuStateCache.currentSelection + ' Precipitation';
                 const visibility = map.getLayoutProperty(visibilityProperty, 'visibility');
