@@ -60,6 +60,15 @@ map.on('load', () => {
         'data': './data/mapbox/guatemala.geojson'
     });    
 
+    map.addSource('central_america', {
+        'type': 'geojson',
+        'data': './data/mapbox/central_america.geojson'
+    });
+
+    map.addSource('central_america_mgwr', {
+        'type': 'geojson',
+        'data': './data/mapbox/central_america_mgwr.geojson'
+    });    
 
     // ADD LAYERS
 
@@ -152,6 +161,10 @@ map.on('load', () => {
         filter: ["==", "admin0Name", "Nigeria"]
     });  
 
+
+    // DATA LAYERS
+
+    // Net Migration
     map.addLayer({
         'id': 'NetRa2010',
         'type': 'fill',
@@ -174,6 +187,78 @@ map.on('load', () => {
             'fill-opacity': 0.75
         }
     });
+
+    map.addLayer({
+        'id': 'NETMg2010',
+        'type': 'fill',
+        'source': 'central_america',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            "fill-color": [
+                "step",
+                ["get", "NETMg2010"], // Using equal count quantile with 7 breaks
+                "#7F3B08",  // Dark Brown (≤ -282)
+                -3828.31, "#B35806",  // Burnt Orange (-282 to -0.85)
+                -1157.12, "#E08214",  // Orange (-0.85 to -0.30)
+                -234.16, "#FDB863",  // Light Orange (-0.30 to -0.16)
+                112.99, "#EDEDBC",  // Light Neutral (-0.16 to 0.00)
+                789.70, "#B2ABD2",  // Light Purple (0.00 to 0.05)
+                2431.84, "#5E3C99"   // Dark Purple (≥ 0.05)
+            ],
+            'fill-opacity': 0.75
+        }
+    });
+
+    // Precipitation
+    map.addLayer({
+        'id': 'PRECAv2010',
+        'type': 'fill',
+        'source': 'central_america',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            "fill-color": [
+                "step",
+                ["get", "PRECAv2010"], // Using equal count quantile with 7 breaks
+                "#FFFFD9",  // ≤ -0.2 (Light Yellow)
+                1389.87, "#EDF8B1",  // Pale Yellow-Green
+                1716.33, "#C7E9B4",  // Light Green
+                1900.69, "#7FCDBB",  // Teal-Green
+                2110.81, "#41B6C4",   // Teal-Blue
+                2584.34, "#1D91C0",   // Blue
+                4049.14, "#225EA8"    // ≥ 0.22 (Dark Blue) 
+            ],
+            'fill-opacity': 0.75
+        }
+    });   
+    
+    // Modelling
+    map.addLayer({
+        'id': 'S_C_RURSU2',
+        'type': 'circle',
+        'source': 'central_america_mgwr',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'circle-radius': 4,
+            'circle-color': [
+                "step",
+                ["get", "S_C_RURSU2"], // Using equal count quantile with 7 breaks
+                "#000004",  // 
+                0.06072, "#2d115f",  // 
+                0.13795, "#721f81",  // 
+                0.23182, "#b6377a",  // 
+                0.39712, "#f1605d",   // 
+                0.66933, "#feaf78",   //
+                3.91409, "#fcfdbf"    // 
+            ],
+            'circle-opacity': 0.75
+        }
+    });    
 
 });
 
