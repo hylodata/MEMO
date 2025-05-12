@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEMO Central America Migration</title>
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.css' rel='stylesheet' />
+
+    <!-- Load d3.js -->
+    <script src="https://d3js.org/d3.v6.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="css/scrolling.css">
+
+</head>
+
+<body>
+
+    <div id="intro">
+        <div id="introImage">
+            <h1 class="title">Migration Trends in Guatemala</h1>
+            <p class="subtitle">
+                This interactive visualizes insights from MEMO research about relationships between migration and
+                demographic, economic, environmental, socio-cultural, and political patterns in Guatemala.</br> </br> <img
+                    id="originalImage" src="./images/down.png" alt="">
+            </p>
+            <video id="accra" src="./video/accra.mp4" alt="" type="video/mp4" preload="auto" autoplay loop
+                muted></video>
+        </div>
+    </div>
+
+    <main>
+
+        <section id="scrollSection">
+
+            <section id="chapter">
+                <h1 class="intro__hed">Background</h1>
+                <p class="intro__dek">
+                </p>
+                <p>
+                    Guatemala lorem ipsum
+                </p>
+            </section>
+
+            <div class="mapDiv">
+                <div id='map'></div>
+            </div>
+
+            <article>
+                <div class="step invisible">
+                </div>
+
+                <div class="step" data-center="-89.735568, 15.673697" data-zoom="5" data-pitch="25" data-bearing="0"
+                    data-speed="0.7" data-toggle_layer="adm0">
+                    <p>
+                        Ghana serves as an interesting case with which to research and analyse complex migration flows and related drivers. Migration dynamics in the country are complex, especially when one considers the fact that Ghana serves as a country of origin, transit, and destination for migration flows.
+                    </p>
+                </div>
+
+                <div class="step invisible">
+                </div>
+
+                <div class="step" data-center="-89.735568, 15.673697" data-zoom="5" data-pitch="25" data-bearing="0"
+                    data-speed="0.7" data-toggle_layer="adm1">
+                    <p>
+                        The country is split into 16 primary administrative regions.
+                    </p>
+                </div>
+
+                <div class="step invisible">
+                </div>
+
+                <div class="step" data-center="-89.735568, 15.673697" data-zoom="5" data-pitch="25" data-bearing="0"
+                    data-speed="0.7" data-toggle_layer="adm2">
+                    <p>
+                        And 260 secondary administrative regions.
+                    </p>
+                </div>
+
+                <div class="step" data-center="-89.735568, 15.673697" data-zoom="5" data-pitch="25" data-bearing="0"
+                    data-speed="0.7" data-toggle_layer="adm1" style="background-color: rgba(0, 0, 0, 0);">
+                </div>
+
+                <div class="step" data-center="-89.735568, 15.673697" data-zoom="5" data-pitch="25" data-bearing="0"
+                    data-speed="0.7" data-toggle_layer="adm2" style="background-color: rgba(0, 0, 0, 0);">
+                </div>
+
+                <div class="step invisible">
+                </div>
+
+                <div class="step" data-center="-89.735568, 15.673697" data-zoom="6" data-pitch="15" data-bearing="0"
+                    data-speed="0.7" data-toggle_layer="NETMg2010">
+                    <p>
+                        In recent years, prevalent trends of migration have involved growing numbers of young Ghanaian men and women seeking to embark on perilous journeys or what is popularly referred to as ‘boat migration’ to Europe and the Middle East, as well as internal rural-to-urban migration involving youngsters structured along a north-south direction and often spearheaded largely by economic motives.
+                    </p>
+                    <ul class="legend">
+                        <li>Neg NM&nbsp;</li>
+                        <li><span class="step1"></span></li>
+                        <li><span class="step2"></span></li>
+                        <li><span class="step3"></span></li>
+                        <li><span class="step4"></span></li>
+                        <li><span class="step5"></span></li>
+                        <li><span class="step6"></span></li>
+                        <li><span class="step7"></span></li>
+                        <li><span class="step8"></span></li>
+                        <li><span class="step9"></span></li>
+                        <li><span class="step10"></span></li>
+                        <li>&nbsp;Pos NM</li>
+                    </ul>
+                    <img src="images/ghanaNM.svg" alt="Ghana Net Migration" style="width:100%">
+                    <div id="my_dataviz"></div>
+                </div>
+
+                <div class="step invisible">
+                </div>
+
+                <div class="step invisible">
+                </div>
+
+                <div class="step" data-center="-89.735568, 15.673697" data-zoom="6" data-pitch="15" data-bearing="0"
+                    data-speed="0.7">
+                    <p>
+                        There is also a growing exodus of labour migrants, including that of healthcare workers to
+                        countries in Western Europe, and trafficking of children in the fisheries sector around the
+                        region of Lake Volta.
+                    </p>
+                    <img src="images/mgwr_scatterplots.svg" alt="Ghana Net Migration" style="width:100%">
+                </div>
+
+                <div class="step invisible">
+                </div>
+
+                <div class="step" data-center="-89.735568, 15.673697" data-zoom="6" data-pitch="15" data-bearing="0"
+                    data-speed="0.7" style="background-color: rgba(0, 0, 0, 0);">
+                </div>
+
+                <div class="step" data-center="-89.735568, 15.673697" data-zoom="6" data-pitch="15" data-bearing="0"
+                    data-speed="0.7" style="background-color: rgba(0, 0, 0, 0);">
+                </div>
+
+            </article>
+
+        </section>
+
+        <section id="chapter">
+            <!-- <h1 class="intro__hed">Leaving Hohoe</h1> -->
+            <h1 class="intro__hed">Summary Insights</h1>
+            <p class="intro__dek">
+                <!-- <div>
+                   <img class="bg" src="./images/work.jpg" alt="">
+                   </div> -->
+            </p>
+            <p>
+                The MEMO modelling and visuualization team has collected the following data about Ghana: list. This data has been normalized to 5 year time periods and a 25km spatial grid. 
+            </p>
+        </section>
+
+        <section id="scrollSection">
+            <div class="map2Div">
+                <div id='map2'></div>
+            </div>
+
+            <article>
+                <div class="step invisible">
+                </div>
+
+                <div class="step" data-center="-89.735568, 15.673697" data-zoom="5" data-pitch="25" data-bearing="0"
+                    data-speed="0.7" data-toggle_layer="2adm0">
+                    <p>
+                        Looking at Migration patterns during these five-year periods, we see 
+                    </p>
+                </div>
+
+                <div class="step invisible">
+                </div>
+
+                <div class="step" data-center="-89.735568, 15.673697" data-zoom="5" data-pitch="25" data-bearing="0"
+                    data-speed="0.7" data-toggle_layer="2adm0">
+                    <p>
+                        Another variable that influences migration in Ghana is rainfall. 
+                    </p>
+                </div>
+
+                <div class="step invisible">
+                </div>
+
+                <div class="step" data-center="-89.735568, 15.673697" data-zoom="5" data-pitch="25" data-bearing="0"
+                    data-speed="0.7" data-toggle_layer="2adm0">
+                    <p>
+                        We also note the presence of artisanal gold mining.
+                    </p>
+                </div>
+
+                <div class="step invisible">
+                </div>
+
+            </article>
+        </section>
+
+        <section id="chapter">
+            <!-- <h1 class="intro__hed">Leaving Hohoe</h1> -->
+            <h1 class="intro__hed">Modelling</h1>
+            <p class="intro__dek">
+                <!-- <div>
+                   <img class="bg" src="./images/work.jpg" alt="">
+                   </div> -->
+            </p>
+            <p>
+                The MEMO modelling team has employed the use of multiscale geographicaly weighted regression models to better understand the relationship between drivers in Ghana's migration picture.
+            </p>
+        </section>
+
+        <section id="scrollSection">
+            <div class="map3Div">
+                <div id='map3'></div>
+            </div>
+
+            <article>
+                <div class="step invisible">
+                </div>
+
+                <div class="step" data-center="-89.735568, 15.673697" data-zoom="5" data-pitch="25" data-bearing="0"
+                    data-speed="0.7" data-toggle_layer="S_C_RURSU2">
+                    <p>
+                        Looking at Migration patterns during these five-year periods, we see 
+                    </p>
+                </div>
+
+                <div class="step invisible">
+                </div>
+
+                <div class="step" data-center="-89.735568, 15.673697" data-zoom="5" data-pitch="25" data-bearing="0"
+                    data-speed="0.7" data-toggle_layer="mgwr_2_rslt_param_URBSu2010">
+                    <p>
+                        Another variable that influences migration in Ghana is rainfall. 
+                    </p>
+                </div>
+
+                <div class="step invisible">
+                </div>
+
+                <div class="step" data-center="-89.735568, 15.673697" data-zoom="5" data-pitch="25" data-bearing="0"
+                    data-speed="0.7" data-toggle_layer="mgwr_2_rslt_param_URBSu2010">
+                    <p>
+                        We also note the presence of artisanal gold mining.
+                    </p>
+                </div>
+
+                <div class="step invisible">
+                </div>
+
+            </article>
+        </section>
+
+        <section id="chapter">
+            <!-- <h1 class="intro__hed">Leaving Hohoe</h1> -->
+            <h1 class="intro__hed">Qualitative Insights</h1>
+            <p class="intro__dek">
+                <!-- <div>
+                   <img class="bg" src="./images/work.jpg" alt="">
+                   </div> -->
+            </p>
+            <p>
+                MEMO's regional teams have also been carrying out interviews
+            </p>
+        </section>
+
+        <section id="scrollSection">
+            <div class="map4Div">
+                <div id='map4'></div>
+            </div>
+
+            <article>
+                <div class="step invisible">
+                </div>
+
+                <div class="step" data-center="-89.735568, 15.673697" data-zoom="5" data-pitch="25" data-bearing="0"
+                    data-speed="0.7" data-toggle_layer="4adm0">
+                    <p>
+                        Looking at Migration patterns during these five-year periods, we see 
+                    </p>
+                </div>
+
+                <div class="step invisible">
+                </div>
+
+                <div class="step" data-center="-89.735568, 15.673697" data-zoom="5" data-pitch="25" data-bearing="0"
+                    data-speed="0.7" data-toggle_layer="4adm0">
+                    <p>
+                        Another variable that influences migration in Ghana is rainfall. 
+                    </p>
+                </div>
+
+                <div class="step invisible">
+                </div>
+
+                <div class="step" data-center="-89.735568, 15.673697" data-zoom="5" data-pitch="25" data-bearing="0"
+                    data-speed="0.7" data-toggle_layer="4adm0">
+                    <p>
+                        We also note the presence of artisanal gold mining.
+                    </p>
+                </div>
+
+                <div class="step invisible">
+                </div>
+
+            </article>
+        </section>
+
+        <section id="chapter">
+            <!-- <h1 class="intro__hed">Leaving Hohoe</h1> -->
+            <h1 class="intro__hed">Conclusions</h1>
+            <p class="intro__dek">
+                <!-- <div>
+                   <img class="bg" src="./images/work.jpg" alt="">
+                   </div> -->
+            </p>
+            <p>
+                MEMO's analysis and modelling team will be updating data layers as they become available.
+            </p>
+        </section>        
+
+    </main>
+
+    <!--
+    Mapbox Javascript Setup
+  -->
+    <script src="js/guatemala_scrolling.js">    </script>
+
+    <!--
+    Scrollama Javascript Setup
+  -->
+    <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
+    <script src="https://unpkg.com/scrollama"></script>
+    <script src="js/scrolling.js"></script>
+
+    <script>
+
+        // set the dimensions and margins of the graph
+        const margin = {top: 10, right: 30, bottom: 30, left: 60},
+            width = 460 - margin.left - margin.right,
+            height = 400 - margin.top - margin.bottom;
+        
+        // append the svg object to the body of the page
+        const svg = d3.select("#my_dataviz")
+          .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+        
+        //Read the data
+        d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/3_TwoNumOrdered_comma.csv",
+        
+          // When reading the csv, I must format variables:
+          function(d){
+            return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.value }
+          }).then(
+        
+          // Now I can use this dataset:
+          function(data) {
+        
+            // Add X axis --> it is a date format
+            const x = d3.scaleTime()
+              .domain(d3.extent(data, function(d) { return d.date; }))
+              .range([ 0, width ]);
+            svg.append("g")
+              .attr("transform", `translate(0, ${height})`)
+              .call(d3.axisBottom(x));
+        
+            // Add Y axis
+            const y = d3.scaleLinear()
+              .domain([0, d3.max(data, function(d) { return +d.value; })])
+              .range([ height, 0 ]);
+            svg.append("g")
+              .call(d3.axisLeft(y));
+        
+            // Add the line
+            svg.append("path")
+              .datum(data)
+              .attr("fill", "none")
+              .attr("stroke", "steelblue")
+              .attr("stroke-width", 1.5)
+              .attr("d", d3.line()
+                .x(function(d) { return x(d.date) })
+                .y(function(d) { return y(d.value) })
+                )
+        
+        })
+        </script>
+
+</body>
+
+</html>

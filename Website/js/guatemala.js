@@ -68,7 +68,12 @@ map.on('load', () => {
     map.addSource('central_america_mgwr', {
         'type': 'geojson',
         'data': './data/mapbox/central_america_mgwr.geojson'
-    });    
+    });
+    
+    map.addSource('central_america_mgwr_2', {
+        'type': 'geojson',
+        'data': './data/mapbox/central_america_mgwr_2.geojson'
+    });     
 
     // ADD LAYERS
 
@@ -258,7 +263,30 @@ map.on('load', () => {
             ],
             'circle-opacity': 0.75
         }
-    });    
+    }); 
+    
+    map.addLayer({
+        'id': 'mgwr_2_rslt_param_URBSu2010',
+        'type': 'fill',
+        'source': 'central_america_mgwr_2',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            "fill-color": [
+                "step",
+                ["get", "mgwr_2_rslt_param_URBSu2010"], // Using equal count quantile with 7 breaks
+                "#000004",  // 
+                -1.20756, "#2d115f",  // 
+                -1.01242, "#721f81",  // 
+                -0.98389, "#b6377a",  // 
+                -0.50903, "#f1605d",   // 
+                -0.38098, "#feaf78",   //
+                -0.29472, "#fcfdbf"    // 
+            ],
+            'fill-opacity': 0.75
+        }
+    });      
 
 });
 
