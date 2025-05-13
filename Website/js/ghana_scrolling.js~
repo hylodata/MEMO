@@ -1,0 +1,637 @@
+mapboxgl.accessToken = 'pk.eyJ1IjoiZ2JieSIsImEiOiJjbDRnMnhpcWowOTZ0M2ltYmVidmFlYzUyIn0.YMvE-Zv6jfxhACw69xOvLQ';
+
+const map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/gbby/clhb7frzz021n01pa1scr6r2e',
+    center: [-1.023194, 7.946527],
+    zoom: 4,
+    projection: 'globe'
+});
+
+const map2 = new mapboxgl.Map({
+    container: 'map2',
+    style: 'mapbox://styles/gbby/clhb7frzz021n01pa1scr6r2e',
+    center: [-1.023194, 7.946527],
+    zoom: 4,
+    projection: 'globe'
+});
+
+const map3 = new mapboxgl.Map({
+    container: 'map3',
+    style: 'mapbox://styles/gbby/clhb7frzz021n01pa1scr6r2e',
+    center: [-1.023194, 7.946527],
+    zoom: 4,
+    projection: 'globe'
+});
+
+const map4 = new mapboxgl.Map({
+    container: 'map4',
+    style: 'mapbox://styles/gbby/clhb7frzz021n01pa1scr6r2e',
+    center: [-1.023194, 7.946527],
+    zoom: 4,
+    projection: 'globe'
+});
+
+map.on('style.load', () => {
+    map.setFog({});
+    map.scrollZoom.disable();
+    map.dragPan.enable()
+    map.dragRotate.disable()
+});
+
+map2.on('style.load', () => {
+    map2.setFog({});
+    map2.scrollZoom.disable();
+    map2.dragPan.enable()
+    map2.dragRotate.disable()
+});
+
+map3.on('style.load', () => {
+    map3.setFog({});
+    map3.scrollZoom.disable();
+    map3.dragPan.enable()
+    map3.dragRotate.disable()
+});
+
+map4.on('style.load', () => {
+    map4.setFog({});
+    map4.scrollZoom.disable();
+    map4.dragPan.enable()
+    map4.dragRotate.disable()
+});
+
+map.on('load', () => {
+
+    // Load geojson data sources
+    map.addSource('adm0', {
+        'type': 'geojson',
+        'data': './data/mapbox/adm0.geojson'
+    });
+
+    map.addSource('adm1', {
+        'type': 'geojson',
+        'data': './data/mapbox/adm1.geojson'
+    });
+
+    map.addSource('adm2', {
+        'type': 'geojson',
+        'data': './data/mapbox/adm2.geojson'
+    });
+
+    // Main ghana source
+    map.addSource('ghana', {
+        'type': 'geojson',
+        'data': './data/mapbox/ghana.geojson'
+    });
+
+    // ADD LAYERS
+
+    // Ghana adm0
+    map.addLayer({
+        'id': 'adm0',
+        'type': 'line',
+        'source': 'adm0',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'line-color': '#336',
+            'line-width': 2
+        },
+        filter: ["==", "admin0Name", "Ghana"]
+    });
+
+    // Ghana adm1
+    map.addLayer({
+        'id': 'adm1',
+        'type': 'line',
+        'source': 'adm1',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'line-color': '#336',
+            'line-width': 2
+        },
+        filter: ["==", "admin0Name", "Ghana"]
+    });
+
+    // Ghana adm2
+    map.addLayer({
+        'id': 'adm2',
+        'type': 'line',
+        'source': 'adm2',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'line-color': '#336',
+            'line-width': 2
+        },
+        filter: ["==", "admin0Name", "Ghana"]
+    });
+
+    map.addLayer({
+        'id': 'NETRa2010',
+        'type': 'fill',
+        'source': 'ghana',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            "fill-color": [
+                "step",
+                ["get", "NETRa2010"], // Using equal count quantile with 7 breaks
+                "#7F3B08",  // Dark Brown (≤ -282)
+                -282, "#B35806",  // Burnt Orange (-282 to -0.85)
+                -0.85, "#E08214",  // Orange (-0.85 to -0.30)
+                -0.30, "#FDB863",  // Light Orange (-0.30 to -0.16)
+                -0.16, "#EDEDBC",  // Light Neutral (-0.16 to 0.00)
+                0.00, "#B2ABD2",  // Light Purple (0.00 to 0.05)
+                0.05, "#5E3C99"   // Dark Purple (≥ 0.05)
+            ],
+            'fill-opacity': 0.75
+        }
+    });
+
+});
+
+map2.on('load', () => {
+
+    // Load geojson data sources
+    map2.addSource('2adm0', {
+        'type': 'geojson',
+        'data': './data/mapbox/adm0.geojson'
+    });
+
+    // ADD LAYERS
+
+    // Ghana adm0
+    map2.addLayer({
+        'id': '2adm0',
+        'type': 'line',
+        'source': '2adm0',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'line-color': '#336',
+            'line-width': 2
+        },
+        filter: ["==", "admin0Name", "Ghana"]
+    });
+
+});
+
+map3.on('load', () => {
+
+    // Load geojson data sources
+    map3.addSource('3adm0', {
+        'type': 'geojson',
+        'data': './data/mapbox/adm0.geojson'
+    });
+
+    map3.addSource('ghana_mgwr', {
+        'type': 'geojson',
+        'data': './data/mapbox/ghana_mgwr.geojson'
+    });    
+
+    // ADD LAYERS
+
+    // Ghana adm0
+    map3.addLayer({
+        'id': '3adm0',
+        'type': 'line',
+        'source': '3adm0',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'line-color': '#336',
+            'line-width': 2
+        },
+        filter: ["==", "admin0Name", "Ghana"]
+    });
+
+    map3.addLayer({
+        'id': 'beta_W_Edu1_2014rate',
+        'type': 'fill',
+        'source': 'ghana_mgwr',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            "fill-color": [
+                "step",
+                ["get", "beta_W_Edu1_2014rate"], // Using equal count quantile with 7 breaks
+                "#000004",  // 
+                -0.15075, "#2d115f",  // 
+                -0.07031, "#721f81",  // 
+                -0.00886, "#b6377a",  // 
+                0.0203, "#f1605d",   // 
+                0.03959, "#feaf78",   //
+                0.15368, "#fcfdbf"    // 
+            ],
+            'fill-opacity': 0.75
+        }
+    });    
+
+});
+
+map4.on('load', () => {
+
+    // Load geojson data sources
+    map4.addSource('4adm0', {
+        'type': 'geojson',
+        'data': './data/mapbox/adm0.geojson'
+    });
+
+    // ADD LAYERS
+
+    // Ghana adm0
+    map4.addLayer({
+        'id': '4adm0',
+        'type': 'line',
+        'source': '4adm0',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'line-color': '#336',
+            'line-width': 2
+        },
+        filter: ["==", "admin0Name", "Ghana"]
+    });
+
+});
+
+
+
+/* map.addSource('Ghana', {
+    'type': 'geojson',
+    'data': './data/mapbox/Ghana.geojson'
+});
+
+map.addSource('Ghana_test', {
+    'type': 'geojson',
+    'data': './data/mapbox/ghanatest.geojson'
+});
+
+map.addSource('ghana_urban', {
+    'type': 'geojson',
+    'data': './data/mapbox/ghana_urban.geojson'
+});
+
+map.addSource('Accra', {
+    'type': 'geojson',
+    'data': './data/mapbox/accra_density.geojson'
+});
+
+map.addSource('milestones', {
+    'type': 'geojson',
+    'data': './data/mapbox/milestones.geojson'
+});
+
+map.addSource('route', {
+    'type': 'geojson',
+    'data': './data/mapbox/fullRoute.geojson'
+});
+
+map.addSource('borders', {
+    'type': 'geojson',
+    'data': './data/mapbox/borders.geojson'
+});
+
+map.addSource('unemployment', {
+    'type': 'geojson',
+    'data': './data/mapbox/Ghana/population_unemployment.geojson'
+});
+
+map.addSource('net_migration_200005', {
+    'type': 'geojson',
+    'data': './data/mapbox/net_migration_200005.geojson'
+});
+
+map.addSource('net_migration_200510', {
+    'type': 'geojson',
+    'data': './data/mapbox/net_migration_200510.geojson'
+});
+
+map.addSource('gold', {
+    'type': 'geojson',
+    'data': './data/mapbox/goldmines.geojson'
+}); */
+
+
+// unemployment choropleth
+/*     map.addLayer({
+        'id': 'unemployment',
+        'type': 'fill',
+        'source': 'unemployment',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'fill-color': {
+                property: 'value',
+                stops: [
+                    [0, 'white'],
+                    [50, 'green']
+                ]
+            },
+            'fill-opacity': 0.75
+        }
+    })
+
+    // Ghana adm2
+    map.addLayer({
+        'id': 'gold',
+        'type': 'line',
+        'source': 'gold',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'line-color': '#336',
+            'line-width': 2
+        }
+    });
+
+    // Accra density choropleth
+    map.addLayer({
+        'id': 'Accra_density',
+        'type': 'fill',
+        'source': 'Accra',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'fill-color': {
+                property: 'Population Density',
+                stops: [
+                    [112, 'pink'],
+                    [29479, 'red']
+                ]
+            },
+            'fill-opacity': 0.75
+        }
+    })
+
+    // 2010 Migration
+    map.addLayer({
+        'id': 'Net Migration 2010',
+        'type': 'fill',
+        'source': 'Ghana_test',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'fill-color': {
+                property: 'NETMg2010',
+                stops: [
+                    [-128773, 'rgba(230,97,1,1.0)'],
+                    [-4132, 'rgba(241,136,44,1.0)'],
+                    [-1755, 'rgba(251,175,88,1.0)'],
+                    [-731, 'rgba(251,205,148,1.0)'],
+                    [-244, 'rgba(249,233,214,1.0)'],
+                    [-31, 'rgba(232,231,239,1.0)'],
+                    [-2, 'rgba(201,197,223,1.0)'],
+                    [9, 'rgba(169,159,204,1.0)'],
+                    [92, 'rgba(131,109,179,1.0)'],
+                    [617, 'rgba(94,60,153,1.0)']
+                ]
+            },
+            'fill-opacity': 0.75
+        }
+    })
+
+    // 2015 Migration
+    map.addLayer({
+        'id': 'Net Migration 2015',
+        'type': 'fill',
+        'source': 'ghana',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'fill-color': {
+                property: 'Net_Migrat',
+                stops: [
+                    [-128773, 'rgba(230,97,1,1.0)'],
+                    [-4132, 'rgba(241,136,44,1.0)'],
+                    [-1755, 'rgba(251,175,88,1.0)'],
+                    [-731, 'rgba(251,205,148,1.0)'],
+                    [-244, 'rgba(249,233,214,1.0)'],
+                    [-31, 'rgba(232,231,239,1.0)'],
+                    [-2, 'rgba(201,197,223,1.0)'],
+                    [9, 'rgba(169,159,204,1.0)'],
+                    [92, 'rgba(131,109,179,1.0)'],
+                    [617, 'rgba(94,60,153,1.0)']
+                ]
+            },
+            'fill-opacity': 0.75
+        }
+    });
+
+    // 2015 Migration urban pathways
+    map.addLayer({
+        'id': '2015 NM Urban',
+        'type': 'fill',
+        'source': 'ghana_urban',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'fill-color': {
+                property: 'Net_Migrat',
+                stops: [
+                    [-128773, 'rgba(230,97,1,1.0)'],
+                    [-4132, 'rgba(241,136,44,1.0)'],
+                    [-1755, 'rgba(251,175,88,1.0)'],
+                    [-731, 'rgba(251,205,148,1.0)'],
+                    [-244, 'rgba(249,233,214,1.0)'],
+                    [-31, 'rgba(232,231,239,1.0)'],
+                    [-2, 'rgba(201,197,223,1.0)'],
+                    [9, 'rgba(169,159,204,1.0)'],
+                    [92, 'rgba(131,109,179,1.0)'],
+                    [617, 'rgba(94,60,153,1.0)']
+                ]
+            },
+            'fill-opacity': 0.75
+        }
+    })
+
+    // 1985 Precipitation
+    map.addLayer({
+        'id': '2010 Precipitation',
+        'type': 'fill',
+        'source': 'Ghana',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'fill-color': {
+                property: 'PRECAv2010',
+                stops: [
+                    [791, '#ffffd9'],
+                    [1033, '#edf8b1'],
+                    [1110, '#c7e9b4'],
+                    [1250, '#7fcdbb'],
+                    [1361, '#41b6c4'],
+                    [1437, '#1d91c0'],
+                    [1519, '#225ea8'],
+                    [1861, '#0c2c84']
+                ]
+            },
+            'fill-opacity': 0.75
+        }
+    })
+
+    // filtered 1985 Precipitation
+    map.addLayer({
+        'id': '1985 Precipitation Filtered',
+        'type': 'fill',
+        'source': 'Ghana',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'fill-color': {
+                property: 'F1985raince',
+                stops: [
+                    [791, '#ffffd9'],
+                    [1033, '#edf8b1'],
+                    [1110, '#c7e9b4'],
+                    [1250, '#7fcdbb'],
+                    [1361, '#41b6c4'],
+                    [1437, '#1d91c0'],
+                    [1519, '#225ea8'],
+                    [1861, '#0c2c84']
+                ]
+            },
+            'fill-opacity': 0.75
+        },
+        filter: [">", "OBJECTID", 100]
+    })
+
+    // Route
+    map.addLayer({
+        'id': 'route',
+        'type': 'line',
+        'source': 'route',
+        'layout': {
+            'visibility': 'none',
+            'line-join': 'round',
+            'line-cap': 'round'
+        },
+        'minzoom': 4,
+        'maxzoom': 15,
+        'paint': {
+            'line-color': '#0077c8',
+            'line-width': 5,
+            'line-opacity': 0.7
+        }
+    });
+
+    // Milestones Markers
+    map.addLayer({
+        'id': 'milestones-overview',
+        'type': 'circle',
+        'source': 'milestones',
+        'minzoom': 4,
+        'maxzoom': 8,
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'circle-radius': 12,
+            'circle-color': '#dba11c',
+            'circle-opacity': 0.7
+        }
+    }
+
+    );
+
+    map.addLayer({
+        'id': 'milestones-cities',
+        'type': 'circle',
+        'source': 'milestones',
+        'minzoom': 8,
+        'maxzoom': 15,
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'circle-radius': 10,
+            'circle-color': '#dba11c',
+            'circle-opacity': 0.9
+        }
+    }
+
+    );
+
+    // Borders
+    map.addLayer({
+        'id': 'borders-overview',
+        'visibility': 'none',
+        'type': 'circle',
+        'source': 'borders',
+        'minzoom': 4,
+        'maxzoom': 8,
+        'paint': {
+            'circle-radius': 12,
+            'circle-color': '#FC6944',
+            'circle-opacity': 0.7
+        }
+    }
+
+    );
+
+    map.addLayer({
+        'id': 'borders',
+        'visibility': 'none',
+        'type': 'circle',
+        'source': 'borders',
+        'minzoom': 8,
+        'maxzoom': 15,
+        'paint': {
+            'circle-radius': 10,
+            'circle-color': ' #133BFC',
+            'circle-opacity': 0.9
+        }
+    }
+
+    );
+
+    // migration
+    map.addLayer({
+        'id': 'net_migration_200005',
+        'type': 'circle',
+        'source': 'net_migration_200005',
+        'minzoom': 4,
+        'maxzoom': 15,
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'circle-radius': 3,
+            'circle-color': {
+                property: 'Migration',
+                stops: [
+                    [-128773, 'rgba(230,97,1,1.0)'],
+                    [-4132, 'rgba(241,136,44,1.0)'],
+                    [-1755, 'rgba(251,175,88,1.0)'],
+                    [-731, 'rgba(251,205,148,1.0)'],
+                    [-244, 'rgba(249,233,214,1.0)'],
+                    [-31, 'rgba(232,231,239,1.0)'],
+                    [-2, 'rgba(201,197,223,1.0)'],
+                    [9, 'rgba(169,159,204,1.0)'],
+                    [92, 'rgba(131,109,179,1.0)'],
+                    [617, 'rgba(94,60,153,1.0)']
+                ]
+            },
+            'circle-opacity': 0.5
+        }
+    }
+
+    ); */

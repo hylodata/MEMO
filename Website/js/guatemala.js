@@ -75,6 +75,11 @@ map.on('load', () => {
         'data': './data/mapbox/central_america_mgwr_2.geojson'
     });     
 
+    map.addSource('central_america_mgwr_2_circle', {
+        'type': 'geojson',
+        'data': './data/mapbox/central_america_mgwr_2_circle.geojson'
+    });    
+
     map.addSource('guatemala_glc', {
         'type': 'geojson',
         'data': './data/mapbox/guatemala_glc.geojson'
@@ -289,11 +294,11 @@ map.on('load', () => {
                 0.66933, "#feaf78",   //
                 3.91409, "#fcfdbf"    // 
             ],
-            'circle-opacity': 0.75
+            'circle-opacity': 1
         }
     }); 
     
-    map.addLayer({
+/*     map.addLayer({
         'id': 'mgwr_2_rslt_param_URBSu2010',
         'type': 'fill',
         'source': 'central_america_mgwr_2',
@@ -314,7 +319,33 @@ map.on('load', () => {
             ],
             'fill-opacity': 0.75
         }
-    });      
+    }); */
+    
+    map.addLayer({
+        'id': 'mgwr_2_rslt_param_URBSu2010',
+        'type': 'circle',
+        'source': 'central_america_mgwr_2_circle',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'circle-radius': {
+                stops: [[1, 3], [5, 8], [10, 30], [15, 60]]
+            },
+            'circle-color': [
+                "step",
+                ["get", "mgwr_2_rslt_param_URBSu2010"], // Using equal count quantile with 7 breaks
+                "#000004",  // 
+                -1.20756, "#2d115f",  // 
+                -1.00669, "#721f81",  // 
+                -0.9174, "#b6377a",  // 
+                -0.42719, "#f1605d",   // 
+                -0.32296, "#feaf78",   //
+                -0.08268, "#fcfdbf"    // 
+            ],
+            'circle-opacity': 1
+        }
+    });     
 
 });
 
