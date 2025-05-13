@@ -75,6 +75,11 @@ map.on('load', () => {
         'data': './data/mapbox/central_america_mgwr_2.geojson'
     });     
 
+    map.addSource('guatemala_glc', {
+        'type': 'geojson',
+        'data': './data/mapbox/guatemala_glc.geojson'
+    });     
+
     // ADD LAYERS
 
     // adm0
@@ -238,7 +243,28 @@ map.on('load', () => {
             ],
             'fill-opacity': 0.75
         }
-    });   
+    });
+    
+    // Ground cover
+    map.addLayer({
+        'id': 'guatemala_glc',
+        'type': 'fill',
+        'source': 'guatemala_glc',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            "fill-color": [
+                "step",
+                ["get", "VALUE"], // Using equal count quantile with 7 breaks
+                "#62b9e0",  // water
+                10, "#e1c10a",  // cropland
+                20, "#117c00",  // forest
+                30, "#bd995d",  // grassland
+            ],
+            'fill-opacity': 0.75
+        }
+    });    
     
     // Modelling
     map.addLayer({
@@ -249,7 +275,9 @@ map.on('load', () => {
             'visibility': 'none'
         },
         'paint': {
-            'circle-radius': 4,
+            'circle-radius': {
+                stops: [[1, 3], [5, 8], [10, 30], [15, 60]]
+            },
             'circle-color': [
                 "step",
                 ["get", "S_C_RURSU2"], // Using equal count quantile with 7 breaks
