@@ -226,6 +226,54 @@ map.on('load', () => {
         }
     });
 
+    // Temperature Max
+    map.addLayer({
+        'id': 'TMAXMx2010',
+        'type': 'fill',
+        'source': 'central_america',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            "fill-color": [
+                "step",
+                ["get", "TMAXMx2010"], // Using equal count quantile with 7 breaks
+                "#fee5d9",  // ≤ -0.2 
+                35.7667, "#fcae91",  // 
+                37.60, "#fb6a4a",  // 
+                38.78, "#de2d26",  // 
+                39.59, "#a50f15",   // 
+                40.76, "#67000d",   // 
+                42.96, "#49000d"    // 
+            ],
+            'fill-opacity': 0.75
+        }
+    });
+
+    // Temperature Min
+    map.addLayer({
+        'id': 'TMINMn2010',
+        'type': 'fill',
+        'source': 'central_america',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            "fill-color": [
+                "step",
+                ["get", "TMINMn2010"], // Using equal count quantile with 7 breaks
+                "#edf8fb",  //
+                8.467, "#b3cde3",  // 
+                10.933, "#8c96c6",  // 
+                13.30, "#8856a7",  // 
+                15.43, "#810f7c",   // 
+                18.993, "#4d004b",   // 
+                25.06, "#2e004b"    // 
+            ],
+            'fill-opacity': 0.75
+        }
+    });
+
     // Precipitation
     map.addLayer({
         'id': 'PRECAv2010',
@@ -249,6 +297,150 @@ map.on('load', () => {
             'fill-opacity': 0.75
         }
     });
+
+    // Rural
+    map.addLayer({
+        'id': 'RURSu2010',
+        'type': 'fill',
+        'source': 'central_america',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            "fill-color": [
+                "step",
+                ["get", "RURSu2010"], // Using equal count quantile with 7 breaks
+                "#ffea46",  //
+                635.33, "#d5c264",  // 
+                716.00, "#a79e75",  // 
+                730.00, "#7d7c78",  // 
+                736.00, "#575c6d",   // 
+                754.00, "#243e6c",   // 
+                763.00, "#00204d"    // 
+            ],
+            'fill-opacity': 0.75
+        }
+    });
+
+    // Towns
+    map.addLayer({
+        'id': 'TOWSu2010',
+        'type': 'fill',
+        'source': 'central_america',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            "fill-color": [
+                "step",
+                ["get", "TOWSu2010"], // Using equal count quantile with 7 breaks
+                "#ffea46",  //
+                0.00, "#d5c264",  // 
+                0.01, "#a79e75",  // 
+                6.00, "#7d7c78",  // 
+                13.00, "#575c6d",   // 
+                32.33, "#243e6c",   // 
+                259.00, "#00204d"    // 
+            ],
+            'fill-opacity': 0.75
+        }
+    });
+
+    // Urban Centres
+    map.addLayer({
+        'id': 'URBSu2010',
+        'type': 'fill',
+        'source': 'central_america',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            "fill-color": [
+                "step",
+                ["get", "URBSu2010"], // Using equal count quantile with 7 breaks
+                "#ffea46",  //
+                0.00, "#d5c264",  // 
+                0.01, "#a79e75",  // 
+                0.02, "#7d7c78",  // 
+                0.03, "#575c6d",   // 
+                0.04, "#243e6c",   // 
+                286.00, "#00204d"    // 
+            ],
+            'fill-opacity': 0.75
+        }
+    });
+
+    // Palm Nut Farms
+    map.addLayer({
+        'id': 'NUTSu2010',
+        'type': 'fill',
+        'source': 'central_america',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            "fill-color": [
+                "step",
+                ["get", "NUTSu2010"], // Using equal count quantile with 7 breaks
+                "#ffffcc",  //
+                0.00, "#d6eeaa",  // 
+                0.01, "#a9db8e",  // 
+                2.75, "#78c679",  // 
+                8.06, "#49af60",   // 
+                17.41, "#218f4a",   // 
+                71.17, "#006837"    // 
+            ],
+            'fill-opacity': 0.75
+        }
+    });
+
+    // Sugar Plantations
+    map.addLayer({
+        'id': 'SUGSu2010',
+        'type': 'fill',
+        'source': 'central_america',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            "fill-color": [
+                "step",
+                ["get", "SUGSu2010"], // Using equal count quantile with 7 breaks
+                "#ffffcc",  //
+                9.088, "#d6eeaa",  // 
+                30.74, "#a9db8e",  // 
+                55.56, "#78c679",  // 
+                89.05, "#49af60",   // 
+                176.75, "#218f4a",   // 
+                815.82, "#006837"    // 
+            ],
+            'fill-opacity': 0.75
+        }
+    });
+
+    // Banana Farms
+    map.addLayer({
+        'id': 'BANSu2010',
+        'type': 'fill',
+        'source': 'central_america',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            "fill-color": [
+                "step",
+                ["get", "BANSu2010"], // Using equal count quantile with 7 breaks
+                "#ffffcc",  //
+                0.9737, "#d6eeaa",  // 
+                2.2906, "#a9db8e",  // 
+                4.4325, "#78c679",  // 
+                9.6827, "#49af60",   // 
+                18.6425, "#218f4a",   // 
+                144.7495, "#006837"    // 
+            ],
+            'fill-opacity': 0.75
+        }
+    });    
     
     // Ground cover
     map.addLayer({
@@ -297,29 +489,6 @@ map.on('load', () => {
             'circle-opacity': 1
         }
     }); 
-    
-/*     map.addLayer({
-        'id': 'mgwr_2_rslt_param_URBSu2010',
-        'type': 'fill',
-        'source': 'central_america_mgwr_2',
-        'layout': {
-            'visibility': 'none'
-        },
-        'paint': {
-            "fill-color": [
-                "step",
-                ["get", "mgwr_2_rslt_param_URBSu2010"], // Using equal count quantile with 7 breaks
-                "#000004",  // 
-                -1.20756, "#2d115f",  // 
-                -1.01242, "#721f81",  // 
-                -0.98389, "#b6377a",  // 
-                -0.50903, "#f1605d",   // 
-                -0.38098, "#feaf78",   //
-                -0.29472, "#fcfdbf"    // 
-            ],
-            'fill-opacity': 0.75
-        }
-    }); */
     
     map.addLayer({
         'id': 'mgwr_2_rslt_param_URBSu2010',
